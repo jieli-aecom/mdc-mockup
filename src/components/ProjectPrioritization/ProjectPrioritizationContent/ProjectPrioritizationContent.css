@@ -1,0 +1,29 @@
+.project-prioritization-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.project-prioritization-export {
+  background-color: #ebebeb;
+  box-shadow: 2px 2px 3px #66afe94d;
+  border-radius: 5px;
+  padding: 7px 14px 6px 15px;
+  font-size: 16px;
+  color: #263c8c;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 9px;
+}
+
+.project-prioritization-export:hover {
+  background-color: #4d9fd7;
+  color: white;
+  outline-offset: 3px;
+  outline-color: #4d9fd7;
+  outline-style: dotted;
+  outline-width: 2px;
+  cursor: pointer;
+}

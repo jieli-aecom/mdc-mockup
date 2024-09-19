@@ -1,0 +1,136 @@
+/* General Layout */
+.resource-container {
+  display: flex;
+}
+
+.resource-sidebar {
+  width: 250px;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.resource-main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.resource-header {
+  margin-bottom: 20px;
+}
+
+.resource-categories {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.resource-category-tab {
+  padding: 10px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.resource-icon-active {
+  background-color: #e61754;
+  color: white !important;
+}
+
+.resource-search-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.resource-search-bar {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.resource-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resource-clear-filters {
+  text-decoration: underline;
+  color: #0077ff;
+  cursor: pointer;
+}
+
+.resource-filter-section {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.resource-filter-section h4 {
+  margin: 0 0 10px;
+}
+
+.resource-filter-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.resource-filter-section li {
+  margin-bottom: 10px;
+}
+
+/* Data Downloads */
+.resource-downloads .resource-item {
+  border: 1px solid red;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.resource-downloads .resource-item h4 {
+  margin-bottom: 10px;
+}
+
+.resource-meta {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+/* Technical Documents */
+.resource-documents {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.resource-document-item {
+  text-align: center;
+  border: 1px solid red;
+  padding: 20px;
+}
+
+.resource-document-item .resource-document-icon {
+  height: 100px;
+  background-color: lightgray;
+  margin-bottom: 10px;
+}
+
+/* Sidebar */
+.resource-tab {
+  padding: 15px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resource-active-tab {
+  background-color: #ff0066;
+  color: white;
+}
+
+.resource-icon {
+  width: 20px;
+  height: 20px;
+  background-color: gray;
+}

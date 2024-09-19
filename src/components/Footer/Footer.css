@@ -1,0 +1,10 @@
+.footer-container {
+  background-color: black;
+  height: 400px;
+  width: 100%;
+}
+
+.footer-logo {
+  margin-top: 100px;
+  margin-left: 1100px;
+}

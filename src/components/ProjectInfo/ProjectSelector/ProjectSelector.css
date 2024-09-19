@@ -1,0 +1,34 @@
+.project-selector-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 120px 50px;
+}
+
+.project-label {
+  line-height: 22px;
+  font-size: 18px;
+  color: #4f4f4f;
+}
+
+.project-dropdown {
+  padding: 7px;
+  font-size: 18px;
+  color: #4f4f4f;
+  border: 1px solid #263c8c;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #fff;
+  width: 540px;
+}
+
+.project-dropdown:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.project-dropdown option {
+  padding: 10px;
+  font-size: 14px;
+}

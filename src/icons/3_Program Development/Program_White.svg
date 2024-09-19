@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.53 36.74">
+<defs>
+<style>.j{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6px;}</style>
+</defs>
+<path id="b" class="j" d="m12.2,32.28h3.61V4.46h-3.61"/>
+<line id="c" class="j" x1="19.19" y1="18.37" x2="12.21" y2="18.37"/>
+<g id="d">
+<g id="e">
+<rect id="f" class="j" x="23.61" y="14.83" width="7.12" height="7.09"/>
+<rect id="g" class="j" x=".8" y="14.82" width="7.12" height="7.09"/>
+<rect id="h" class="j" x=".8" y=".8" width="7.12" height="7.09"/>
+<rect id="i" class="j" x=".8" y="28.85" width="7.12" height="7.09"/>
+</g>
+</g>
+</svg>

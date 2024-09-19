@@ -1,0 +1,40 @@
+.create-project-main-container {
+  height: 100%;
+  width: 55%;
+  background-color: white;
+  padding: 0 0 0 80px;
+}
+
+.create-project-main-text {
+  margin: 8px 0;
+}
+
+.create-project-main-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.create-project-main-button {
+  height: 24px;
+  width: 24px;
+  border: 1px solid #ed592d;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.create-project-main-selected-button {
+  background-color: #ed592d;
+  color: white;
+  outline-offset: 2px;
+  outline-color: #ed592d;
+  outline-style: dotted;
+  outline-width: 2px;
+}
+
+.create-project-main-map {
+  background-color: black;
+}

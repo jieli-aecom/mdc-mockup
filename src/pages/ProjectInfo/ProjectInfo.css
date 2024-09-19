@@ -1,0 +1,160 @@
+.project-information {
+  width: 100%;
+}
+
+.project-info-header {
+  width: calc(100% - 200px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 100px 14px;
+  background-color: #ebebeb;
+}
+
+.back-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.create-project-button {
+  background-color: #263c8c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.create-project-button:hover {
+  cursor: pointer;
+  background-color: #4d9fd7;
+  outline-offset: 3px;
+  outline-width: 3px;
+  outline-color: #4d9fd7;
+  outline-style: dotted;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 50px;
+  padding: 0 100px;
+}
+
+.project-content-main {
+  width: 70%;
+  overflow-y: auto;
+}
+
+.project-summary {
+  width: 100%;
+}
+
+.project-summary h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #4f4f4f;
+}
+
+.project-summary hr {
+  background-color: #f15624;
+  height: 2px;
+  border: none;
+  margin: 15px 0;
+}
+
+.project-summary p {
+  margin: 5px 0;
+}
+
+.project-summary-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-summary-header p {
+  font-size: 18px;
+}
+
+.performance-scores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.score-box {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.score-box:hover {
+  border-color: #333;
+}
+
+.score-label {
+  font-weight: bold;
+}
+
+.score-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.score-details {
+  width: 60%;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.details-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.details-item {
+  width: 45%;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.details-item p {
+  margin: 5px 0;
+}
+
+.map-placeholder {
+  width: 35%;
+  height: 500px;
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+@media (max-width: 1024px) {
+  .project-content {
+    flex-direction: column;
+  }
+
+  .map-placeholder {
+    width: 100%;
+  }
+}

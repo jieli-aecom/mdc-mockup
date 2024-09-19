@@ -1,0 +1,14 @@
+.project-aggregation-main-container {
+  height: 100%;
+  width: 55%;
+  background-color: white;
+  padding: 0 0 0 80px;
+}
+
+.project-aggregation-main-text {
+  margin: 8px 0;
+}
+
+.project-aggregation-main-map {
+  background-color: black;
+}

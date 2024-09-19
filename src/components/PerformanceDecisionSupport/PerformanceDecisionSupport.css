@@ -1,0 +1,46 @@
+.performance-decision-support-container {
+  display: flex;
+  flex-direction: column;
+  padding: 400px 100px 150px 100px;
+  background-color: #ebebeb;
+}
+
+.performance-decision-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.performance-decision-icon {
+  width: 80px;
+  height: 80px;
+  opacity: 0.5;
+}
+
+.performance-decision-title {
+  font-size: 48px;
+  font-weight: 600;
+  color: #4f4f4f;
+  margin-bottom: 30px;
+}
+
+.performance-decision-get-started-btn {
+  background-color: #293b89;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 120px;
+  transition: background-color, outline 0.1s ease-in;
+}
+
+.performance-decision-get-started-btn:hover {
+  background-color: #549ed4;
+  outline-color: #549ed4;
+  outline-offset: 5px;
+  outline-style: dotted;
+  outline-width: 3px;
+}

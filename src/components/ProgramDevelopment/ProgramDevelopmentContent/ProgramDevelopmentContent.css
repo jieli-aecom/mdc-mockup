@@ -1,0 +1,126 @@
+.program-development-content-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px !important;
+  width: calc(100% - 200px);
+  height: calc(100% - 30px);
+  box-sizing: border-box;
+}
+
+.program-development-content {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+}
+
+.program-development-score-board {
+  width: 40%;
+  min-width: 550px;
+}
+
+.page-comment {
+  font-size: 18px;
+  color: #4f4f4f;
+  margin-top: 22px;
+}
+
+.score-board-title {
+  background-color: #ebebeb;
+  color: "#4f4f4f";
+  padding: 14px;
+  padding-right: 50px;
+  font-weight: 600;
+  height: 50px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-development-table {
+  width: 100%;
+  border-collapse: collapse;
+  height: 350px;
+  display: block;
+}
+
+.project-development-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.project-development-table > thead {
+  border: 2px solid #f15624;
+  display: block;
+  width: 100%;
+  font-weight: 600;
+  padding-right: 17px;
+  box-sizing: border-box;
+}
+
+.project-development-table .td-center {
+  text-align: center;
+}
+
+.project-development-table-body {
+  width: 100%;
+  height: 300px;
+  display: block;
+  overflow-y: auto;
+}
+
+.project-development-table-body > tr {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.project-development-table thead td {
+  padding: 16px 14px;
+  box-sizing: border-box;
+}
+
+.project-development-table tbody td {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+}
+
+.project-development-table-body td.td-selector {
+  padding-left: 15px;
+}
+
+.top-projects-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.project-prioritization-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.program-aggregation-output {
+  color: #ebebeb;
+  box-shadow: 2px 2px 3px #66afe94d;
+  border-radius: 5px;
+  padding: 7px 14px 6px 15px;
+  font-size: 16px;
+  background-color: #263c8c;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 9px;
+}
+
+.program-aggregation-output:hover {
+  background-color: #4d9fd7;
+  color: white;
+  outline-offset: 3px;
+  outline-color: #4d9fd7;
+  outline-style: dotted;
+  outline-width: 2px;
+  cursor: pointer;
+}
