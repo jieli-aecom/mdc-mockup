@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DATA_URL } from "../../../consts";
 import SaveIcon from "../../../icons/SaveIcon";
 import LoadIcon from "../../../icons/LoadIcon";
@@ -7,6 +7,8 @@ import "./ProgramDevelopmentContent.css";
 import ProjectPrioritizationMap from "../../ProjectPrioritization/ProjectPrioritizationMap/ProjectPrioritizationMap";
 import TopProjectSelector from "../TopProjectSelector/TopProjectSelector";
 import FilterItem from "../../FilterItem/FilterItem";
+import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
+import { Project } from "../../../types/Project";
 
 const TOP_PERCENT_OPTIONS = [
   { value: "5%", label: "Top 5%" },
@@ -105,7 +107,11 @@ const PROJECT_LIST = [
   },
 ];
 
+
 const ProgramDevelopmentContent: React.FC = ({}) => {
+  const test = useContext(ProjectsContext);
+  console.log(test);
+
   const [hover, setHover] = useState("");
   const types = [
     "Arterial & Collector",

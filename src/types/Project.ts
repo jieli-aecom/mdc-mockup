@@ -1,3 +1,5 @@
+import Graphic from "@arcgis/core/Graphic";
+
 export enum ProjectType {
   ArterialCollector = "Arterial & Collector",
   Assets = "Assets",
@@ -83,4 +85,5 @@ export type Project = {
   Description: string;
   Metrics: ProjectSummaryMetric[];
   Scores: ProjectSummaryScore[];
+  Shape: Graphic;
 };
