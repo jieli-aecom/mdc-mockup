@@ -3,7 +3,7 @@ export const HEADER_NAV_LINKS = [
   "/performance-tracking",
   "/project-prioritization",
   "/program-development",
-  "/resources"
+  "/resources",
 ];
 
 export const HEADER_NAV_NAMES = [
@@ -11,14 +11,14 @@ export const HEADER_NAV_NAMES = [
   "PERFORMANCE TRACKING",
   "PROJECT PRIORITIZATION",
   "PROGRAM DEVELOPMENT",
-  "RESOURCES"
+  "RESOURCES",
 ];
 
 export const PERFORMANCE_TRACKING_SIDEBAR_ITEMS = [
   "SAFE",
   "CLEAN",
   "EFFICIENT",
-  "CONNECTED"
+  "CONNECTED",
 ];
 
 export const MAP_API_KEY =
@@ -74,9 +74,14 @@ export const ROADWAY_SHIELD_THREE =
 export const ROADWAY_SHIELD_FOUR =
   "https://services7.arcgis.com/wGTEYtsrVhoPXek1/ArcGIS/rest/services/TX_Roadway_Labels/FeatureServer/8";
 
+export const POINT_PROJECTS_LAYER =
+  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/arcgis/rest/services/Miami_Mock_Map_WFL1/FeatureServer/0";
+export const LINE_PROJECTS_LAYER =
+  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/arcgis/rest/services/Miami_Mock_Map_WFL1/FeatureServer/1";
+
 export const DEFAULT_SPATIAL_REF = { wkid: 3857 };
 export const DEFAULT_MAP_CENTRAL_POINT = [
-  -99.13168096993665, 31.503809189893104
+  -99.13168096993665, 31.503809189893104,
 ];
 export const WEIGHTS_DEFAULT_VALUES = {
   pavement: 11,
@@ -84,7 +89,7 @@ export const WEIGHTS_DEFAULT_VALUES = {
   safety: 28,
   congestion: 22,
   economic: 11,
-  connectivity: 17
+  connectivity: 17,
 };
 
 export const ROADWAY_CLASSIFICATIONS = [
@@ -93,13 +98,13 @@ export const ROADWAY_CLASSIFICATIONS = [
   { label: "SH", value: "SH" },
   { label: "FM", value: "FM" },
   { label: "RM", value: "RM" },
-  { label: "OTHERS", value: "OTHERS" }
+  { label: "OTHERS", value: "OTHERS" },
 ];
 
 export const CUSTOM_OPTIONS = [
   { label: "No Filter", value: -1 },
   { label: "Yes", value: 1 },
-  { label: "No", value: 0 }
+  { label: "No", value: 0 },
 ];
 
 export const DISTRICTS = [
@@ -127,7 +132,7 @@ export const DISTRICTS = [
   "Tyler",
   "Waco",
   "Wichita Falls",
-  "Yoakum"
+  "Yoakum",
 ];
 
 export const DISTRICT_LOOKUP = [
@@ -135,152 +140,152 @@ export const DISTRICT_LOOKUP = [
     TXDOT_DIST_ABRVN_NM: "ABL",
     TXDOT_DIST_NBR: 8,
     TXDOT_DIST_NM: "Abilene",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "AMA",
     TXDOT_DIST_NBR: 4,
     TXDOT_DIST_NM: "Amarillo",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "ATL",
     TXDOT_DIST_NBR: 19,
     TXDOT_DIST_NM: "Atlanta",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "AUS",
     TXDOT_DIST_NBR: 14,
     TXDOT_DIST_NM: "Austin",
-    TYPE: "Metro"
+    TYPE: "Metro",
   },
   {
     TXDOT_DIST_ABRVN_NM: "BMT",
     TXDOT_DIST_NBR: 20,
     TXDOT_DIST_NM: "Beaumont",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "BWD",
     TXDOT_DIST_NBR: 23,
     TXDOT_DIST_NM: "Brownwood",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "BRY",
     TXDOT_DIST_NBR: 17,
     TXDOT_DIST_NM: "Bryan",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "CHS",
     TXDOT_DIST_NBR: 25,
     TXDOT_DIST_NM: "Childress",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "CRP",
     TXDOT_DIST_NBR: 16,
     TXDOT_DIST_NM: "Corpus Christi",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "DAL",
     TXDOT_DIST_NBR: 18,
     TXDOT_DIST_NM: "Dallas",
-    TYPE: "Metro"
+    TYPE: "Metro",
   },
   {
     TXDOT_DIST_ABRVN_NM: "ELP",
     TXDOT_DIST_NBR: 24,
     TXDOT_DIST_NM: "El Paso",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "FTW",
     TXDOT_DIST_NBR: 2,
     TXDOT_DIST_NM: "Fort Worth",
-    TYPE: "Metro"
+    TYPE: "Metro",
   },
   {
     TXDOT_DIST_ABRVN_NM: "HOU",
     TXDOT_DIST_NBR: 12,
     TXDOT_DIST_NM: "Houston",
-    TYPE: "Metro"
+    TYPE: "Metro",
   },
   {
     TXDOT_DIST_ABRVN_NM: "LRD",
     TXDOT_DIST_NBR: 22,
     TXDOT_DIST_NM: "Laredo",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "LBB",
     TXDOT_DIST_NBR: 5,
     TXDOT_DIST_NM: "Lubbock",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "LFK",
     TXDOT_DIST_NBR: 11,
     TXDOT_DIST_NM: "Lufkin",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "ODA",
     TXDOT_DIST_NBR: 6,
     TXDOT_DIST_NM: "Odessa",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "PAR",
     TXDOT_DIST_NBR: 1,
     TXDOT_DIST_NM: "Paris",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "PHR",
     TXDOT_DIST_NBR: 21,
     TXDOT_DIST_NM: "Pharr",
-    TYPE: "Metro"
+    TYPE: "Metro",
   },
   {
     TXDOT_DIST_ABRVN_NM: "SJT",
     TXDOT_DIST_NBR: 7,
     TXDOT_DIST_NM: "San Angelo",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "SAT",
     TXDOT_DIST_NBR: 15,
     TXDOT_DIST_NM: "San Antonio",
-    TYPE: "Metro"
+    TYPE: "Metro",
   },
   {
     TXDOT_DIST_ABRVN_NM: "TYL",
     TXDOT_DIST_NBR: 10,
     TXDOT_DIST_NM: "Tyler",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "WAC",
     TXDOT_DIST_NBR: 9,
     TXDOT_DIST_NM: "Waco",
-    TYPE: "Urban"
+    TYPE: "Urban",
   },
   {
     TXDOT_DIST_ABRVN_NM: "WFS",
     TXDOT_DIST_NBR: 3,
     TXDOT_DIST_NM: "Wichita Falls",
-    TYPE: "Rural"
+    TYPE: "Rural",
   },
   {
     TXDOT_DIST_ABRVN_NM: "YKM",
     TXDOT_DIST_NBR: 13,
     TXDOT_DIST_NM: "Yoakum",
-    TYPE: "Rural"
-  }
+    TYPE: "Rural",
+  },
 ];
 
 export const MPOs = [
@@ -309,125 +314,125 @@ export const MPOs = [
   "Tyler Area",
   "Victoria",
   "Waco",
-  "Wichita Falls"
+  "Wichita Falls",
 ];
 
 export const MPO_LOOKUP = [
   {
     MPO_NBR: 15,
     MPO_NM: "Houston-Galveston Area Council",
-    MPO_LBL: "Houston-Galveston Area Council MPO"
+    MPO_LBL: "Houston-Galveston Area Council MPO",
   },
   {
     MPO_NBR: 28,
     MPO_NM: "Alamo Area",
-    MPO_LBL: "Alamo Area MPO"
+    MPO_LBL: "Alamo Area MPO",
   },
   {
     MPO_NBR: 66,
     MPO_NM: "El Paso",
-    MPO_LBL: "El Paso MPO"
+    MPO_LBL: "El Paso MPO",
   },
   {
     MPO_NBR: 90,
     MPO_NM: "Capital Area",
-    MPO_LBL: "CAMPO"
+    MPO_LBL: "CAMPO",
   },
   {
     MPO_NBR: 96,
     MPO_NM: "Corpus Christi",
-    MPO_LBL: "Corpus Christi MPO"
+    MPO_LBL: "Corpus Christi MPO",
   },
   {
     MPO_NBR: 120,
     MPO_NM: "Amarillo",
-    MPO_LBL: "Amarillo MPO"
+    MPO_LBL: "Amarillo MPO",
   },
   {
     MPO_NBR: 122,
     MPO_NM: "Lubbock",
-    MPO_LBL: "Lubbock MPO"
+    MPO_LBL: "Lubbock MPO",
   },
   {
     MPO_NBR: 135,
     MPO_NM: "South East Texas Regional Planning Commission",
-    MPO_LBL: "South East Texas RPC MPO"
+    MPO_LBL: "South East Texas RPC MPO",
   },
   {
     MPO_NBR: 140,
     MPO_NM: "Waco",
-    MPO_LBL: "Waco MPO"
+    MPO_LBL: "Waco MPO",
   },
   {
     MPO_NBR: 151,
     MPO_NM: "Wichita Falls",
-    MPO_LBL: "Wichita Falls MPO"
+    MPO_LBL: "Wichita Falls MPO",
   },
   {
     MPO_NBR: 166,
     MPO_NM: "Abilene",
-    MPO_LBL: "Abilene MPO"
+    MPO_LBL: "Abilene MPO",
   },
   {
     MPO_NBR: 174,
     MPO_NM: "Permian Basin",
-    MPO_LBL: "Permian Basin MPO"
+    MPO_LBL: "Permian Basin MPO",
   },
   {
     MPO_NBR: 205,
     MPO_NM: "Laredo Webb County Area",
-    MPO_LBL: "Laredo Webb County Area MPO"
+    MPO_LBL: "Laredo Webb County Area MPO",
   },
   {
     MPO_NBR: 208,
     MPO_NM: "San Angelo",
-    MPO_LBL: "San Angelo MPO"
+    MPO_LBL: "San Angelo MPO",
   },
   {
     MPO_NBR: 211,
     MPO_NM: "Texarkana",
-    MPO_LBL: "Texarkana MPO"
+    MPO_LBL: "Texarkana MPO",
   },
   {
     MPO_NBR: 213,
     MPO_NM: "Tyler",
-    MPO_LBL: "Tyler MPO"
+    MPO_LBL: "Tyler MPO",
   },
   {
     MPO_NBR: 230,
     MPO_NM: "Rio Grande Valley",
-    MPO_LBL: "Rio Grande Valley MPO"
+    MPO_LBL: "Rio Grande Valley MPO",
   },
   {
     MPO_NBR: 232,
     MPO_NM: "Grayson County",
-    MPO_LBL: "Grayson County MPO"
+    MPO_LBL: "Grayson County MPO",
   },
   {
     MPO_NBR: 249,
     MPO_NM: "Bryan-College Station",
-    MPO_LBL: "Bryan-College Station MPO"
+    MPO_LBL: "Bryan-College Station MPO",
   },
   {
     MPO_NBR: 277,
     MPO_NM: "Killeen-Temple",
-    MPO_LBL: "Killeen-Temple MPO"
+    MPO_LBL: "Killeen-Temple MPO",
   },
   {
     MPO_NBR: 282,
     MPO_NM: "North Central Texas Council of Governments",
-    MPO_LBL: "North Central Texas COG"
+    MPO_LBL: "North Central Texas COG",
   },
   {
     MPO_NBR: 361,
     MPO_NM: "Longview",
-    MPO_LBL: "Longview MPO"
+    MPO_LBL: "Longview MPO",
   },
   {
     MPO_NBR: 363,
     MPO_NM: "Victoria",
-    MPO_LBL: "Victoria MPO"
-  }
+    MPO_LBL: "Victoria MPO",
+  },
 ];
 
 export const mode = ["Statewide", "District", "MPO"];
@@ -437,8 +442,8 @@ export const RENDERER_HIGHLIGHT = {
   symbol: {
     type: "simple-line",
     width: 5,
-    color: "#E09231"
-  }
+    color: "#E09231",
+  },
 };
 
 export const RENDERER_BACKGROUND = {
@@ -446,41 +451,41 @@ export const RENDERER_BACKGROUND = {
   symbol: {
     type: "simple-line",
     width: 1.5,
-    color: "#d3d3d3"
-  }
+    color: "#d3d3d3",
+  },
 };
 
 export const DROPDOWN_LIST = [
   {
     label: "Overall",
     value: "Overall",
-    img_url: "/assets/svg/Icon_Overall.svg"
+    img_url: "/assets/svg/Icon_Overall.svg",
   },
   {
     label: "Pavement",
     value: "Pavement",
-    img_url: "/assets/svg/Pavement.svg"
+    img_url: "/assets/svg/Pavement.svg",
   },
   {
     label: "Bridge",
     value: "Bridge",
-    img_url: "/assets/svg/Bridge.svg"
+    img_url: "/assets/svg/Bridge.svg",
   },
   {
     label: "Mobility",
     value: "Mobility",
-    img_url: "/assets/svg/Congestion.svg"
+    img_url: "/assets/svg/Congestion.svg",
   },
   {
     label: "Safety",
     value: "Safety",
-    img_url: "/assets/svg/Safety.svg"
+    img_url: "/assets/svg/Safety.svg",
   },
   {
     label: "Freight",
     value: "Freight",
-    img_url: "/assets/svg/Economic.svg"
-  }
+    img_url: "/assets/svg/Economic.svg",
+  },
 ];
 
 export const RENDERER_HIGHLIGHT_MARKER = {
@@ -492,9 +497,9 @@ export const RENDERER_HIGHLIGHT_MARKER = {
     size: "7px",
     outline: {
       color: "#14375A",
-      width: 1
-    }
-  }
+      width: 1,
+    },
+  },
 };
 
 export const DATA_URL =

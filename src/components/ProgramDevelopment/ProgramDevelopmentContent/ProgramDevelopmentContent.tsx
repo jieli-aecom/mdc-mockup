@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { CSVLink } from "react-csv";
 import { DATA_URL } from "../../../consts";
-// import FilterItem from "../../FilterItem/FilterItem";
 import SaveIcon from "../../../icons/SaveIcon";
 import LoadIcon from "../../../icons/LoadIcon";
 
@@ -326,7 +324,7 @@ const ProgramDevelopmentContent: React.FC = ({}) => {
                   </div>
                 </div>
               </div>
-              <div
+              <button
                 className="program-aggregation-output"
                 onMouseEnter={() => setHover("view-aggregation-output-button")}
                 onMouseLeave={() => setHover("")}
@@ -342,7 +340,7 @@ const ProgramDevelopmentContent: React.FC = ({}) => {
                 >
                   View Aggregation Output
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
