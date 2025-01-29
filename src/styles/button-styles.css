@@ -1,4 +1,5 @@
 .mdc-btn-export {
+  all:unset;
   background-color: #ebebeb;
   box-shadow: 2px 2px 3px #66afe94d;
   border-radius: 5px;

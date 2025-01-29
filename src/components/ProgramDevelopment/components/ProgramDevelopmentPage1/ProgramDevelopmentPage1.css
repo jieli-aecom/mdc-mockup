@@ -20,3 +20,16 @@
   flex-direction: column;
   height: 100%;
 }
+
+.program-development-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.program-development-actions-io {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}

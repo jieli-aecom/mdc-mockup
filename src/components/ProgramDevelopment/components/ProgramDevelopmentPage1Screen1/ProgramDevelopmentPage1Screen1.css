@@ -29,13 +29,6 @@
   display: flex;
 }
 
-.program-development-actions {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .page-comment {
   font-size: 18px;
   color: #4f4f4f;

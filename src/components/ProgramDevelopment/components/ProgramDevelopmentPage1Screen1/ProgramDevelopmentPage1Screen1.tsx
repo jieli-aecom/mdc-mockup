@@ -14,9 +14,11 @@ export type ProgramDevelopmentPage1Screen = 1 | 2;
 
 export type ProgramDevelopmentPage1Screen1Props = {
   handleToScreen2: () => void;
-}
+};
 
-const ProgramDevelopmentPage1Screen1: React.FC<ProgramDevelopmentPage1Screen1Props> = ({handleToScreen2}) => {
+const ProgramDevelopmentPage1Screen1: React.FC<
+  ProgramDevelopmentPage1Screen1Props
+> = ({ handleToScreen2 }) => {
   const {
     topPercents,
     toggleSetTopPercent,
@@ -55,14 +57,8 @@ const ProgramDevelopmentPage1Screen1: React.FC<ProgramDevelopmentPage1Screen1Pro
         />
       </div>
       <div className="program-development-actions">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "20px",
-          }}
-        >
-          <div
+        <div className="program-development-actions-io">
+          <button
             className="mdc-btn-export"
             onMouseEnter={() => setHover("save-button")}
             onMouseLeave={() => setHover("")}
@@ -78,8 +74,8 @@ const ProgramDevelopmentPage1Screen1: React.FC<ProgramDevelopmentPage1Screen1Pro
             >
               Save
             </div>
-          </div>
-          <div
+          </button>
+          <button
             className="mdc-btn-export"
             onMouseEnter={() => setHover("load-button")}
             onMouseLeave={() => setHover("")}
@@ -95,7 +91,7 @@ const ProgramDevelopmentPage1Screen1: React.FC<ProgramDevelopmentPage1Screen1Pro
             >
               Load
             </div>
-          </div>
+          </button>
         </div>
         <button
           className="program-aggregation-output"

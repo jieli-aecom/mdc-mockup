@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-import "./ProgramDevelopmentContent.css";
+import "./ProgramDevelopmentPage1.css";
 import "../../../../styles/button-styles.css";
 import ProjectDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import FilterItem from "../../../FilterItem/FilterItem";
@@ -9,6 +9,7 @@ import { DISTRICTS } from "../../../../consts/districts";
 
 import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
 import ProgramDevelopmentPage1Screen1 from "../ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";
+import ProgramDevelopmentPage1Screen2 from "../ProgramDevelopmentPage1Screen2/ProgramDevelopmentPage1Screen2";
 
 export interface ProgramDevelopmentPage1Props {
   handleToSecondPage: () => void;
@@ -52,7 +53,15 @@ const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
         </div>
         <ProjectDevelopmentMap graphics={mapGraphics} />
         <div className="program-development-score-board">
-          {stepScreen === 1 && <ProgramDevelopmentPage1Screen1 handleToScreen2={handleToScreen2} />}
+          {stepScreen === 1 && (
+            <ProgramDevelopmentPage1Screen1 handleToScreen2={handleToScreen2} />
+          )}
+          {stepScreen === 2 && (
+            <ProgramDevelopmentPage1Screen2
+              handleToScreen1={() => setStepScreen(1)}
+              handleToPage2={handleToSecondPage}
+            />
+          )}
         </div>
       </div>
     </div>

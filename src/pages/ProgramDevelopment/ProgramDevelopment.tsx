@@ -4,7 +4,7 @@ import { ReactComponent as ProgramDevelopmentIcon } from "../../icons/3_Program 
 
 import "./ProgramDevelopment.css";
 import { createContext } from "react";
-import ProgramDevelopmentPage1 from "../../components/ProgramDevelopment/components/ProgramDevelopmentPage1/ProgramDevelopmentContent";
+import ProgramDevelopmentPage1 from "../../components/ProgramDevelopment/components/ProgramDevelopmentPage1/ProgramDevelopmentPage1";
 import {
   initialContext,
   ProgramDevelopmentContext,
