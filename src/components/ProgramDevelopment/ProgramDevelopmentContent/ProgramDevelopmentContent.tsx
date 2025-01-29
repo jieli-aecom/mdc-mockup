@@ -4,8 +4,8 @@ import LoadIcon from "../../../icons/LoadIcon";
 
 import "./ProgramDevelopmentContent.css";
 import "../../../styles/button-styles.css";
-import ProjectPrioritizationMap from "../../ProjectPrioritization/ProjectPrioritizationMap/ProjectPrioritizationMap";
 import TopProjectSelector from "../TopProjectSelector/TopProjectSelector";
+import ProjectDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import FilterItem from "../../FilterItem/FilterItem";
 import { Project } from "../../../types/Project";
 import { PROJECT_TYPES } from "../../../consts/projects";
@@ -59,7 +59,7 @@ const ProgramDevelopmentContent: React.FC = () => {
             handleUpdate={() => {}}
           />
         </div>
-        <ProjectPrioritizationMap project={null} />
+        <ProjectDevelopmentMap project={null} />
         <div className="program-development-score-board">
           <div className="score-board-title">
             Step 1. Select top scored projects
