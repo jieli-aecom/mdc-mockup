@@ -20,97 +20,8 @@ const TOP_PERCENT_OPTIONS = [
   { value: "95%", label: "Top 95%" },
 ];
 
-const PROJECT_LIST = [
-  {
-    id: 1,
-    name: "Project Name",
-    type: "Bike & Pedestrian",
-    score: 87,
-  },
-  {
-    id: 2,
-    name: "Project Name",
-    type: "Arterial & Collector",
-    score: 71,
-  },
-  {
-    id: 3,
-    name: "Project Name",
-    type: "Transit",
-    score: 67,
-  },
-  {
-    id: 4,
-    name: "Project Name",
-    type: "Transit",
-    score: 66,
-  },
-  {
-    id: 5,
-    name: "Project Name",
-    type: "Bike & Pedestrian",
-    score: 58,
-  },
-  {
-    id: 6,
-    name: "Project Name",
-    type: "Transit",
-    score: 56,
-  },
-  {
-    id: 7,
-    name: "Project Name",
-    type: "Congestion",
-    score: 54,
-  },
-  {
-    id: 8,
-    name: "Project Name",
-    type: "Arterial & Collector",
-    score: 54,
-  },
-  {
-    id: 9,
-    name: "Project Name",
-    type: "Assets",
-    score: 49,
-  },
-  {
-    id: 10,
-    name: "Project Name",
-    type: "Transit",
-    score: 48,
-  },
-  {
-    id: 11,
-    name: "Project Name",
-    type: "Assets",
-    score: 46,
-  },
-  {
-    id: 12,
-    name: "Project Name",
-    type: "Bike & Pedestrian",
-    score: 43,
-  },
-  {
-    id: 13,
-    name: "Project Name",
-    type: "Bike & Pedestrian",
-    score: 41,
-  },
-  {
-    id: 14,
-    name: "Project Name",
-    type: "Bike & Pedestrian",
-    score: 39,
-  },
-];
-
-
-const ProgramDevelopmentContent: React.FC = ({}) => {
-  const test = useContext(ProjectsContext);
-  console.log(test);
+const ProgramDevelopmentContent: React.FC = () => {
+  const allProjects = useContext(ProjectsContext);
 
   const [hover, setHover] = useState("");
   const types = [
@@ -228,15 +139,15 @@ const ProgramDevelopmentContent: React.FC = ({}) => {
                   <td width="10%">
                     <div
                       className={`filter-dropdown-circle${
-                        selectedProjects.length === PROJECT_LIST.length
+                        selectedProjects.length === allProjects.length
                           ? " filter-dropdown-circle-active"
                           : ""
                       }`}
                       onClick={() => {
-                        if (selectedProjects.length === PROJECT_LIST.length) {
+                        if (selectedProjects.length === allProjects.length) {
                           setSelectedProjects([]);
                         } else
-                          setSelectedProjects(PROJECT_LIST.map(({ id }) => id));
+                          setSelectedProjects(allProjects.map(({ Id }) => Id));
                       }}
                     ></div>
                   </td>
@@ -250,32 +161,32 @@ const ProgramDevelopmentContent: React.FC = ({}) => {
                 </tr>
               </thead>
               <tbody className="project-development-table-body">
-                {PROJECT_LIST.map(({ id, name, type, score }) => (
-                  <tr key={id}>
+                {allProjects.map((project: Project) => (
+                  <tr key={project.Id}>
                     <td width="10%" className="td-selector">
                       <div
                         className={`filter-dropdown-circle${
-                          selectedProjects.includes(id)
+                          selectedProjects.includes(project.Id)
                             ? " filter-dropdown-circle-active"
                             : ""
                         }`}
                         onClick={() => {
-                          if (selectedProjects.includes(id)) {
+                          if (selectedProjects.includes(project.Id)) {
                             setSelectedProjects(
                               selectedProjects.filter(
-                                (selectedId) => selectedId !== id
+                                (selectedId) => selectedId !== project.Id
                               )
                             );
-                          } else setSelectedProjects([...selectedProjects, id]);
+                          } else setSelectedProjects([...selectedProjects, project.Id]);
                         }}
                       ></div>
                     </td>
-                    <td width="30%">{name}</td>
+                    <td width="30%">{project.Name}</td>
                     <td width="30%" className="td-center">
-                      {type}
+                      {project.ProjectType}
                     </td>
                     <td width="30%" className="td-center">
-                      {score}
+                      {project.CompositeScore}
                     </td>
                   </tr>
                 ))}

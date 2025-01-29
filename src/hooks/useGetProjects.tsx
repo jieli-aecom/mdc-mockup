@@ -1,6 +1,6 @@
 import Query from "@arcgis/core/rest/support/Query";
 import { useEffect, useState } from "react";
-import { lineProjectsLayer, pointProjectsLayer } from "../consts";
+import { lineProjectsLayer, pointProjectsLayer } from "../consts/projects-services";
 import {
   Project,
   ProjectLevel1Category,
@@ -21,7 +21,7 @@ const getProjectType = (type: string): ProjectType => {
   return ProjectType.Other;
 };
 
-const getProject = (feature: Graphic): Project | null => {
+const getProject = (feature: Graphic, id: number): Project | null => {
   if (!feature?.attributes) {
     return null;
   };
@@ -120,12 +120,18 @@ const getProject = (feature: Graphic): Project | null => {
     }
   ];
 
+  const compositeScore = Math.round(scores.reduce((acc: number, score: ProjectSummaryScore) => {
+    return acc + score.value;
+  }, 0) / scores.length); 
+
   const project: Project = {
+    Id: id,
     Name: attributes?.TIPName || "",
     ProjectNumber: attributes?.TIPProject || "",
     Description: attributes?.Descriptio || "",
     ProjectType: type,
     Scores: scores,
+    CompositeScore: compositeScore,
     Metrics: [],
     Shape: new Graphic({
       geometry: feature?.geometry,
@@ -145,20 +151,25 @@ export function useGetProjects() {
       returnGeometry: true,
     });
 
+    let id = 0;
+
     const fetchProjects = async () => {
       try {
         const pointsResp = await pointProjectsLayer.queryFeatures(query);
         const linesResp = await lineProjectsLayer.queryFeatures(query);
         const projects: Project[] = [];
         for (const feature of pointsResp?.features) {
-          const project = getProject(feature);
+          const project = getProject(feature, id++);
           if (project) projects.push(project);
         }
 
         for (const feature of linesResp?.features) {
-          const project = getProject(feature);
+          const project = getProject(feature, id++);
           if (project) projects.push(project);
         }
+        projects.sort((a, b) => {
+          return b.CompositeScore - a.CompositeScore;
+        });
         setProjects(projects);
       } catch (error) {
         console.error(error);

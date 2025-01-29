@@ -79,11 +79,13 @@ export type ProjectSummaryScore = {
 };
 
 export type Project = {
+  Id: number;
   Name: string;
   ProjectNumber: string;
   ProjectType: ProjectType;
   Description: string;
   Metrics: ProjectSummaryMetric[];
   Scores: ProjectSummaryScore[];
+  CompositeScore: number;
   Shape: Graphic;
 };
