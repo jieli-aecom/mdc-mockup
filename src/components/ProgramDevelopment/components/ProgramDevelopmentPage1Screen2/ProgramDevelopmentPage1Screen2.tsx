@@ -28,7 +28,7 @@ const ProgramDevelopmentPage1Screen2: FC<
   return (
     <>
       <div className="score-board-title">
-        <span>Step 2. Select projects</span>
+        <span>Step 3. View Aggregation Outputs</span>
         {pickedProjectIds.size && <span>{pickedProjectIds.size}</span>}
       </div>
       <div className="program-development-select">

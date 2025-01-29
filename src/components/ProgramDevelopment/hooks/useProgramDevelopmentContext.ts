@@ -143,13 +143,17 @@ export function useProgramDevelopmentContext() {
     filteredProjects.map((project) => project.Id)
   );
 
-  const isAllSelected = selectedProjectIds.size === filteredProjectIds.size;
+  const isAllSelected =
+    selectedProjectIds.size === filteredProjectIds.size &&
+    filteredProjectIds.size > 0;
 
   const selectedProjects: Project[] = projects.filter((project) => {
     return selectedProjectIds.has(project.Id);
   });
 
-  const isAllPicked = pickedProjectIds.size === selectedProjectIds.size;
+  const isAllPicked =
+    pickedProjectIds.size === selectedProjectIds.size &&
+    selectedProjectIds.size > 0;
 
   const pickedProjects: Project[] = projects.filter((project) => {
     return pickedProjectIds.has(project.Id);
@@ -193,10 +197,12 @@ export function useProgramDevelopmentContext() {
 
   const selectAllFilteredProjects = () => {
     setSelectedProjectIds(new Set(filteredProjectIds));
+    setPickedProjectIds(new Set(filteredProjectIds));
   };
 
   const unselectAllFilteredProjects = () => {
     setSelectedProjectIds(new Set());
+    setPickedProjectIds(new Set());
   };
 
   const togglePickProject = (projectId: number) => {
