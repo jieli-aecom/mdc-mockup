@@ -1,7 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import SaveIcon from "../../../../icons/SaveIcon";
 import LoadIcon from "../../../../icons/LoadIcon";
 import BackIcon from "../../../../icons/BackIcon";
+import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
+import ProgramDevelopmentTable from "../ProgramDevelopmentTable/ProgramDevelopmentTable";
 
 export interface ProgramDevelopmentPage1Screen2Props {
   handleToScreen1: () => void;
@@ -11,9 +13,34 @@ export interface ProgramDevelopmentPage1Screen2Props {
 const ProgramDevelopmentPage1Screen2: FC<
   ProgramDevelopmentPage1Screen2Props
 > = ({ handleToScreen1, handleToPage2 }) => {
+
+  const {
+    pickedProjectIds,
+    selectedProjects,
+    isAllPicked,
+    unpickAllSelectedProjects,
+    pickAllSelectedProjects,
+    togglePickProject
+  } = useContext(programDevelopmentContext);
+
   const [hover, setHover] = useState<string>("");
+  
   return (
     <>
+      <div className="score-board-title">
+        <span>Step 2. Select projects</span>
+        {pickedProjectIds.size && <span>{pickedProjectIds.size}</span>}
+      </div>
+      <div className="program-development-select">
+        <ProgramDevelopmentTable
+          projects={selectedProjects}
+          selectedIds={pickedProjectIds}
+          isAllSelected={isAllPicked}
+          handleUnselectAll={unpickAllSelectedProjects}
+          handleSelectAll={pickAllSelectedProjects}
+          handleSelect={togglePickProject}
+        />
+      </div>
       <div className="program-development-actions">
         <div className="program-development-actions-io">
           <button
@@ -59,9 +86,7 @@ const ProgramDevelopmentPage1Screen2: FC<
             onMouseLeave={() => setHover("")}
             onClick={handleToScreen1}
           >
-            <BackIcon
-              color={hover === "back-button" ? "white" : "#263C8C"}
-            />
+            <BackIcon color={hover === "back-button" ? "white" : "#263C8C"} />
             <div
               style={{
                 textDecoration: "none",

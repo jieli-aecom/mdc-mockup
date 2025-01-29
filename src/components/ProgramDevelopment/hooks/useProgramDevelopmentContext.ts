@@ -73,11 +73,14 @@ const filterProjects = (
 export interface ProgramDevelopmentContext {
   filteredProjects: Project[];
   selectedProjectIds: Set<number>;
+  selectedProjects: Project[];
   isAllSelected: boolean;
   toggleSelectProject: (projectId: number) => void;
   selectAllFilteredProjects: () => void;
   unselectAllFilteredProjects: () => void;
-  programProjects: Project[];
+  pickedProjectIds: Set<number>;
+  pickedProjects: Project[];
+  isAllPicked: boolean;
   togglePickProject: (projectId: number) => void;
   pickAllSelectedProjects: () => void;
   unpickAllSelectedProjects: () => void;
@@ -90,11 +93,14 @@ export interface ProgramDevelopmentContext {
 export const initialContext: ProgramDevelopmentContext = {
   filteredProjects: [],
   selectedProjectIds: new Set(),
+  selectedProjects: [],
   isAllSelected: false,
   toggleSelectProject: () => {},
   selectAllFilteredProjects: () => {},
   unselectAllFilteredProjects: () => {},
-  programProjects: [],
+  pickedProjectIds: new Set(),
+  pickedProjects: [],
+  isAllPicked: false,
   togglePickProject: () => {},
   pickAllSelectedProjects: () => {},
   unpickAllSelectedProjects: () => {},
@@ -139,7 +145,13 @@ export function useProgramDevelopmentContext() {
 
   const isAllSelected = selectedProjectIds.size === filteredProjectIds.size;
 
-  const programProjects: Project[] = projects.filter((project) => {
+  const selectedProjects: Project[] = projects.filter((project) => {
+    return selectedProjectIds.has(project.Id);
+  });
+
+  const isAllPicked = pickedProjectIds.size === selectedProjectIds.size;
+
+  const pickedProjects: Project[] = projects.filter((project) => {
     return pickedProjectIds.has(project.Id);
   });
 
@@ -176,6 +188,7 @@ export function useProgramDevelopmentContext() {
       selectedProjectIds.add(projectId);
     }
     setSelectedProjectIds(new Set(selectedProjectIds));
+    setPickedProjectIds(new Set(selectedProjectIds)); // Auto-pick selected projects
   };
 
   const selectAllFilteredProjects = () => {
@@ -229,11 +242,14 @@ export function useProgramDevelopmentContext() {
   return {
     filteredProjects,
     selectedProjectIds,
+    selectedProjects,
     isAllSelected,
     toggleSelectProject,
     selectAllFilteredProjects,
     unselectAllFilteredProjects,
-    programProjects,
+    pickedProjectIds,
+    pickedProjects,
+    isAllPicked,
     togglePickProject,
     pickAllSelectedProjects,
     unpickAllSelectedProjects,
