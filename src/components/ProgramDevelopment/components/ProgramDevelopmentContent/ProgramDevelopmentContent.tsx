@@ -64,14 +64,7 @@ const ProgramDevelopmentContent: React.FC = () => {
             <span>Step 2. Select projects</span>
             {selectedProjectIds.size && <span>{selectedProjectIds.size}</span>}
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              gap: "60px",
-            }}
-          >
+          <div className="program-development-select">
             <ProgramDevelopmentTable
               projects={filteredProjects}
               selectedIds={selectedProjectIds}
@@ -80,73 +73,67 @@ const ProgramDevelopmentContent: React.FC = () => {
               handleSelectAll={selectAllFilteredProjects}
               handleSelect={toggleSelectProject}
             />
+          </div>
+          <div className="program-development-actions">
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                gap: "20px",
               }}
             >
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "20px",
-                }}
-              >
-                <div
-                  className="mdc-btn-export"
-                  onMouseEnter={() => setHover("save-button")}
-                  onMouseLeave={() => setHover("")}
-                >
-                  <SaveIcon
-                    strokeColor={hover === "save-button" ? "white" : "#263C8C"}
-                  />
-                  <div
-                    style={{
-                      textDecoration: "none",
-                      color: hover === "save-button" ? "white" : "#263C8C",
-                    }}
-                  >
-                    Save
-                  </div>
-                </div>
-                <div
-                  className="mdc-btn-export"
-                  onMouseEnter={() => setHover("load-button")}
-                  onMouseLeave={() => setHover("")}
-                >
-                  <LoadIcon
-                    strokeColor={hover === "load-button" ? "white" : "#263C8C"}
-                  />
-                  <div
-                    style={{
-                      textDecoration: "none",
-                      color: hover === "load-button" ? "white" : "#263C8C",
-                    }}
-                  >
-                    Load
-                  </div>
-                </div>
-              </div>
-              <button
-                className="program-aggregation-output"
-                onMouseEnter={() => setHover("view-aggregation-output-button")}
+                className="mdc-btn-export"
+                onMouseEnter={() => setHover("save-button")}
                 onMouseLeave={() => setHover("")}
               >
+                <SaveIcon
+                  strokeColor={hover === "save-button" ? "white" : "#263C8C"}
+                />
                 <div
                   style={{
                     textDecoration: "none",
-                    color:
-                      hover === "view-aggregation-output-button"
-                        ? "#263C8C"
-                        : "white",
+                    color: hover === "save-button" ? "white" : "#263C8C",
                   }}
                 >
-                  View Aggregation Output
+                  Save
                 </div>
-              </button>
+              </div>
+              <div
+                className="mdc-btn-export"
+                onMouseEnter={() => setHover("load-button")}
+                onMouseLeave={() => setHover("")}
+              >
+                <LoadIcon
+                  strokeColor={hover === "load-button" ? "white" : "#263C8C"}
+                />
+                <div
+                  style={{
+                    textDecoration: "none",
+                    color: hover === "load-button" ? "white" : "#263C8C",
+                  }}
+                >
+                  Load
+                </div>
+              </div>
             </div>
+            <button
+              className="program-aggregation-output"
+              onMouseEnter={() => setHover("view-aggregation-output-button")}
+              onMouseLeave={() => setHover("")}
+            >
+              <div
+                style={{
+                  textDecoration: "none",
+                  color:
+                    hover === "view-aggregation-output-button"
+                      ? "#263C8C"
+                      : "white",
+                }}
+              >
+                View Aggregation Output
+              </div>
+            </button>
           </div>
         </div>
       </div>

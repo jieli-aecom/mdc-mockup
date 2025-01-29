@@ -1,12 +1,12 @@
 import React from "react";
 
-import ProgramDevelopmentContent from "../../components/ProgramDevelopment/components/ProgramDevelopmentContent/ProgramDevelopmentContent";
 import { ReactComponent as ProgramDevelopmentIcon } from "../../icons/3_Program Development/Program_White.svg";
 
 import "./ProgramDevelopment.css";
 import { useGetProjects } from "../../hooks/useGetProjects";
 import { createContext } from "react";
 import { Project } from "../../types/Project";
+import ProgramDevelopmentContent from "../../components/ProgramDevelopment/components/ProgramDevelopmentContent/ProgramDevelopmentContent";
 
 export const ProjectsContext = createContext<Project[]>([]);
 

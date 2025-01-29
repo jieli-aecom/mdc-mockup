@@ -16,6 +16,22 @@
 .program-development-score-board {
   width: 40%;
   min-width: 550px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.program-development-select {
+  flex-grow: 1;
+  height: 0;
+  display: flex;
+}
+
+.program-development-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .page-comment {
@@ -41,8 +57,8 @@
   display: flex;
   align-items: center;
   position: absolute;
-  left: 60;
-  top: 20;
+  left: 60px;
+  top: 20px;
   z-index: 50;
   gap: 20px;
 }
