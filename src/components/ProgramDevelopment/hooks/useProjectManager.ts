@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Project } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../consts/top-percents";
+import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
 
-export function useProjectManager({ projects }: { projects: Project[] }) {
+export function useProjectManager() {
   //#region States
 
-  // Tier 0: all projects
-  const [allProjects, setAllProjects] = useState<Project[]>([]);
-  const [allProjectIds, setAllProjectIds] = useState<Set<number>>(new Set());
+  const projects: Project[] = useContext(ProjectsContext);
 
   // Tier 1: filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);
@@ -30,17 +29,19 @@ export function useProjectManager({ projects }: { projects: Project[] }) {
 
   //#region Derived states
 
-  const filteredProjects: Project[] = allProjects.slice(
+  const allProjectIds = new Set(projects.map((project) => project.Id));
+
+  const filteredProjects: Project[] = projects.slice(
     0,
-    Math.ceil((topPercents / 100) * allProjects.length)
+    Math.ceil((topPercents / 100) * projects.length)
   ); // TODO: to add other filters
   const filteredProjectIds = new Set(
     filteredProjects.map((project) => project.Id)
   );
 
-  const isAllSelected = selectedProjectIds.size === allProjects.length;
+  const isAllSelected = selectedProjectIds.size === filteredProjectIds.size;
 
-  const programProjects: Project[] = allProjects.filter((project) => {
+  const programProjects: Project[] = projects.filter((project) => {
     return pickedProjectIds.has(project.Id);
   });
 
@@ -108,9 +109,6 @@ export function useProjectManager({ projects }: { projects: Project[] }) {
     allProjects.sort((a: Project, b: Project) => {
       return b.CompositeScore - a.CompositeScore;
     });
-    const allProjectIds = new Set(allProjects.map((project) => project.Id));
-    setAllProjects(allProjects);
-    setAllProjectIds(allProjectIds);
     setTopPercents(100); // TODO: to reset other filters when added
     setSelectedProjectIds(new Set());
     setMapData(allProjects.map((project) => project.Shape)); // TODO: To add symbology

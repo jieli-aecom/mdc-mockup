@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import SaveIcon from "../../../icons/SaveIcon";
 import LoadIcon from "../../../icons/LoadIcon";
 
@@ -7,7 +7,6 @@ import "../../../styles/button-styles.css";
 import ProjectPrioritizationMap from "../../ProjectPrioritization/ProjectPrioritizationMap/ProjectPrioritizationMap";
 import TopProjectSelector from "../TopProjectSelector/TopProjectSelector";
 import FilterItem from "../../FilterItem/FilterItem";
-import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
 import { Project } from "../../../types/Project";
 import { PROJECT_TYPES } from "../../../consts/projects";
 import { DISTRICTS } from "../../../consts/districts";
@@ -15,7 +14,6 @@ import { useProjectManager } from "../hooks/useProjectManager";
 import { TOP_PERCENT_OPTIONS } from "../consts/top-percents";
 
 const ProgramDevelopmentContent: React.FC = () => {
-  const projects: Project[] = useContext(ProjectsContext);
   const {
     topPercents,
     toggleSetTopPercent,
@@ -25,9 +23,7 @@ const ProgramDevelopmentContent: React.FC = () => {
     toggleSelectProject,
     selectAllFilteredProjects,
     unselectAllFilteredProjects,
-  } = useProjectManager({
-    projects,
-  });
+  } = useProjectManager();
 
   const [hover, setHover] = useState("");
 
@@ -103,17 +99,12 @@ const ProgramDevelopmentContent: React.FC = () => {
                   <td width="10%">
                     <div
                       className={`filter-dropdown-circle${
-                        isAllSelected
-                          ? " filter-dropdown-circle-active"
-                          : ""
+                        isAllSelected ? " filter-dropdown-circle-active" : ""
                       }`}
                       onClick={() => {
-                        if (
-                          isAllSelected
-                        ) {
+                        if (isAllSelected) {
                           unselectAllFilteredProjects();
-                        } else
-                          selectAllFilteredProjects();
+                        } else selectAllFilteredProjects();
                       }}
                     ></div>
                   </td>
