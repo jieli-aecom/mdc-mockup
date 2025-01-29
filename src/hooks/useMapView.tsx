@@ -7,12 +7,14 @@ import {
   DEFAULT_MAP_CENTRAL_POINT,
   DEFAULT_SPATIAL_REF,
   MAP_API_KEY,
-  RENDERER_BACKGROUND,
+} from "../consts";
+
+import {
   CORRIDOR_FEATURE_SERVICE_URL,
   CORRIDOR_CREATE_NEW_SEGMENT_URL,
   CORRIDOR_CREATE_NEW_MARKER_URL,
-  RENDERER_HIGHLIGHT_MARKER
-} from "../consts";
+} from "../consts/service-urls";
+
 import { createPopupTemplate } from "../utils";
 import LabelClass from "@arcgis/core/layers/support/LabelClass";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";

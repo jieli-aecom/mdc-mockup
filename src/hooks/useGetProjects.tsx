@@ -1,6 +1,6 @@
 import Query from "@arcgis/core/rest/support/Query";
 import { useEffect, useState } from "react";
-import { lineProjectsLayer, pointProjectsLayer } from "../consts/projects-services";
+import { LINE_PROJECTS_LAYER, POINT_PROJECTS_LAYER } from "../consts/projects";
 import {
   Project,
   ProjectLevel1Category,
@@ -155,8 +155,8 @@ export function useGetProjects() {
 
     const fetchProjects = async () => {
       try {
-        const pointsResp = await pointProjectsLayer.queryFeatures(query);
-        const linesResp = await lineProjectsLayer.queryFeatures(query);
+        const pointsResp = await POINT_PROJECTS_LAYER.queryFeatures(query);
+        const linesResp = await LINE_PROJECTS_LAYER.queryFeatures(query);
         const projects: Project[] = [];
         for (const feature of pointsResp?.features) {
           const project = getProject(feature, id++);

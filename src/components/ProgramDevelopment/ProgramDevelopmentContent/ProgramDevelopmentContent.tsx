@@ -9,6 +9,8 @@ import TopProjectSelector from "../TopProjectSelector/TopProjectSelector";
 import FilterItem from "../../FilterItem/FilterItem";
 import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
 import { Project } from "../../../types/Project";
+import { PROJECT_TYPES } from "../../../consts/projects";
+import { DISTRICTS } from "../../../consts/districts";
 
 const TOP_PERCENT_OPTIONS = [
   { value: "5%", label: "Top 5%" },
@@ -24,23 +26,6 @@ const ProgramDevelopmentContent: React.FC = () => {
   const allProjects = useContext(ProjectsContext);
 
   const [hover, setHover] = useState("");
-  const types = [
-    "Arterial & Collector",
-    "Assets",
-    "Bike & Pedestrian",
-    "Congestion",
-    "Freight",
-    "Transit",
-    "Other",
-  ];
-  const districts = [
-    "District 1",
-    "District 2",
-    "District 3",
-    "District 4",
-    "District 5",
-    "District 6",
-  ];
   const [mapData, setMapData] = useState<any>(null);
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -92,10 +77,10 @@ const ProgramDevelopmentContent: React.FC = () => {
             gap: "20px",
           }}
         >
-          <FilterItem label="Type" items={types} handleUpdate={() => {}} />
+          <FilterItem label="Type" items={PROJECT_TYPES} handleUpdate={() => {}} />
           <FilterItem
             label="Commission District"
-            items={districts}
+            items={DISTRICTS}
             handleUpdate={() => {}}
           />
         </div>
