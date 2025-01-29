@@ -10,24 +10,24 @@ import {
 } from "../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 
-const projectType: { [key: string]: ProjectType } = {
+const projectTypeLookup: { [key: string]: ProjectType } = {
   "A&C": ProjectType.ArterialCollector,
   Bridge: ProjectType.Other,
   "P&B": ProjectType.BikePedestrian,
 };
 
-const getProjectType = (type: string): ProjectType => {
-  if (projectType[type]) return projectType[type];
+const projectType = (type: string): ProjectType => {
+  if (projectTypeLookup[type]) return projectTypeLookup[type];
   return ProjectType.Other;
 };
 
-const getProject = (feature: Graphic, id: number): Project | null => {
+const makeProject = (feature: Graphic, id: number): Project | null => {
   if (!feature?.attributes) {
     return null;
   };
 
   const attributes = feature.attributes;
-  const type: ProjectType = getProjectType(attributes?.PrjType || "");
+  const type: ProjectType = projectType(attributes?.PrjType || "");
 
   const scores: ProjectSummaryScore[] = [
     {
@@ -157,14 +157,18 @@ export function useGetProjects() {
       try {
         const pointsResp = await POINT_PROJECTS_LAYER.queryFeatures(query);
         const linesResp = await LINE_PROJECTS_LAYER.queryFeatures(query);
+
+        console.log('linesResp.features :', linesResp.features);
+
+
         const projects: Project[] = [];
         for (const feature of pointsResp?.features) {
-          const project = getProject(feature, id++);
+          const project = makeProject(feature, id++);
           if (project) projects.push(project);
         }
 
         for (const feature of linesResp?.features) {
-          const project = getProject(feature, id++);
+          const project = makeProject(feature, id++);
           if (project) projects.push(project);
         }
         projects.sort((a, b) => {
