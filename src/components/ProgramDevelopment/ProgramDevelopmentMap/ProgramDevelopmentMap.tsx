@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import MapView from "@arcgis/core/views/MapView";
 import Search from "@arcgis/core/widgets/Search";
 import Home from "@arcgis/core/widgets/Home";
@@ -61,7 +61,9 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
     layerRef.current.removeAll();
     layerRef.current.addMany(mapData);
     if (viewRef.current && mapData.length > 0) {
-      viewRef.current.goTo(mapData);
+      viewRef.current.goTo(mapData).catch((error) => {
+        console.error("Error in goTo", error);
+      })
     }
   }, [mapData]);
 
