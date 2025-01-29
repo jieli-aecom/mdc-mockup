@@ -37,6 +37,15 @@
   justify-content: space-between;
 }
 
+.program-development-filter {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 60;
+  top: 20;
+  z-index: 50;
+  gap: 20px;
+}
 
 .top-projects-selector {
   display: flex;

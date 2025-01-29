@@ -38,17 +38,7 @@ const ProgramDevelopmentContent: React.FC = () => {
         className="program-development-content"
         style={{ position: "relative" }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "absolute",
-            left: 60,
-            top: 20,
-            zIndex: 50,
-            gap: "20px",
-          }}
-        >
+        <div className="program-development-filter">
           <FilterItem
             label="Type"
             items={PROJECT_TYPES}
@@ -90,74 +80,73 @@ const ProgramDevelopmentContent: React.FC = () => {
               handleSelectAll={selectAllFilteredProjects}
               handleSelect={toggleSelectProject}
             />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "20px",
+                justifyContent: "space-between",
               }}
             >
               <div
-                className="mdc-btn-export"
-                onMouseEnter={() => setHover("save-button")}
-                onMouseLeave={() => setHover("")}
-              >
-                <SaveIcon
-                  strokeColor={hover === "save-button" ? "white" : "#263C8C"}
-                />
-                <div
-                  style={{
-                    textDecoration: "none",
-                    color: hover === "save-button" ? "white" : "#263C8C",
-                  }}
-                >
-                  Save
-                </div>
-              </div>
-              <div
-                className="mdc-btn-export"
-                onMouseEnter={() => setHover("load-button")}
-                onMouseLeave={() => setHover("")}
-              >
-                <LoadIcon
-                  strokeColor={hover === "load-button" ? "white" : "#263C8C"}
-                />
-                <div
-                  style={{
-                    textDecoration: "none",
-                    color: hover === "load-button" ? "white" : "#263C8C",
-                  }}
-                >
-                  Load
-                </div>
-              </div>
-            </div>
-            <button
-              className="program-aggregation-output"
-              onMouseEnter={() => setHover("view-aggregation-output-button")}
-              onMouseLeave={() => setHover("")}
-            >
-              <div
                 style={{
-                  textDecoration: "none",
-                  color:
-                    hover === "view-aggregation-output-button"
-                      ? "#263C8C"
-                      : "white",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "20px",
                 }}
               >
-                View Aggregation Output
+                <div
+                  className="mdc-btn-export"
+                  onMouseEnter={() => setHover("save-button")}
+                  onMouseLeave={() => setHover("")}
+                >
+                  <SaveIcon
+                    strokeColor={hover === "save-button" ? "white" : "#263C8C"}
+                  />
+                  <div
+                    style={{
+                      textDecoration: "none",
+                      color: hover === "save-button" ? "white" : "#263C8C",
+                    }}
+                  >
+                    Save
+                  </div>
+                </div>
+                <div
+                  className="mdc-btn-export"
+                  onMouseEnter={() => setHover("load-button")}
+                  onMouseLeave={() => setHover("")}
+                >
+                  <LoadIcon
+                    strokeColor={hover === "load-button" ? "white" : "#263C8C"}
+                  />
+                  <div
+                    style={{
+                      textDecoration: "none",
+                      color: hover === "load-button" ? "white" : "#263C8C",
+                    }}
+                  >
+                    Load
+                  </div>
+                </div>
               </div>
-            </button>
-          </div>
-
+              <button
+                className="program-aggregation-output"
+                onMouseEnter={() => setHover("view-aggregation-output-button")}
+                onMouseLeave={() => setHover("")}
+              >
+                <div
+                  style={{
+                    textDecoration: "none",
+                    color:
+                      hover === "view-aggregation-output-button"
+                        ? "#263C8C"
+                        : "white",
+                  }}
+                >
+                  View Aggregation Output
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Project } from "../../../types/Project";
+import { Project, ProjectType } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../consts/top-percents";
 import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
@@ -50,6 +50,17 @@ const makeMapGraphics = (
   return mapGraphics;
 };
 
+const filterProjects = (
+  projects: Project[],
+  topPercent: TopPercent,
+  filterType: ProjectType | null
+) => {
+  const filteredProjects = projects
+    .filter((project) => !filterType || project.ProjectType === filterType)
+    .slice(0, Math.ceil((topPercent / 100) * projects.length));
+  return filteredProjects;
+};
+
 export function useProjectManager() {
   //#region States
 
@@ -57,6 +68,7 @@ export function useProjectManager() {
 
   // Tier 1: filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);
+  const [filterType, setFilterType] = useState<ProjectType | null>(null);
 
   // Tier 2: selected as candidate for aggregation ("Selected")
   const [selectedProjectIds, setSelectedProjectIds] = useState<Set<number>>(
@@ -73,10 +85,11 @@ export function useProjectManager() {
 
   const allProjectIds = new Set(projects.map((project) => project.Id));
 
-  const filteredProjects: Project[] = projects.slice(
-    0,
-    Math.ceil((topPercents / 100) * projects.length)
-  ); // TODO: to add other filters
+  const filteredProjects: Project[] = filterProjects(
+    projects,
+    topPercents,
+    filterType
+  );
   const filteredProjectIds = new Set(
     filteredProjects.map((project) => project.Id)
   );
@@ -99,6 +112,12 @@ export function useProjectManager() {
 
   const toggleSetTopPercent = (topPercent: TopPercent) => {
     setTopPercents(topPercent);
+    unselectAllFilteredProjects();
+    unpickAllSelectedProjects();
+  };
+
+  const toggleSetFilterType = (type: ProjectType | null) => {
+    setFilterType(type);
     unselectAllFilteredProjects();
     unpickAllSelectedProjects();
   };
@@ -177,6 +196,7 @@ export function useProjectManager() {
     unpickAllSelectedProjects,
     topPercents,
     toggleSetTopPercent,
+    toggleSetFilterType,
     mapGraphics,
   };
 }
