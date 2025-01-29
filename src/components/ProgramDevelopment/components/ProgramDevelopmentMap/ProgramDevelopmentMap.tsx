@@ -7,7 +7,7 @@ import Graphic from "@arcgis/core/Graphic";
 
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import "./ProgramDevelopmentMap.css";
-import { MAP_BASEMAP, MAP_CENTER, MAP_START_ZOOM } from "../../../consts/map";
+import { MAP_BASEMAP, MAP_CENTER, MAP_START_ZOOM } from "../../../../consts/map";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 
 import Map from "@arcgis/core/Map";

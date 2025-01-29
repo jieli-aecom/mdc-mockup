@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import SaveIcon from "../../../icons/SaveIcon";
-import LoadIcon from "../../../icons/LoadIcon";
+import SaveIcon from "../../../../icons/SaveIcon";
+import LoadIcon from "../../../../icons/LoadIcon";
 
 import "./ProgramDevelopmentContent.css";
-import "../../../styles/button-styles.css";
+import "../../../../styles/button-styles.css";
 import TopProjectSelector from "../TopProjectSelector/TopProjectSelector";
 import ProjectDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
-import FilterItem from "../../FilterItem/FilterItem";
-import { Project } from "../../../types/Project";
-import { PROJECT_TYPES } from "../../../consts/projects";
-import { DISTRICTS } from "../../../consts/districts";
-import { useProjectManager } from "../hooks/useProjectManager";
-import { TOP_PERCENT_OPTIONS } from "../consts/top-percents";
+import FilterItem from "../../../FilterItem/FilterItem";
+import { Project } from "../../../../types/Project";
+import { PROJECT_TYPES } from "../../../../consts/projects";
+import { DISTRICTS } from "../../../../consts/districts";
+import { useProjectManager } from "../../hooks/useProjectManager";
+import { TOP_PERCENT_OPTIONS } from "../../consts/top-percents";
 
 const ProgramDevelopmentContent: React.FC = () => {
   const {

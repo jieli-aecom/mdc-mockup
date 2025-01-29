@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProgramDevelopmentContent from "../../components/ProgramDevelopment/ProgramDevelopmentContent/ProgramDevelopmentContent";
+import ProgramDevelopmentContent from "../../components/ProgramDevelopment/components/ProgramDevelopmentContent/ProgramDevelopmentContent";
 import { ReactComponent as ProgramDevelopmentIcon } from "../../icons/3_Program Development/Program_White.svg";
 
 import "./ProgramDevelopment.css";
