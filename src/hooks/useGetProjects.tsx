@@ -171,9 +171,6 @@ export function useGetProjects() {
           const project = makeProject(feature, id++);
           if (project) projects.push(project);
         }
-        projects.sort((a, b) => {
-          return b.CompositeScore - a.CompositeScore;
-        });
         setProjects(projects);
       } catch (error) {
         console.error(error);

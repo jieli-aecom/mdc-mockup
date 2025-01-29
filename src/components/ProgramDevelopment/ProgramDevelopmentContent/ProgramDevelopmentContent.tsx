@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { DATA_URL } from "../../../consts";
+import React, { useContext, useState } from "react";
 import SaveIcon from "../../../icons/SaveIcon";
 import LoadIcon from "../../../icons/LoadIcon";
 
@@ -11,50 +10,25 @@ import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelo
 import { Project } from "../../../types/Project";
 import { PROJECT_TYPES } from "../../../consts/projects";
 import { DISTRICTS } from "../../../consts/districts";
-
-const TOP_PERCENT_OPTIONS = [
-  { value: "5%", label: "Top 5%" },
-  { value: "15%", label: "Top 15%" },
-  { value: "25%", label: "Top 25%" },
-  { value: "50%", label: "Top 50%" },
-  { value: "75%", label: "Top 75%" },
-  { value: "85%", label: "Top 85%" },
-  { value: "95%", label: "Top 95%" },
-];
+import { useProjectManager } from "../hooks/useProjectManager";
+import { TOP_PERCENT_OPTIONS } from "../consts/top-percents";
 
 const ProgramDevelopmentContent: React.FC = () => {
-  const allProjects = useContext(ProjectsContext);
+  const projects: Project[] = useContext(ProjectsContext);
+  const {
+    topPercents,
+    toggleSetTopPercent,
+    filteredProjects,
+    selectedProjectIds,
+    isAllSelected,
+    toggleSelectProject,
+    selectAllFilteredProjects,
+    unselectAllFilteredProjects,
+  } = useProjectManager({
+    projects,
+  });
 
   const [hover, setHover] = useState("");
-  const [mapData, setMapData] = useState<any>(null);
-  const [projects, setProjects] = useState([]);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [topPercents, setTopPercents] = useState("5%");
-  const [selectedProjects, setSelectedProjects] = useState<number[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(DATA_URL);
-        const data = await response.json();
-        setMapData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (mapData) setProjects(mapData.features);
-  }, [mapData]);
-
-  useEffect(() => {
-    if (projects) {
-      setFilteredProjects(projects);
-    }
-  }, [projects]);
 
   return (
     <div className="project-manage-container program-development-content-container">
@@ -77,7 +51,11 @@ const ProgramDevelopmentContent: React.FC = () => {
             gap: "20px",
           }}
         >
-          <FilterItem label="Type" items={PROJECT_TYPES} handleUpdate={() => {}} />
+          <FilterItem
+            label="Type"
+            items={PROJECT_TYPES}
+            handleUpdate={() => {}}
+          />
           <FilterItem
             label="Commission District"
             items={DISTRICTS}
@@ -96,7 +74,7 @@ const ProgramDevelopmentContent: React.FC = () => {
             <TopProjectSelector
               value={topPercents}
               options={TOP_PERCENT_OPTIONS}
-              onChange={(newValue) => setTopPercents(newValue)}
+              onChange={toggleSetTopPercent}
             />
             <span style={{ fontWeight: 600 }}>
               of{" "}
@@ -108,7 +86,7 @@ const ProgramDevelopmentContent: React.FC = () => {
           </div>
           <div className="score-board-title">
             <span>Step 2. Select projects</span>
-            {selectedProjects.length && <span>{selectedProjects.length}</span>}
+            {selectedProjectIds.size && <span>{selectedProjectIds.size}</span>}
           </div>
           <div
             style={{
@@ -124,15 +102,17 @@ const ProgramDevelopmentContent: React.FC = () => {
                   <td width="10%">
                     <div
                       className={`filter-dropdown-circle${
-                        selectedProjects.length === allProjects.length
+                        isAllSelected
                           ? " filter-dropdown-circle-active"
                           : ""
                       }`}
                       onClick={() => {
-                        if (selectedProjects.length === allProjects.length) {
-                          setSelectedProjects([]);
+                        if (
+                          isAllSelected
+                        ) {
+                          unselectAllFilteredProjects();
                         } else
-                          setSelectedProjects(allProjects.map(({ Id }) => Id));
+                          selectAllFilteredProjects();
                       }}
                     ></div>
                   </td>
@@ -146,23 +126,17 @@ const ProgramDevelopmentContent: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="project-development-table-body">
-                {allProjects.map((project: Project) => (
+                {filteredProjects.map((project: Project) => (
                   <tr key={project.Id}>
                     <td width="10%" className="td-selector">
                       <div
                         className={`filter-dropdown-circle${
-                          selectedProjects.includes(project.Id)
+                          selectedProjectIds.has(project.Id)
                             ? " filter-dropdown-circle-active"
                             : ""
                         }`}
                         onClick={() => {
-                          if (selectedProjects.includes(project.Id)) {
-                            setSelectedProjects(
-                              selectedProjects.filter(
-                                (selectedId) => selectedId !== project.Id
-                              )
-                            );
-                          } else setSelectedProjects([...selectedProjects, project.Id]);
+                          toggleSelectProject(project.Id);
                         }}
                       ></div>
                     </td>

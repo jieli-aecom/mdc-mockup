@@ -1,15 +1,11 @@
 import { FC } from "react";
 import "./TopProjectSelector.css";
-
-interface SelectorOptionProps {
-  value: string;
-  label: string;
-}
+import { SelectorOptionProps, TopPercent } from "../consts/top-percents";
 
 interface TopProjectSelectorProps {
-  value: string;
+  value: TopPercent;
   options: SelectorOptionProps[];
-  onChange: (newValue: string) => void;
+  onChange: (newValue: TopPercent) => void;
 }
 
 const TopProjectSelector: FC<TopProjectSelectorProps> = ({
@@ -21,7 +17,7 @@ const TopProjectSelector: FC<TopProjectSelectorProps> = ({
     <select
       className="top-project-selector-container"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange(parseInt(e.target.value) as TopPercent)}
     >
       {options.map(({ value, label }) => (
         <option key={value} value={value}>
