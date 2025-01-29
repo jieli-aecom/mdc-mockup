@@ -88,4 +88,5 @@ export type Project = {
   Scores: ProjectSummaryScore[];
   CompositeScore: number;
   Shape: Graphic;
+  IsLine: boolean;
 };

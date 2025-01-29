@@ -9,6 +9,7 @@ import {
   ProjectType,
 } from "../types/Project";
 import Graphic from "@arcgis/core/Graphic";
+import { REGULAR_LINE_SYMBOL, REGULAR_POINT_SYMBOL } from "../consts/map-symbologies";
 
 const projectTypeLookup: { [key: string]: ProjectType } = {
   "A&C": ProjectType.ArterialCollector,
@@ -21,7 +22,7 @@ const projectType = (type: string): ProjectType => {
   return ProjectType.Other;
 };
 
-const makeProject = (feature: Graphic, id: number): Project | null => {
+const makeProject = (feature: Graphic, id: number, isLine: boolean): Project | null => {
   if (!feature?.attributes) {
     return null;
   };
@@ -135,7 +136,9 @@ const makeProject = (feature: Graphic, id: number): Project | null => {
     Metrics: [],
     Shape: new Graphic({
       geometry: feature?.geometry,
+      symbol: isLine ? REGULAR_LINE_SYMBOL : REGULAR_POINT_SYMBOL
     }),
+    IsLine: isLine,
   };
 
   return project;
@@ -163,12 +166,12 @@ export function useGetProjects() {
 
         const projects: Project[] = [];
         for (const feature of pointsResp?.features) {
-          const project = makeProject(feature, id++);
+          const project = makeProject(feature, id++, false);
           if (project) projects.push(project);
         }
 
         for (const feature of linesResp?.features) {
-          const project = makeProject(feature, id++);
+          const project = makeProject(feature, id++, true);
           if (project) projects.push(project);
         }
         setProjects(projects);
