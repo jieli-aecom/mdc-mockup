@@ -65,23 +65,11 @@ const ProgramDevelopmentContent: React.FC = () => {
           <div className="score-board-title">
             Step 1. Select top scored projects
           </div>
-          <div
-            className="top-projects-selector"
-            style={{ marginBottom: "25px", marginTop: "18px" }}
-          >
-            <TopProjectSelector
-              value={topPercents}
-              options={TOP_PERCENT_OPTIONS}
-              onChange={toggleSetTopPercent}
-            />
-            <span style={{ fontWeight: 600 }}>
-              of{" "}
-              <span style={{ color: "#4D9FD7", textDecoration: "underline" }}>
-                200
-              </span>{" "}
-              projects
-            </span>
-          </div>
+          <TopProjectSelector
+            value={topPercents}
+            options={TOP_PERCENT_OPTIONS}
+            onChange={toggleSetTopPercent}
+          />
           <div className="score-board-title">
             <span>Step 2. Select projects</span>
             {selectedProjectIds.size && <span>{selectedProjectIds.size}</span>}

@@ -14,17 +14,29 @@ const TopProjectSelector: FC<TopProjectSelectorProps> = ({
   onChange,
 }) => {
   return (
-    <select
-      className="top-project-selector-container"
-      value={value}
-      onChange={(e) => onChange(parseInt(e.target.value) as TopPercent)}
+    <div
+      className="top-projects-selector"
+      style={{ marginBottom: "25px", marginTop: "18px" }}
     >
-      {options.map(({ value, label }) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
+      <select
+        className="top-project-selector-container"
+        value={value}
+        onChange={(e) => onChange(parseInt(e.target.value) as TopPercent)}
+      >
+        {options.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
+      <span style={{ fontWeight: 600 }}>
+        of{" "}
+        <span style={{ color: "#4D9FD7", textDecoration: "underline" }}>
+          200
+        </span>{" "}
+        projects
+      </span>
+    </div>
   );
 };
 
