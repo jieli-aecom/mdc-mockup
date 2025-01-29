@@ -43,3 +43,7 @@ export const PICKED_POINT_SYMBOL = new SimpleMarkerSymbol({
     width: 4,
   },
 });
+
+export const MAP_CENTER = [-80.19179, 25.76168];
+export const MAP_START_ZOOM = 12;
+export const MAP_BASEMAP = "streets-navigation-vector";

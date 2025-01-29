@@ -9,7 +9,7 @@ import {
   ProjectType,
 } from "../types/Project";
 import Graphic from "@arcgis/core/Graphic";
-import { REGULAR_LINE_SYMBOL, REGULAR_POINT_SYMBOL } from "../consts/map-symbologies";
+import { REGULAR_LINE_SYMBOL, REGULAR_POINT_SYMBOL } from "../consts/map";
 
 const projectTypeLookup: { [key: string]: ProjectType } = {
   "A&C": ProjectType.ArterialCollector,
@@ -125,9 +125,13 @@ const makeProject = (feature: Graphic, id: number, isLine: boolean): Project | n
     return acc + score.value;
   }, 0) / scores.length); 
 
+  if (!attributes?.TIPName || attributes?.TIPName === "temp") {
+    return null;
+  }
+
   const project: Project = {
     Id: id,
-    Name: attributes?.TIPName || "",
+    Name: attributes?.TIPName,
     ProjectNumber: attributes?.TIPProject || "",
     Description: attributes?.Descriptio || "",
     ProjectType: type,
@@ -160,9 +164,6 @@ export function useGetProjects() {
       try {
         const pointsResp = await POINT_PROJECTS_LAYER.queryFeatures(query);
         const linesResp = await LINE_PROJECTS_LAYER.queryFeatures(query);
-
-        console.log('linesResp.features :', linesResp.features);
-
 
         const projects: Project[] = [];
         for (const feature of pointsResp?.features) {

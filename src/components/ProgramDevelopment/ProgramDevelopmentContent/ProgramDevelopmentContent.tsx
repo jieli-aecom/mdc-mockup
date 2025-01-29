@@ -23,6 +23,7 @@ const ProgramDevelopmentContent: React.FC = () => {
     toggleSelectProject,
     selectAllFilteredProjects,
     unselectAllFilteredProjects,
+    mapGraphics,
   } = useProjectManager();
 
   const [hover, setHover] = useState("");
@@ -59,7 +60,7 @@ const ProgramDevelopmentContent: React.FC = () => {
             handleUpdate={() => {}}
           />
         </div>
-        <ProjectDevelopmentMap project={null} />
+        <ProjectDevelopmentMap graphics={mapGraphics} />
         <div className="program-development-score-board">
           <div className="score-board-title">
             Step 1. Select top scored projects

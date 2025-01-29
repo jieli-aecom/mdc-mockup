@@ -24,7 +24,7 @@ export function useProjectManager() {
 
   // Map: should show filtered projects, but with different symbols
   // for filtered, selected, and aggregated projects
-  const [mapData, setMapData] = useState<Graphic[]>([]);
+  const [mapGraphics, setMapGraphics] = useState<Graphic[]>([]);
   //#endregion
 
   //#region Derived states
@@ -111,7 +111,7 @@ export function useProjectManager() {
     });
     setTopPercents(100); // TODO: to reset other filters when added
     setSelectedProjectIds(new Set());
-    setMapData(allProjects.map((project) => project.Shape)); // TODO: To add symbology
+    setMapGraphics(allProjects.map((project) => project.Shape)); // TODO: To add symbology
   }, [projects]);
 
   //#endregion
@@ -129,6 +129,6 @@ export function useProjectManager() {
     unpickAllSelectedProjects,
     topPercents,
     toggleSetTopPercent,
-    mapData,
+    mapGraphics,
   };
 }
