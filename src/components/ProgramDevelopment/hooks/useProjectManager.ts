@@ -3,8 +3,6 @@ import { Project, ProjectType } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../consts/top-percents";
 import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import {
   PICKED_LINE_SYMBOL,
   PICKED_POINT_SYMBOL,
@@ -19,34 +17,45 @@ const makeMapGraphics = (
   selectedProjectIds: Set<number> = new Set(),
   pickedProjectIds: Set<number> = new Set()
 ) => {
-  const mapGraphics: Graphic[] = [];
+  const regularGraphics: Graphic[] = [];
+  const selectedGraphics: Graphic[] = [];
+  const pickedGraphics: Graphic[] = [];
   for (const project of mapProjects) {
     if (!project.Shape) continue;
 
-    let symbol: SimpleLineSymbol | SimpleMarkerSymbol;
-    if (project.IsLine) {
-      if (pickedProjectIds.has(project.Id)) {
-        symbol = PICKED_LINE_SYMBOL;
-      } else if (selectedProjectIds.has(project.Id)) {
-        symbol = SELECTED_LINE_SYMBOL;
-      } else {
-        symbol = REGULAR_LINE_SYMBOL;
-      }
+    if (pickedProjectIds.has(project.Id)) {
+      const symbol = project.IsLine ? PICKED_LINE_SYMBOL : PICKED_POINT_SYMBOL;
+      const graphic = new Graphic({
+        geometry: project.Shape,
+        symbol,
+      });
+      pickedGraphics.push(graphic);
+    } else if (selectedProjectIds.has(project.Id)) {
+      const symbol = project.IsLine
+        ? SELECTED_LINE_SYMBOL
+        : SELECTED_POINT_SYMBOL;
+      const graphic = new Graphic({
+        geometry: project.Shape,
+        symbol,
+      });
+      selectedGraphics.push(graphic);
     } else {
-      if (pickedProjectIds.has(project.Id)) {
-        symbol = PICKED_POINT_SYMBOL;
-      } else if (selectedProjectIds.has(project.Id)) {
-        symbol = SELECTED_POINT_SYMBOL;
-      } else {
-        symbol = REGULAR_POINT_SYMBOL;
-      }
+      const symbol = project.IsLine
+        ? REGULAR_LINE_SYMBOL
+        : REGULAR_POINT_SYMBOL;
+      const graphic = new Graphic({
+        geometry: project.Shape,
+        symbol,
+      });
+      regularGraphics.push(graphic);
     }
-    const graphic = new Graphic({
-      geometry: project.Shape,
-      symbol,
-    });
-    mapGraphics.push(graphic);
   }
+
+  const mapGraphics = [
+    ...regularGraphics,
+    ...selectedGraphics,
+    ...pickedGraphics,
+  ]; // order matters
   return mapGraphics;
 };
 
