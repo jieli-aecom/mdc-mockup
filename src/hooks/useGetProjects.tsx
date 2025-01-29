@@ -138,10 +138,7 @@ const makeProject = (feature: Graphic, id: number, isLine: boolean): Project | n
     Scores: scores,
     CompositeScore: compositeScore,
     Metrics: [],
-    Shape: new Graphic({
-      geometry: feature?.geometry,
-      symbol: isLine ? REGULAR_LINE_SYMBOL : REGULAR_POINT_SYMBOL
-    }),
+    Shape: feature?.geometry,
     IsLine: isLine,
   };
 

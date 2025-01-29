@@ -1,4 +1,5 @@
 import Graphic from "@arcgis/core/Graphic";
+import Geometry from "@arcgis/core/geometry/Geometry";
 
 export enum ProjectType {
   ArterialCollector = "Arterial & Collector",
@@ -87,6 +88,6 @@ export type Project = {
   Metrics: ProjectSummaryMetric[];
   Scores: ProjectSummaryScore[];
   CompositeScore: number;
-  Shape: Graphic;
+  Shape?: Geometry;
   IsLine: boolean;
 };

@@ -8,7 +8,7 @@ import Graphic from "@arcgis/core/Graphic";
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import "./ProgramDevelopmentMap.css";
 import { MAP_BASEMAP, MAP_CENTER, MAP_START_ZOOM } from "../../../consts/map";
-import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 
 import Map from "@arcgis/core/Map";
 
@@ -17,7 +17,7 @@ interface ProjectDevelopmentMapProps {
 }
 
 const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
-   graphics: mapData,
+  graphics: mapData,
 }) => {
   const mapDiv = useRef<HTMLDivElement>(null);
   const layerRef = useRef<GraphicsLayer | null>(null);
@@ -26,7 +26,7 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
   useEffect(() => {
     const map = new Map({
       basemap: MAP_BASEMAP,
-    })
+    });
 
     const graphicsLayer = new GraphicsLayer({
       id: "project-graphics",
@@ -34,7 +34,7 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
     });
     layerRef.current = graphicsLayer;
     map.add(graphicsLayer);
-    
+
     const view = new MapView({
       container: mapDiv.current as HTMLDivElement,
       map: map,
@@ -53,7 +53,6 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
     view.ui.add(zoomWidget, "bottom-right");
 
     map.add(graphicsLayer);
-    
   }, []);
 
   useEffect(() => {
@@ -61,11 +60,9 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
 
     layerRef.current.removeAll();
     layerRef.current.addMany(mapData);
-    
-    if(viewRef.current) {
+    if (viewRef.current && mapData.length > 0) {
       viewRef.current.goTo(mapData);
     }
-
   }, [mapData]);
 
   return <div className="map-view" ref={mapDiv}></div>;

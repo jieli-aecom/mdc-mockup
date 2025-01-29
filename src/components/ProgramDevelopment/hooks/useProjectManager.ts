@@ -3,6 +3,52 @@ import { Project } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../consts/top-percents";
 import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import {
+  PICKED_LINE_SYMBOL,
+  PICKED_POINT_SYMBOL,
+  REGULAR_LINE_SYMBOL,
+  REGULAR_POINT_SYMBOL,
+  SELECTED_LINE_SYMBOL,
+  SELECTED_POINT_SYMBOL,
+} from "../../../consts/map";
+
+const makeMapGraphics = (
+  mapProjects: Project[],
+  selectedProjectIds: Set<number> = new Set(),
+  pickedProjectIds: Set<number> = new Set()
+) => {
+  const mapGraphics: Graphic[] = [];
+  for (const project of mapProjects) {
+    if (!project.Shape) continue;
+
+    let symbol: SimpleLineSymbol | SimpleMarkerSymbol;
+    if (project.IsLine) {
+      if (pickedProjectIds.has(project.Id)) {
+        symbol = PICKED_LINE_SYMBOL;
+      } else if (selectedProjectIds.has(project.Id)) {
+        symbol = SELECTED_LINE_SYMBOL;
+      } else {
+        symbol = REGULAR_LINE_SYMBOL;
+      }
+    } else {
+      if (pickedProjectIds.has(project.Id)) {
+        symbol = PICKED_POINT_SYMBOL;
+      } else if (selectedProjectIds.has(project.Id)) {
+        symbol = SELECTED_POINT_SYMBOL;
+      } else {
+        symbol = REGULAR_POINT_SYMBOL;
+      }
+    }
+    const graphic = new Graphic({
+      geometry: project.Shape,
+      symbol,
+    });
+    mapGraphics.push(graphic);
+  }
+  return mapGraphics;
+};
 
 export function useProjectManager() {
   //#region States
@@ -21,10 +67,6 @@ export function useProjectManager() {
   const [pickedProjectIds, setPickedProjectIds] = useState<Set<number>>(
     new Set()
   );
-
-  // Map: should show filtered projects, but with different symbols
-  // for filtered, selected, and aggregated projects
-  const [mapGraphics, setMapGraphics] = useState<Graphic[]>([]);
   //#endregion
 
   //#region Derived states
@@ -44,6 +86,12 @@ export function useProjectManager() {
   const programProjects: Project[] = projects.filter((project) => {
     return pickedProjectIds.has(project.Id);
   });
+
+  const mapGraphics = makeMapGraphics(
+    filteredProjects,
+    selectedProjectIds,
+    pickedProjectIds
+  );
 
   //#endregion
 
@@ -111,7 +159,7 @@ export function useProjectManager() {
     });
     setTopPercents(100); // TODO: to reset other filters when added
     setSelectedProjectIds(new Set());
-    setMapGraphics(allProjects.map((project) => project.Shape)); // TODO: To add symbology
+    setPickedProjectIds(new Set());
   }, [projects]);
 
   //#endregion
