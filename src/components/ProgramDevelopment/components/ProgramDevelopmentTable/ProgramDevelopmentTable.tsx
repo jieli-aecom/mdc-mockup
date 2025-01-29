@@ -20,7 +20,7 @@ const ProgramDevelopmentTable: FC<ProgramDevelopmentTableProps> = ({
   handleSelect: toggleSelectProject,
 }) => {
   return (
-    <div className="project-development-table">
+    <table className="project-development-table">
       <thead>
         <tr>
           <td width="10%">
@@ -69,7 +69,7 @@ const ProgramDevelopmentTable: FC<ProgramDevelopmentTableProps> = ({
           </tr>
         ))}
       </tbody>
-    </div>
+    </table>
   );
 };
 

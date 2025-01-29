@@ -169,7 +169,7 @@ const ProjectPrioritizationContent: React.FC<
       <p className="project-manage-title">
         {tab.length === 0 ? "Project Prioritization" : tab}
       </p>
-      <div className="mdcbtn-buttons">
+      <div className="project-prioritization-buttons">
         <div className="filters-container">
           <FilterItem
             label="Rank"

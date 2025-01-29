@@ -1,0 +1,22 @@
+.program-development-content-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px !important;
+  width: calc(100% - 200px);
+  height: calc(100% - 30px);
+  box-sizing: border-box;
+}
+
+.program-development-content {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+}
+
+.program-development-score-board {
+  width: 40%;
+  min-width: 550px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

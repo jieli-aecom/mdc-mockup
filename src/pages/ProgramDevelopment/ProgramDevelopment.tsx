@@ -1,30 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { ReactComponent as ProgramDevelopmentIcon } from "../../icons/3_Program Development/Program_White.svg";
 
 import "./ProgramDevelopment.css";
-import { useGetProjects } from "../../hooks/useGetProjects";
 import { createContext } from "react";
-import { Project } from "../../types/Project";
-import ProgramDevelopmentContent from "../../components/ProgramDevelopment/components/ProgramDevelopmentContent/ProgramDevelopmentContent";
+import ProgramDevelopmentPage1 from "../../components/ProgramDevelopment/components/ProgramDevelopmentPage1/ProgramDevelopmentContent";
+import {
+  initialContext,
+  ProgramDevelopmentContext,
+  useProgramDevelopmentContext,
+} from "../../components/ProgramDevelopment/hooks/useProgramDevelopmentContext";
 
-export const ProjectsContext = createContext<Project[]>([]);
+export const programDevelopmentContext =
+  createContext<ProgramDevelopmentContext>(initialContext);
+
+export type ProgramDevelopmentPage = 1 | 2;
 
 const ProgramDevelopment: React.FC = () => {
-  const { projects } = useGetProjects();
-  return (
-    <ProjectsContext.Provider value={projects}>
-    <div className="main-content-container">
-      <div className="sidebar-container">
-        <div className="program-development-icon sidebar-item-container">
-          <ProgramDevelopmentIcon />
-          PROGRAM DEVELOPMENT
-        </div>
-      </div>
+  const context = useProgramDevelopmentContext();
 
-      <ProgramDevelopmentContent />
-    </div>
-    </ProjectsContext.Provider>
+  const [page, setPage] = useState<ProgramDevelopmentPage>(1);
+
+  const handleToSecondPage = () => {
+    setPage(2);
+  }
+
+  return (
+    <programDevelopmentContext.Provider value={context}>
+      {page === 1 && (
+        <div className="main-content-container">
+          <div className="sidebar-container">
+            <div className="program-development-icon sidebar-item-container">
+              <ProgramDevelopmentIcon />
+              PROGRAM DEVELOPMENT
+            </div>
+          </div>
+
+          <ProgramDevelopmentPage1 handleToSecondPage={handleToSecondPage} />
+        </div>
+      )}
+    </programDevelopmentContext.Provider>
   );
 };
 

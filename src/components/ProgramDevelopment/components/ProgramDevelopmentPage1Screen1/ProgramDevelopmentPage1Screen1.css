@@ -1,44 +1,3 @@
-.program-development-content-container {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 25px !important;
-  width: calc(100% - 200px);
-  height: calc(100% - 30px);
-  box-sizing: border-box;
-}
-
-.program-development-content {
-  display: flex;
-  gap: 24px;
-  height: 100%;
-}
-
-.program-development-score-board {
-  width: 40%;
-  min-width: 550px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.program-development-select {
-  flex-grow: 1;
-  height: 0;
-  display: flex;
-}
-
-.program-development-actions {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.page-comment {
-  font-size: 18px;
-  color: #4f4f4f;
-  margin-top: 22px;
-}
 
 .score-board-title {
   background-color: #ebebeb;
@@ -61,6 +20,26 @@
   top: 20px;
   z-index: 50;
   gap: 20px;
+}
+
+
+.program-development-select {
+  flex-grow: 1;
+  height: 0;
+  display: flex;
+}
+
+.program-development-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-comment {
+  font-size: 18px;
+  color: #4f4f4f;
+  margin-top: 22px;
 }
 
 .top-projects-selector {

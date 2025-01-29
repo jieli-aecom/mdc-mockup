@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Project, ProjectType } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../consts/top-percents";
-import { ProjectsContext } from "../../../pages/ProgramDevelopment/ProgramDevelopment";
 import {
   PICKED_LINE_SYMBOL,
   PICKED_POINT_SYMBOL,
@@ -11,6 +10,7 @@ import {
   SELECTED_LINE_SYMBOL,
   SELECTED_POINT_SYMBOL,
 } from "../../../consts/map";
+import { useGetProjects } from "../../../hooks/useGetProjects";
 
 const makeMapGraphics = (
   mapProjects: Project[],
@@ -70,10 +70,44 @@ const filterProjects = (
   return filteredProjects;
 };
 
-export function useProjectManager() {
+export interface ProgramDevelopmentContext {
+  filteredProjects: Project[];
+  selectedProjectIds: Set<number>;
+  isAllSelected: boolean;
+  toggleSelectProject: (projectId: number) => void;
+  selectAllFilteredProjects: () => void;
+  unselectAllFilteredProjects: () => void;
+  programProjects: Project[];
+  togglePickProject: (projectId: number) => void;
+  pickAllSelectedProjects: () => void;
+  unpickAllSelectedProjects: () => void;
+  topPercents: TopPercent;
+  toggleSetTopPercent: (topPercent: TopPercent) => void;
+  toggleSetFilterType: (type: ProjectType | null) => void;
+  mapGraphics: Graphic[];
+}
+
+export const initialContext: ProgramDevelopmentContext = {
+  filteredProjects: [],
+  selectedProjectIds: new Set(),
+  isAllSelected: false,
+  toggleSelectProject: () => {},
+  selectAllFilteredProjects: () => {},
+  unselectAllFilteredProjects: () => {},
+  programProjects: [],
+  togglePickProject: () => {},
+  pickAllSelectedProjects: () => {},
+  unpickAllSelectedProjects: () => {},
+  topPercents: 100,
+  toggleSetTopPercent: () => {},
+  toggleSetFilterType: () => {},
+  mapGraphics: [],
+};
+
+export function useProgramDevelopmentContext() {
   //#region States
 
-  const projects: Project[] = useContext(ProjectsContext);
+  const { projects } = useGetProjects();
 
   // Tier 1: filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);
