@@ -5,6 +5,7 @@ import FilterItem from "../../FilterItem/FilterItem";
 import ExportIcon from "../../../icons/ExportIcon";
 import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
 import "./ProjectPrioritizationContent.css";
+import "../../../styles/button-styles.css";
 
 interface ProjectPrioritizationContentProps {
   tab: string;
@@ -168,7 +169,7 @@ const ProjectPrioritizationContent: React.FC<
       <p className="project-manage-title">
         {tab.length === 0 ? "Project Prioritization" : tab}
       </p>
-      <div className="project-prioritization-buttons">
+      <div className="mdcbtn-buttons">
         <div className="filters-container">
           <FilterItem
             label="Rank"
@@ -183,7 +184,7 @@ const ProjectPrioritizationContent: React.FC<
           />
         </div>
         <div
-          className="project-prioritization-export"
+          className="mdc-btn-export"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >

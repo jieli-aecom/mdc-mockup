@@ -3,6 +3,7 @@ import SaveIcon from "../../../icons/SaveIcon";
 import LoadIcon from "../../../icons/LoadIcon";
 
 import "./ProgramDevelopmentContent.css";
+import "../../../styles/button-styles.css";
 import ProjectPrioritizationMap from "../../ProjectPrioritization/ProjectPrioritizationMap/ProjectPrioritizationMap";
 import TopProjectSelector from "../TopProjectSelector/TopProjectSelector";
 import FilterItem from "../../FilterItem/FilterItem";
@@ -166,7 +167,7 @@ const ProgramDevelopmentContent: React.FC = () => {
                 }}
               >
                 <div
-                  className="project-prioritization-export"
+                  className="mdc-btn-export"
                   onMouseEnter={() => setHover("save-button")}
                   onMouseLeave={() => setHover("")}
                 >
@@ -183,7 +184,7 @@ const ProgramDevelopmentContent: React.FC = () => {
                   </div>
                 </div>
                 <div
-                  className="project-prioritization-export"
+                  className="mdc-btn-export"
                   onMouseEnter={() => setHover("load-button")}
                   onMouseLeave={() => setHover("")}
                 >
