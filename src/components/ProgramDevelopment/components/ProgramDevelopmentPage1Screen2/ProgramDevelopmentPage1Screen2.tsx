@@ -14,18 +14,23 @@ export interface ProgramDevelopmentPage1Screen2Props {
 const ProgramDevelopmentPage1Screen2: FC<
   ProgramDevelopmentPage1Screen2Props
 > = ({ handleToScreen1, handleToPage2 }) => {
-
   const {
     pickedProjectIds,
     selectedProjects,
     isAllPicked,
     unpickAllSelectedProjects,
     pickAllSelectedProjects,
-    togglePickProject
+    togglePickProject,
   } = useContext(programDevelopmentContext);
 
   const [hover, setHover] = useState<string>("");
-  
+
+  const noPicked = pickedProjectIds.size === 0;
+
+  const toPage2 = () => {
+    if (!noPicked) handleToPage2();
+  }
+
   return (
     <>
       <div className="score-board-title-blue">
@@ -98,22 +103,12 @@ const ProgramDevelopmentPage1Screen2: FC<
             </div>
           </button>
           <button
-            className="program-aggregation-output"
+            className={noPicked ? "mdc-btn-main mdc-btn-main-disabled" : "mdc-btn-main"}
             onMouseEnter={() => setHover("view-aggregation-output-button")}
             onMouseLeave={() => setHover("")}
-            onClick={handleToPage2}
+            onClick={toPage2}
           >
-            <div
-              style={{
-                textDecoration: "none",
-                color:
-                  hover === "view-aggregation-output-button"
-                    ? "#263C8C"
-                    : "white",
-              }}
-            >
-              View Results
-            </div>
+            <div>View Results</div>
           </button>
         </div>
       </div>

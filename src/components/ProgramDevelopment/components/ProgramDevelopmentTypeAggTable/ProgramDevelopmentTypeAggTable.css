@@ -1,0 +1,46 @@
+.program-development-type-agg-table {
+  width: 100%;
+}
+
+.program-development-type-agg-table-bold {
+  font-weight: 500;
+}
+
+.program-development-type-agg-table > thead {
+  border-bottom: 2px solid #f15624;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+
+.program-development-type-agg-table > tbody {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.program-development-type-agg-table > thead > tr {
+  width: 100%;
+  display: flex;
+}
+
+.program-development-type-agg-table > tbody > tr {
+  width: 100%;
+  display: flex;
+}
+
+.program-development-type-agg-table thead td {
+  padding: 12px 0;
+}
+
+.program-development-type-agg-table td {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 4px 0;
+}
+
+td.program-development-type-agg-table-leftalign {
+  font-size: 0.8rem;
+  text-align: left !important;
+}

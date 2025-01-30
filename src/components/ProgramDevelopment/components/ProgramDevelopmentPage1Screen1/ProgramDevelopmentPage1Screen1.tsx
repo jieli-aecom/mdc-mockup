@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import SaveIcon from "../../../../icons/SaveIcon";
 import LoadIcon from "../../../../icons/LoadIcon";
 
@@ -31,6 +31,12 @@ const ProgramDevelopmentPage1Screen1: React.FC<
   } = useContext(programDevelopmentContext);
 
   const [hover, setHover] = useState("");
+
+  const noSelection = selectedProjectIds.size === 0;
+
+  const toScreen2 = useCallback(() => {
+    if (!noSelection) handleToScreen2();
+  }, [handleToScreen2, noSelection]);
 
   return (
     <>
@@ -94,22 +100,12 @@ const ProgramDevelopmentPage1Screen1: React.FC<
           </button>
         </div>
         <button
-          className="program-aggregation-output"
+          className={noSelection ? "mdc-btn-main mdc-btn-main-disabled": "mdc-btn-main"}
           onMouseEnter={() => setHover("view-aggregation-output-button")}
           onMouseLeave={() => setHover("")}
-          onClick={handleToScreen2}
+          onClick={toScreen2}
         >
-          <div
-            style={{
-              textDecoration: "none",
-              color:
-                hover === "view-aggregation-output-button"
-                  ? "#263C8C"
-                  : "white",
-            }}
-          >
-            View Aggregation Output
-          </div>
+          <div>View Aggregation Output</div>
         </button>
       </div>
     </>

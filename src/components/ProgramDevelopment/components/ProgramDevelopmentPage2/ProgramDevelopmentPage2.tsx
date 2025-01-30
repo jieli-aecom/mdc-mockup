@@ -7,6 +7,8 @@ import BackIcon from "../../../../icons/BackIcon";
 import PlusIcon from "../../../../icons/PlusIcon";
 import MinusIcon from "../../../../icons/MinusIcon";
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
+import ProgramDevelopmentTypeAggTable, { ProgramDevelopmentTypeAggDataRow } from "../ProgramDevelopmentTypeAggTable/ProgramDevelopmentTypeAggTable";
+import { Project, ProjectType } from "../../../../types/Project";
 
 export interface ProgramDevelopmentPage2Props {
   handleToPage1: () => void;
@@ -66,10 +68,45 @@ const TitleSection: FC<TitleSectionProps> = ({ handleToPage1 }) => {
 };
 //#endregion
 
+//#region Util functions
+const aggregateByType = (projects: Project[]) => {
+  const countByType: Partial<Record<ProjectType, number>> = {};
+  const costByType: Partial<Record<ProjectType, number>> = {};
+  const totalScoreByType: Partial<Record<ProjectType, number>> = {};
+  const avgScoreByType: Partial<Record<ProjectType, number>> = {};
+
+  for (const project of projects) {
+    const type: ProjectType = project.ProjectType;
+    countByType[type] = (countByType[type] || 0) + 1;
+    costByType[type] = (costByType[type] || 0) + project.Totalcost;
+    totalScoreByType[type] = (totalScoreByType[type] || 0) + project.CompositeScore;
+  }
+
+  for (const type in countByType) {
+    const projectType = type as ProjectType;
+    avgScoreByType[projectType] = totalScoreByType[projectType]! / countByType[projectType]!;
+  }
+
+  const result: ProgramDevelopmentTypeAggDataRow[] = Object.keys(countByType).map((type) => ({
+      Name: type as ProjectType,
+      TotalCount: countByType[type as ProjectType]!,
+      TotalCost: costByType[type as ProjectType]!,
+      AverageScore: avgScoreByType[type as ProjectType]!,
+    }));
+
+  return result;
+
+}
+//#endregion
+
 const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   handleToPage1,
 }) => {
   const { pickedProjects } = useContext(programDevelopmentContext);
+  const typeAggData = aggregateByType(pickedProjects);
+
+  const typeAggTable = <ProgramDevelopmentTypeAggTable data={typeAggData || []} />
+
   return (
     <>
       <div
@@ -79,7 +116,7 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
         <TitleSection handleToPage1={handleToPage1} />
         <ExpansionPanel
           title="Selected Projects"
-          children={<MinusIcon />}
+          children={typeAggTable}
           defaultExpanded={true}
         />
       </div>

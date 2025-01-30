@@ -47,27 +47,3 @@
   justify-content: space-between;
 }
 
-.program-aggregation-output {
-  all: unset;
-  color: #ebebeb;
-  box-shadow: 2px 2px 3px #66afe94d;
-  border-radius: 5px;
-  padding: 7px 14px 6px 15px;
-  font-size: 16px;
-  background-color: #263c8c;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 9px;
-}
-
-.program-aggregation-output:hover {
-  background-color: #4d9fd7;
-  color: white;
-  outline-offset: 3px;
-  outline-color: #4d9fd7;
-  outline-style: dotted;
-  outline-width: 2px;
-  cursor: pointer;
-}

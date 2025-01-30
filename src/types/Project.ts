@@ -85,6 +85,7 @@ export type Project = {
   ProjectNumber: string;
   ProjectType: ProjectType;
   Description: string;
+  Totalcost: number;
   Metrics: ProjectSummaryMetric[];
   Scores: ProjectSummaryScore[];
   CompositeScore: number;

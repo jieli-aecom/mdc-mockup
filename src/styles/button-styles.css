@@ -38,6 +38,10 @@
   gap: 9px;
 }
 
+.mdc-btn-main-disabled {
+  background-color: #949494;
+}
+
 .mdc-btn-main:hover {
   background-color: #4d9fd7;
   color: white;
@@ -46,4 +50,11 @@
   outline-style: dotted;
   outline-width: 2px;
   cursor: pointer;
+}
+
+.mdc-btn-main-disabled:hover {
+  background-color: #949494;
+  outline-offset: 0;
+  outline-width: 0;
+  cursor: not-allowed;
 }

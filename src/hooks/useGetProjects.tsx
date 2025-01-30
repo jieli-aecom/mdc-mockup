@@ -134,6 +134,7 @@ const makeProject = (feature: Graphic, id: number, isLine: boolean): Project | n
     Name: attributes?.TIPName,
     ProjectNumber: attributes?.TIPProject || "",
     Description: attributes?.Descriptio || "",
+    Totalcost: attributes?.TotalCost || 0,
     ProjectType: type,
     Scores: scores,
     CompositeScore: compositeScore,
