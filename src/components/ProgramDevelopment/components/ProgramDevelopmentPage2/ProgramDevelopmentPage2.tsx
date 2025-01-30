@@ -7,7 +7,9 @@ import BackIcon from "../../../../icons/BackIcon";
 import PlusIcon from "../../../../icons/PlusIcon";
 import MinusIcon from "../../../../icons/MinusIcon";
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
-import ProgramDevelopmentTypeAggTable, { ProgramDevelopmentTypeAggDataRow } from "../ProgramDevelopmentTypeAggTable/ProgramDevelopmentTypeAggTable";
+import ProgramDevelopmentTypeAggTable, {
+  ProgramDevelopmentTypeAggDataRow,
+} from "../ProgramDevelopmentTypeAggTable/ProgramDevelopmentTypeAggTable";
 import { Project, ProjectType } from "../../../../types/Project";
 
 export interface ProgramDevelopmentPage2Props {
@@ -79,24 +81,27 @@ const aggregateByType = (projects: Project[]) => {
     const type: ProjectType = project.ProjectType;
     countByType[type] = (countByType[type] || 0) + 1;
     costByType[type] = (costByType[type] || 0) + project.Totalcost;
-    totalScoreByType[type] = (totalScoreByType[type] || 0) + project.CompositeScore;
+    totalScoreByType[type] =
+      (totalScoreByType[type] || 0) + project.CompositeScore;
   }
 
   for (const type in countByType) {
     const projectType = type as ProjectType;
-    avgScoreByType[projectType] = totalScoreByType[projectType]! / countByType[projectType]!;
+    avgScoreByType[projectType] =
+      totalScoreByType[projectType]! / countByType[projectType]!;
   }
 
-  const result: ProgramDevelopmentTypeAggDataRow[] = Object.keys(countByType).map((type) => ({
-      Name: type as ProjectType,
-      TotalCount: countByType[type as ProjectType]!,
-      TotalCost: costByType[type as ProjectType]!,
-      AverageScore: avgScoreByType[type as ProjectType]!,
-    }));
+  const result: ProgramDevelopmentTypeAggDataRow[] = Object.keys(
+    countByType
+  ).map((type) => ({
+    Name: type as ProjectType,
+    TotalCount: countByType[type as ProjectType]!,
+    TotalCost: costByType[type as ProjectType]!,
+    AverageScore: avgScoreByType[type as ProjectType]!,
+  }));
 
   return result;
-
-}
+};
 //#endregion
 
 const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
@@ -105,19 +110,36 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   const { pickedProjects } = useContext(programDevelopmentContext);
   const typeAggData = aggregateByType(pickedProjects);
 
-  const typeAggTable = <ProgramDevelopmentTypeAggTable data={typeAggData || []} />
+  const typeAggTable = (
+    <ProgramDevelopmentTypeAggTable data={typeAggData || []} />
+  );
 
   return (
     <>
       <div
         className="project-manage-container program-development-page2-container"
-        style={{ width: "70%", minWidth: "300px"}}
+        style={{ width: "70%", minWidth: "300px" }}
       >
         <TitleSection handleToPage1={handleToPage1} />
         <ExpansionPanel
-          title="Selected Projects"
+          title="Project Types"
           children={typeAggTable}
           defaultExpanded={true}
+        />
+        <ExpansionPanel
+          title="Policy Alignment"
+          children={null}
+          defaultExpanded={false}
+        />
+        <ExpansionPanel
+          title="Environmental Justice"
+          children={null}
+          defaultExpanded={false}
+        />
+        <ExpansionPanel
+          title="Commission Districts"
+          children={null}
+          defaultExpanded={false}
         />
       </div>
       <ProgramDevelopmentMap />

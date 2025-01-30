@@ -5,7 +5,7 @@ import PlusIcon from "../../icons/PlusIcon";
 
 export interface ExpansionPanelProps {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   defaultExpanded: boolean;
 }
 
@@ -37,7 +37,7 @@ const ExpansionPanel : FC<ExpansionPanelProps> = ({ title, children, defaultExpa
       </button>
     </div>
     <div className={bodyClass}>
-      {children}
+      {children ?? null}
     </div>
 
   </div>;
