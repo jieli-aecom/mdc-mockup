@@ -1,0 +1,12 @@
+.score-board-title-blue {
+  background-color: #456db5;
+  color: white;
+  padding: 14px;
+  padding-right: 50px;
+  font-weight: 600;
+  height: 50px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

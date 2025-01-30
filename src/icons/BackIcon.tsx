@@ -1,8 +1,7 @@
 import React from "react";
 
 interface BackIconProps extends React.SVGProps<SVGSVGElement> {
-  strokeColor?: string;
-  strokeWidth?: number;
+  color?: string;
 }
 
 const BackIcon: React.FC<BackIconProps> = ({

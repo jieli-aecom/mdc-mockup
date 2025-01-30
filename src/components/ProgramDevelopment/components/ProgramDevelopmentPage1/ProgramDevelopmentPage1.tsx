@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import "./ProgramDevelopmentPage1.css";
 import "../../../../styles/button-styles.css";
@@ -7,7 +7,6 @@ import FilterItem from "../../../FilterItem/FilterItem";
 import { PROJECT_TYPES } from "../../../../consts/projects";
 import { DISTRICTS } from "../../../../consts/districts";
 
-import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
 import ProgramDevelopmentPage1Screen1 from "../ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";
 import ProgramDevelopmentPage1Screen2 from "../ProgramDevelopmentPage1Screen2/ProgramDevelopmentPage1Screen2";
 
@@ -20,7 +19,6 @@ export type ProgramDevelopmentPage1Screen = 1 | 2;
 const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
   handleToSecondPage,
 }) => {
-  const { mapGraphics, mapZoomSignal } = useContext(programDevelopmentContext);
 
   const [stepScreen, setStepScreen] =
     useState<ProgramDevelopmentPage1Screen>(1);

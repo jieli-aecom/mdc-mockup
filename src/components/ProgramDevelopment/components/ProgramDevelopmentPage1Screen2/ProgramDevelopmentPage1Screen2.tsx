@@ -4,6 +4,7 @@ import LoadIcon from "../../../../icons/LoadIcon";
 import BackIcon from "../../../../icons/BackIcon";
 import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
 import ProgramDevelopmentTable from "../ProgramDevelopmentTable/ProgramDevelopmentTable";
+import "./ProgramDevelopmentPage1Screen2.css";
 
 export interface ProgramDevelopmentPage1Screen2Props {
   handleToScreen1: () => void;
@@ -27,7 +28,7 @@ const ProgramDevelopmentPage1Screen2: FC<
   
   return (
     <>
-      <div className="score-board-title">
+      <div className="score-board-title-blue">
         <span>Step 3. View Aggregation Outputs</span>
         {pickedProjectIds.size && <span>{pickedProjectIds.size}</span>}
       </div>

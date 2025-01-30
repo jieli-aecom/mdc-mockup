@@ -15,8 +15,7 @@ import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/
 interface ProjectDevelopmentMapProps {
 }
 
-const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = ({
-}) => {
+const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
   const mapDiv = useRef<HTMLDivElement>(null);
   const layerRef = useRef<GraphicsLayer | null>(null);
   const viewRef = useRef<MapView | null>(null);
