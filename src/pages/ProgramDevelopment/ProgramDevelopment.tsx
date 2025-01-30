@@ -10,6 +10,7 @@ import {
   ProgramDevelopmentContext,
   useProgramDevelopmentContext,
 } from "../../components/ProgramDevelopment/hooks/useProgramDevelopmentContext";
+import ProgramDevelopmentPage2 from "../../components/ProgramDevelopment/components/ProgramDevelopmentPage2/ProgramDevelopmentPage2";
 
 export const programDevelopmentContext =
   createContext<ProgramDevelopmentContext>(initialContext);
@@ -23,22 +24,24 @@ const ProgramDevelopment: React.FC = () => {
 
   const handleToSecondPage = () => {
     setPage(2);
-  }
+  };
 
   return (
     <programDevelopmentContext.Provider value={context}>
-      {page === 1 && (
-        <div className="main-content-container">
-          <div className="sidebar-container">
-            <div className="program-development-icon sidebar-item-container">
-              <ProgramDevelopmentIcon />
-              PROGRAM DEVELOPMENT
-            </div>
+      <div className="main-content-container">
+        <div className="sidebar-container">
+          <div className="program-development-icon sidebar-item-container">
+            <ProgramDevelopmentIcon />
+            PROGRAM DEVELOPMENT
           </div>
-
-          <ProgramDevelopmentPage1 handleToSecondPage={handleToSecondPage} />
         </div>
-      )}
+        {page === 1 && (
+          <ProgramDevelopmentPage1 handleToSecondPage={handleToSecondPage} />
+        )}
+        {page === 2 && (
+          <ProgramDevelopmentPage2 handleToPage1={() => setPage(1)} />
+        )}
+      </div>
     </programDevelopmentContext.Provider>
   );
 };

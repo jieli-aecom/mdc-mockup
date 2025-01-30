@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Project, ProjectType } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../consts/top-percents";
@@ -12,6 +12,7 @@ import {
 } from "../../../consts/map";
 import { useGetProjects } from "../../../hooks/useGetProjects";
 
+//#region Utility functions
 const makeMapGraphics = (
   mapProjects: Project[],
   selectedProjectIds: Set<number> = new Set(),
@@ -64,12 +65,14 @@ const filterProjects = (
   topPercent: TopPercent,
   filterType: ProjectType | null
 ) => {
-  const filteredProjects = projects
+  const filteredProjects = [...projects]
     .filter((project) => !filterType || project.ProjectType === filterType)
     .slice(0, Math.ceil((topPercent / 100) * projects.length));
   return filteredProjects;
 };
+//#endregion
 
+//#region Interface
 export interface ProgramDevelopmentContext {
   filteredProjects: Project[];
   selectedProjectIds: Set<number>;
@@ -88,6 +91,8 @@ export interface ProgramDevelopmentContext {
   toggleSetTopPercent: (topPercent: TopPercent) => void;
   toggleSetFilterType: (type: ProjectType | null) => void;
   mapGraphics: Graphic[];
+  mapZoomSignal: boolean;
+  triggerMapZoomSignal: () => void;
 }
 
 export const initialContext: ProgramDevelopmentContext = {
@@ -108,7 +113,11 @@ export const initialContext: ProgramDevelopmentContext = {
   toggleSetTopPercent: () => {},
   toggleSetFilterType: () => {},
   mapGraphics: [],
+  mapZoomSignal: false,
+  triggerMapZoomSignal: () => {},
 };
+
+//#endregion
 
 export function useProgramDevelopmentContext() {
   //#region States
@@ -128,6 +137,9 @@ export function useProgramDevelopmentContext() {
   const [pickedProjectIds, setPickedProjectIds] = useState<Set<number>>(
     new Set()
   );
+
+  // Map zoom signal
+  const [mapZoomSignal, setMapZoomSignal] = useState<boolean>(false);
   //#endregion
 
   //#region Derived states
@@ -139,15 +151,16 @@ export function useProgramDevelopmentContext() {
     topPercents,
     filterType
   );
-  const filteredProjectIds = new Set(
-    filteredProjects.map((project) => project.Id)
+  const filteredProjectIds = useMemo(
+    () => new Set(filteredProjects.map((project) => project.Id)),
+    [filteredProjects]
   );
 
   const isAllSelected =
     selectedProjectIds.size === filteredProjectIds.size &&
     filteredProjectIds.size > 0;
 
-  const selectedProjects: Project[] = projects.filter((project) => {
+  const selectedProjects: Project[] = [...projects].filter((project) => {
     return selectedProjectIds.has(project.Id);
   });
 
@@ -155,7 +168,7 @@ export function useProgramDevelopmentContext() {
     pickedProjectIds.size === selectedProjectIds.size &&
     selectedProjectIds.size > 0;
 
-  const pickedProjects: Project[] = projects.filter((project) => {
+  const pickedProjects: Project[] = [...projects].filter((project) => {
     return pickedProjectIds.has(project.Id);
   });
 
@@ -228,9 +241,18 @@ export function useProgramDevelopmentContext() {
     setPickedProjectIds(new Set());
   };
 
+  const triggerMapZoomSignal = useCallback(() => {
+    if (mapZoomSignal) return;
+    setMapZoomSignal(true);
+    setTimeout(() => {
+      setMapZoomSignal(false);
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   //#endregion
 
-  //#region Data changes
+  //#region Effects
 
   // When source projects change, update hook copy, and reset all filters
   useEffect(() => {
@@ -241,7 +263,8 @@ export function useProgramDevelopmentContext() {
     setTopPercents(100); // TODO: to reset other filters when added
     setSelectedProjectIds(new Set());
     setPickedProjectIds(new Set());
-  }, [projects]);
+    triggerMapZoomSignal();
+  }, [projects, triggerMapZoomSignal]);
 
   //#endregion
 
@@ -263,5 +286,7 @@ export function useProgramDevelopmentContext() {
     toggleSetTopPercent,
     toggleSetFilterType,
     mapGraphics,
+    mapZoomSignal,
+    triggerMapZoomSignal,
   };
 }

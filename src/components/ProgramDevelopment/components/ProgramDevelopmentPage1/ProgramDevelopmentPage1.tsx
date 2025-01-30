@@ -20,7 +20,7 @@ export type ProgramDevelopmentPage1Screen = 1 | 2;
 const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
   handleToSecondPage,
 }) => {
-  const { mapGraphics } = useContext(programDevelopmentContext);
+  const { mapGraphics, mapZoomSignal } = useContext(programDevelopmentContext);
 
   const [stepScreen, setStepScreen] =
     useState<ProgramDevelopmentPage1Screen>(1);
@@ -51,7 +51,7 @@ const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
             handleUpdate={() => {}}
           />
         </div>
-        <ProjectDevelopmentMap graphics={mapGraphics} />
+        <ProjectDevelopmentMap />
         <div className="program-development-score-board">
           {stepScreen === 1 && (
             <ProgramDevelopmentPage1Screen1 handleToScreen2={handleToScreen2} />
