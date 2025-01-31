@@ -12,27 +12,22 @@
   justify-content: space-between;
 }
 
-.program-development-filter {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 60px;
-  top: 20px;
-  z-index: 50;
-  gap: 20px;
-}
-
-
 .program-development-select {
   flex-grow: 1;
   height: 0;
   display: flex;
 }
 
+@media only screen and (max-width: 1300px) {
+  .program-development-select {
+    height: 500px;
+  }
+}
+
 .page-comment {
   font-size: 18px;
   color: #4f4f4f;
-  margin-top: 22px;
+  margin: 0.5rem 0;
 }
 
 .top-projects-selector {

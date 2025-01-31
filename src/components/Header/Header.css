@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
   z-index: 10;
   top: 0;
 }
@@ -128,36 +127,3 @@
   }
 }
 
-/* Small Screens */
-@media (max-width: 480px) {
-  .header-top-bar {
-    padding: 5px;
-  }
-
-  .header-user-icon {
-    width: 35px;
-    height: 35px;
-    font-size: 12px;
-  }
-
-  .header-nav-container {
-    padding: 5px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .header-nav-items {
-    gap: 8px;
-  }
-
-  .header-nav-item {
-    font-size: 12px;
-    padding: 5px 8px;
-  }
-
-  .header-logo-container {
-    width: 100%;
-    height: 45px;
-  }
-}
