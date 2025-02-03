@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FilterIcon from "../../icons/FilterIcon";
 
 import "./FilterItem.css";
@@ -6,23 +6,27 @@ import "./FilterItem.css";
 interface FilterItemProps {
   label: string;
   items: string[];
-  handleUpdate: (p: number) => void;
+  selectedItems?: Set<string>;
+  handleUpdate: ((item: string) => void)
 }
 
 const FilterItem: React.FC<FilterItemProps> = ({
   label,
   items,
+  selectedItems,
   handleUpdate,
 }) => {
   const [open, setOpen] = useState(false);
-  const [selectedItem, selectItem] = useState("");
+  const [selectedItemsAuto, setSelectedItemsAuto] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    if (selectedItem.startsWith("Top ")) {
-      const p = Number(selectedItem.slice(4, selectedItem.length - 1));
-      handleUpdate(p);
+  const handleToggleItemAuto = (item: string) => {
+    if (selectedItemsAuto.has(item)) {
+      selectedItemsAuto.delete(item);
+    } else {
+      selectedItemsAuto.add(item);
     }
-  }, [selectedItem, handleUpdate]);
+    setSelectedItemsAuto(new Set(selectedItemsAuto));
+  }
 
   return (
     <div>
@@ -35,20 +39,26 @@ const FilterItem: React.FC<FilterItemProps> = ({
       </div>
       {open && (
         <div className="filter-dropdown-container">
-          {items.map((item, index) => (
+          {items.map((item, index) => {
+            const selected = selectedItems ? selectedItems.has(item) : selectedItemsAuto.has(item);
+            const onClick = () => {
+              handleUpdate(item);
+              handleToggleItemAuto(item);
+            }
+            return (
             <div
               key={`filter-dropdown-item-${label}-${index}`}
               className="filter-dropdown-item"
             >
               <div
                 className={`filter-dropdown-circle${
-                  selectedItem === item ? " filter-dropdown-circle-active" : ""
+                  selected ? " filter-dropdown-circle-active" : ""
                 }`}
-                onClick={() => selectItem(item)}
+                onClick={onClick}
               ></div>
               {item}
             </div>
-          ))}
+          )})}
         </div>
       )}
     </div>

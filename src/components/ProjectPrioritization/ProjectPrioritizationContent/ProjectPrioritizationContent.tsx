@@ -174,7 +174,7 @@ const ProjectPrioritizationContent: React.FC<
           <FilterItem
             label="Rank"
             items={percentages.map((p) => `Top ${p}%`)}
-            handleUpdate={(p: number) => filterProjects(p)}
+            handleUpdate={(p: string) => filterProjects(parseInt(p.split(" ")[1]))}
           />
           <FilterItem label="Type" items={types} handleUpdate={() => {}} />
           <FilterItem

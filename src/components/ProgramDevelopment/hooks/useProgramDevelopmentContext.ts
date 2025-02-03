@@ -11,6 +11,7 @@ import {
   SELECTED_POINT_SYMBOL,
 } from "../../../consts/map";
 import { useGetProjects } from "../../../hooks/useGetProjects";
+import { CommissionDistrict } from "../../../types/District";
 
 //#region Utility functions
 const makeMapGraphics = (
@@ -63,13 +64,22 @@ const makeMapGraphics = (
 const filterProjects = (
   projects: Project[],
   topPercent: TopPercent,
-  filterType: ProjectType | null
+  filterType: Set<ProjectType>,
+  filterDistrict: Set<CommissionDistrict>
 ) => {
   const sorted = [...projects];
   sorted.sort((a, b) => b.CompositeScore - a.CompositeScore);
 
   return sorted
-    .filter((project: Project) => !filterType || project.Type === filterType)
+    .filter((project: Project) => {
+      const typeMatch = filterType.size === 0 || filterType.has(project.Type);
+      const districtMatch =
+        filterDistrict.size === 0 ||
+        project.CommissionDistricts.some((district) =>
+          filterDistrict.has(district)
+        );
+      return typeMatch && districtMatch;
+    })
     .slice(0, Math.ceil((topPercent / 100) * projects.length));
 };
 //#endregion
@@ -92,6 +102,7 @@ export interface ProgramDevelopmentContext {
   topPercents: TopPercent;
   toggleSetTopPercent: (topPercent: TopPercent) => void;
   toggleSetFilterType: (type: ProjectType | null) => void;
+  toggleSetFilterDistrict: (district: CommissionDistrict | null) => void;
   mapGraphics: Graphic[];
   mapZoomSignal: boolean;
   triggerMapZoomSignal: () => void;
@@ -114,6 +125,7 @@ export const initialContext: ProgramDevelopmentContext = {
   topPercents: 100,
   toggleSetTopPercent: () => {},
   toggleSetFilterType: () => {},
+  toggleSetFilterDistrict: () => {},
   mapGraphics: [],
   mapZoomSignal: false,
   triggerMapZoomSignal: () => {},
@@ -128,7 +140,12 @@ export function useProgramDevelopmentContext() {
 
   // Tier 1: filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);
-  const [filterType, setFilterType] = useState<ProjectType | null>(null);
+  const [filteredTypes, setFilteredTypes] = useState<Set<ProjectType>>(
+    new Set()
+  );
+  const [filteredDistricts, setFilteredDistricts] = useState<
+    Set<CommissionDistrict>
+  >(new Set());
 
   // Tier 2: selected as candidate for aggregation ("Selected")
   const [selectedProjectIds, setSelectedProjectIds] = useState<Set<string>>(
@@ -151,7 +168,8 @@ export function useProgramDevelopmentContext() {
   const filteredProjects: Project[] = filterProjects(
     projects,
     topPercents,
-    filterType
+    filteredTypes,
+    filteredDistricts
   );
   const filteredProjectIds = useMemo(
     () => new Set(filteredProjects.map((project) => project.Id)),
@@ -190,10 +208,22 @@ export function useProgramDevelopmentContext() {
     unpickAllSelectedProjects();
   };
 
-  const toggleSetFilterType = (type: ProjectType | null) => {
-    setFilterType(type);
-    unselectAllFilteredProjects();
-    unpickAllSelectedProjects();
+  const toggleSetFilterType = (type: ProjectType) => {
+    if (filteredTypes.has(type)) {
+      filteredTypes.delete(type);
+    } else {
+      filteredTypes.add(type);
+    }
+    setFilteredTypes(filteredTypes);
+  };
+
+  const toggleSetFilterDistrict = (district: CommissionDistrict) => {
+    if (filteredDistricts.has(district)) {
+      filteredDistricts.delete(district);
+    } else {
+      filteredDistricts.add(district);
+    }
+    setFilteredDistricts(filteredDistricts);
   };
 
   const toggleSelectProject = (projectId: string) => {
@@ -215,10 +245,10 @@ export function useProgramDevelopmentContext() {
     setPickedProjectIds(new Set(filteredProjectIds));
   };
 
-  const unselectAllFilteredProjects = () => {
+  const unselectAllFilteredProjects = useCallback(() => {
     setSelectedProjectIds(new Set());
     setPickedProjectIds(new Set());
-  };
+  }, []);
 
   const togglePickProject = (projectId: string) => {
     if (!selectedProjectIds.has(projectId)) {
@@ -239,9 +269,9 @@ export function useProgramDevelopmentContext() {
     setPickedProjectIds(new Set(selectedProjectIds));
   };
 
-  const unpickAllSelectedProjects = () => {
+  const unpickAllSelectedProjects = useCallback(() => {
     setPickedProjectIds(new Set());
-  };
+  }, []);
 
   const triggerMapZoomSignal = useCallback(() => {
     if (mapZoomSignal) return;
@@ -264,6 +294,18 @@ export function useProgramDevelopmentContext() {
     triggerMapZoomSignal();
   }, [projects, triggerMapZoomSignal]);
 
+  useEffect(() => {
+    triggerMapZoomSignal();
+    unselectAllFilteredProjects();
+    unpickAllSelectedProjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    filterProjects,
+    triggerMapZoomSignal,
+    unselectAllFilteredProjects,
+    unpickAllSelectedProjects,
+  ]);
+
   //#endregion
 
   return {
@@ -283,6 +325,7 @@ export function useProgramDevelopmentContext() {
     topPercents,
     toggleSetTopPercent,
     toggleSetFilterType,
+    toggleSetFilterDistrict,
     mapGraphics,
     mapZoomSignal,
     triggerMapZoomSignal,

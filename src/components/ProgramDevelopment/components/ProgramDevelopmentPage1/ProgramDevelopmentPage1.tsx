@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import "./ProgramDevelopmentPage1.css";
 import "../../../../styles/button-styles.css";
@@ -9,6 +9,9 @@ import { COMMISSION_DISTRICTS } from "../../../../consts/districts";
 
 import ProgramDevelopmentPage1Screen1 from "./ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";
 import ProgramDevelopmentPage1Screen2 from "./ProgramDevelopmentPage1Screen2/ProgramDevelopmentPage1Screen2";
+import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
+import { ProjectType } from "../../../../types/Project";
+import { CommissionDistrict } from "../../../../types/District";
 
 export interface ProgramDevelopmentPage1Props {
   handleToSecondPage: () => void;
@@ -19,13 +22,16 @@ export type ProgramDevelopmentPage1Screen = 1 | 2;
 const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
   handleToSecondPage,
 }) => {
-
   const [stepScreen, setStepScreen] =
     useState<ProgramDevelopmentPage1Screen>(1);
 
   const handleToScreen2 = () => {
     setStepScreen(2);
   };
+
+  const { toggleSetFilterType, toggleSetFilterDistrict } = useContext(
+    programDevelopmentContext
+  );
 
   return (
     <div className="project-manage-container program-development-content-container">
@@ -40,13 +46,13 @@ const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
         <div className="program-development-filter">
           <FilterItem
             label="Type"
-            items={PROJECT_TYPES}
-            handleUpdate={() => {}}
+            items={PROJECT_TYPES as string[]}
+            handleUpdate={(e) => toggleSetFilterType(e as ProjectType)}
           />
           <FilterItem
             label="Commission District"
             items={COMMISSION_DISTRICTS}
-            handleUpdate={() => {}}
+            handleUpdate={(e) => toggleSetFilterDistrict(e as CommissionDistrict)}
           />
         </div>
         <ProjectDevelopmentMap />
