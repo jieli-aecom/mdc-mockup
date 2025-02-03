@@ -1,10 +1,16 @@
 .project-prioritization-table-container {
-  height: 100%;
-  max-height: 600px;
+  height: 0;
+  flex-grow: 1;
   border: 3px solid var(--dark-orange);
   box-sizing: border-box;
   max-width: 100%;
   font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 1300px) {
+  .project-prioritization-table-container {
+    height: 500px;
+  }
 }
 
 .project-table {
@@ -19,12 +25,21 @@
 .project-table td {
   padding: 5px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .project-table thead {
   background-color: white;
   border-bottom: 4px solid var(--dark-orange);
   padding-right: 14px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-table thead tr {
+  width: 100%;
+  display: flex;
 }
 
 .project-table tbody {

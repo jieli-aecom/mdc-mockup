@@ -43,11 +43,13 @@ const ProgramDevelopmentPage1Screen1: React.FC<
       <div className="score-board-title">
         Step 1. Select top scored projects
       </div>
+      <div style={{paddingTop: '1rem', paddingBottom: '1rem'}}>
       <TopProjectSelector
         value={topPercents}
         options={TOP_PERCENT_OPTIONS}
         onChange={toggleSetTopPercent}
-      />
+        totalProjects={filteredProjects.length}
+      /></div>
       <div className="score-board-title">
         <span>Step 2. Select projects</span>
         {selectedProjectIds.size && <span>{selectedProjectIds.size}</span>}

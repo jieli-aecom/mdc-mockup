@@ -113,14 +113,12 @@ export function useProgramDevelopmentContext() {
     [projects]
   );
 
-  const filteredProjects: Project[] = useMemo(() => {
-    return filterProjects(
-      projects,
-      topPercents,
-      filteredTypes,
-      filteredDistricts
-    );
-  }, [projects, topPercents, filteredTypes, filteredDistricts]);
+  const filteredProjects: Project[] = filterProjects(
+    projects,
+    topPercents,
+    filteredTypes,
+    filteredDistricts
+  );
 
   const filteredProjectIds = useMemo(
     () => new Set(filteredProjects.map((project) => project.Id)),

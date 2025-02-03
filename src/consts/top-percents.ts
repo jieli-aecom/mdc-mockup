@@ -8,7 +8,7 @@ export const TOP_PERCENT_LABELS: Record<TopPercent, string> = {
   75: "Top 75%",
   85: "Top 85%",
   95: "Top 95%",
-  100: "All",
+  100: "Top 100%",
 };
 
 export interface SelectorOptionProps {

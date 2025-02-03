@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./ProjectPrioritizationTable.css";
 import { Project } from "../../../types/Project";
 import ArrowDown from "../../../icons/ArrowDown";
@@ -30,6 +30,11 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
 }) => {
   const [sortByIndex, setSortByIndex] = useState<number>(0);
   const [sortAscending, setSortAscending] = useState<boolean>(true);
+
+  useEffect(() => {
+    setSortByIndex(0);
+    setSortAscending(true);
+  }, [config])
 
   const sortedProjects = useMemo(() => {
     const sorted = [...projects];
@@ -102,6 +107,7 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
             >
               {config.map((col: TableColumnConfiguration, index) => (
                 <td
+                  key={index}
                   style={{ width: col.width, textAlign: col.align }}
                   onClick={() => {}}
                 >

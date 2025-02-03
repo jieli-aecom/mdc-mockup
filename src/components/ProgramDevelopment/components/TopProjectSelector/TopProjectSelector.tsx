@@ -1,23 +1,25 @@
 import { FC } from "react";
 import "./TopProjectSelector.css";
-import { SelectorOptionProps, TopPercent } from "../../../../consts/top-percents";
+import {
+  SelectorOptionProps,
+  TopPercent,
+} from "../../../../consts/top-percents";
 
 interface TopProjectSelectorProps {
   value: TopPercent;
   options: SelectorOptionProps[];
+  totalProjects?: number;
   onChange: (newValue: TopPercent) => void;
 }
 
 const TopProjectSelector: FC<TopProjectSelectorProps> = ({
   value,
   options,
+  totalProjects = 200,
   onChange,
 }) => {
   return (
-    <div
-      className="top-projects-selector"
-      style={{ marginBottom: "25px", marginTop: "18px" }}
-    >
+    <div className="top-projects-selector">
       <select
         className="top-project-selector-container"
         value={value}
@@ -32,7 +34,7 @@ const TopProjectSelector: FC<TopProjectSelectorProps> = ({
       <span style={{ fontWeight: 600 }}>
         of{" "}
         <span style={{ color: "#4D9FD7", textDecoration: "underline" }}>
-          200
+          {totalProjects}
         </span>{" "}
         projects
       </span>

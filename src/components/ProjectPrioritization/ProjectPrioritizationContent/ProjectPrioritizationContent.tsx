@@ -1,91 +1,40 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CSVLink } from "react-csv";
-import { DATA_URL } from "../../../consts";
 import FilterItem from "../../FilterItem/FilterItem";
 import ExportIcon from "../../../icons/ExportIcon";
-import ProjectPrioritizationTable, { TableConfiguration } from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
+import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
 import "./ProjectPrioritizationContent.css";
 import "../../../styles/button-styles.css";
 import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
 import { projectPrioritizationContext } from "../../../pages/ProjectPrioritization/ProjectPrioritization";
-import { Project } from "../../../types/Project";
+import { Project, ProjectType } from "../../../types/Project";
 import { generalTableConfig } from "./table-configs";
+import { COMMISSION_DISTRICTS } from "../../../consts/districts";
+import { CommissionDistrict } from "../../../types/District";
+import { PROJECT_TYPES } from "../../../consts/projects";
+import {
+  TOP_PERCENT_LABELS,
+  TOP_PERCENT_OPTIONS,
+} from "../../../consts/top-percents";
+import TopProjectSelector from "../../ProgramDevelopment/components/TopProjectSelector/TopProjectSelector";
 
 interface ProjectPrioritizationContentProps {
   tab: string;
   changeProject: (newProject: any) => void;
 }
 
-
-
 const ProjectPrioritizationContent: React.FC<
   ProjectPrioritizationContentProps
 > = ({ tab, changeProject }) => {
-
-  const {filteredProjects} = useContext(projectPrioritizationContext);
+  const {
+    filteredProjects,
+    toggleSetFilterDistrict,
+    toggleSetFilterType,
+    topPercents,
+    toggleSetTopPercent,
+  } = useContext(projectPrioritizationContext);
 
   const [isHover, setHover] = useState(false);
-  const percentages = [5, 15, 25, 50, 75, 85, 95];
-  const types = [
-    "Arterial & Collector",
-    "Assets",
-    "Bike & Pedestrian",
-    "Congestion",
-    "Freight",
-    "Transit",
-    "Other",
-  ];
-  const districts = [
-    "District 1",
-    "District 2",
-    "District 3",
-    "District 4",
-    "District 5",
-    "District 6",
-  ];
-  const [mapData, setMapData] = useState<any>(null);
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(DATA_URL);
-        const data = await response.json();
-        setMapData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (mapData) setProjects(mapData.features);
-  }, [mapData]);
-
-  // useEffect(() => {
-  //   if (projects) {
-  //     setFilteredProjects(projects);
-  //   }
-  // }, [projects]);
-
-  const getLocationScore = (data: any) => {
-    return Math.round(
-      (data.Safety + data.Resiliency + data.TravelTime + data.LandUse) / 4
-    );
-  };
-
-  const getBenefitScore = (data: any) => {
-    return Math.round(
-      (data.PopDensity + data.Existing + data.EmployDensity + data.Metrobus) / 4
-    );
-  };
-
-  const getCompositeScore = (data: any) => {
-    return Math.round((getLocationScore(data) + getBenefitScore(data)) / 2);
-  };
-
   const getCurrentProjects = () => {
     if (tab === "") {
       return filteredProjects.map((project: Project) => ({
@@ -163,17 +112,16 @@ const ProjectPrioritizationContent: React.FC<
         <div className="project-prioritization-buttons">
           <div className="filters-container">
             <FilterItem
-              label="Rank"
-              items={percentages.map((p) => `Top ${p}%`)}
-              handleUpdate={(p: string) =>
-              {}
-              }
+              label="Type"
+              items={PROJECT_TYPES}
+              handleUpdate={(e) => toggleSetFilterType(e as ProjectType)}
             />
-            <FilterItem label="Type" items={types} handleUpdate={() => {}} />
             <FilterItem
               label="Commission District"
-              items={districts}
-              handleUpdate={() => {}}
+              items={COMMISSION_DISTRICTS}
+              handleUpdate={(e) =>
+                toggleSetFilterDistrict(e as CommissionDistrict)
+              }
             />
           </div>
           <div
@@ -195,6 +143,13 @@ const ProjectPrioritizationContent: React.FC<
             </CSVLink>
           </div>
         </div>
+        <TopProjectSelector
+          value={topPercents}
+          options={TOP_PERCENT_OPTIONS}
+          onChange={toggleSetTopPercent}
+          totalProjects={filteredProjects.length}
+        />
+
         <ProjectPrioritizationTable
           id={tab}
           config={generalTableConfig}

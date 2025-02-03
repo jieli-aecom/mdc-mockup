@@ -80,16 +80,12 @@ export function useProjectPriotizationContext() {
 
   //#region Derived states
 
-  const filteredProjects: Project[] = useMemo(() => {
-    return filterProjects(
-      projects,
-      topPercents,
-      filteredTypes,
-      filteredDistricts
-    )
-  }, [projects, topPercents, filteredTypes, filteredDistricts]);
-
-  console.log("filteredProjects", filteredProjects);
+  const filteredProjects: Project[] = filterProjects(
+    projects,
+    topPercents,
+    filteredTypes,
+    filteredDistricts
+  );
 
   const mapGraphics = useMemo(() => {
     return makeMapGraphicsByType(
@@ -111,6 +107,7 @@ export function useProjectPriotizationContext() {
     } else {
       filteredTypes.add(type);
     }
+    console.log("filteredTypes", filteredTypes);
     setFilteredTypes(filteredTypes);
   };
 
