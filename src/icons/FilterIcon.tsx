@@ -7,7 +7,7 @@ interface FilterIconProps extends React.SVGProps<SVGSVGElement> {
 
 const FilterIcon: React.FC<FilterIconProps> = ({
   strokeColor = "#263d8c",
-  strokeWidth = 2,
+  strokeWidth = 1.5,
   ...props
 }) => (
   <svg

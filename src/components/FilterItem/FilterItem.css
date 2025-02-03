@@ -1,6 +1,6 @@
 .filter-item-container {
   background-color: white;
-  border: 2px solid #263c8c;
+  border: 1.5px solid #263c8c;
   border-radius: 5px;
   color: #263c8c;
   padding: 6px 14px 5px 17px;
@@ -9,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-size: 18px;
+  font-size: 0.9rem;
   width: fit-content;
 }
 
@@ -28,7 +28,9 @@
 }
 
 .filter-dropdown-container {
-  width: 250px;
+  width: 150px;
+  max-height: 200px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

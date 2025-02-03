@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FilterIcon from "../../icons/FilterIcon";
 
 import "./FilterItem.css";
+import { DEEP_BLUE, WHITE } from "../../consts/colors";
 
 interface FilterItemProps {
   label: string;
@@ -34,7 +35,7 @@ const FilterItem: React.FC<FilterItemProps> = ({
         className={`filter-item-container${open ? " filter-item-active" : ""}`}
         onClick={() => setOpen(!open)}
       >
-        <FilterIcon strokeColor={open ? "#ffffff" : "#263d8c"} />
+        <FilterIcon strokeColor={open ? WHITE : DEEP_BLUE} />
         <div>{label}</div>
       </div>
       {open && (
