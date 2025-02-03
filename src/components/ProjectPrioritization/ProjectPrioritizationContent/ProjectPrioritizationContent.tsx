@@ -6,6 +6,7 @@ import ExportIcon from "../../../icons/ExportIcon";
 import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
 import "./ProjectPrioritizationContent.css";
 import "../../../styles/button-styles.css";
+import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
 
 interface ProjectPrioritizationContentProps {
   tab: string;
@@ -210,6 +211,10 @@ const ProjectPrioritizationContent: React.FC<
           projects={filteredProjects}
           selectProject={changeProject}
         />
+      </div>
+
+      <div className="project-prioritization-map">
+        <ProjectPrioritizationMap />
       </div>
     </div>
   );
