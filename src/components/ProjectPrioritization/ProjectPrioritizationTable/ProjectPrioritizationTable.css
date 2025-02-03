@@ -17,13 +17,14 @@
 
 .project-table th,
 .project-table td {
-  padding: 3px;
+  padding: 5px;
   text-align: center;
 }
 
 .project-table thead {
   background-color: white;
   border-bottom: 4px solid var(--dark-orange);
+  padding-right: 14px;
 }
 
 .project-table tbody {
@@ -62,7 +63,16 @@
 .table-sorts {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+}
+
+.table-sorts > button {
+  all: unset;
+  width: 20px;
+  height: 20px;
+}
+
+.table-sorts > button:hover {
+  cursor: pointer;
 }
 
 .project-table td {

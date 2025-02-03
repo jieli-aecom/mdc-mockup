@@ -35,6 +35,7 @@ export const makeProject = (feature: Graphic) => {
   if (
     !feature?.attributes ||
     !feature?.attributes?.GlobalID ||
+    !feature?.attributes?.Location ||
     !feature?.attributes?.Type ||
     !feature?.geometry
   ) {
@@ -48,7 +49,7 @@ export const makeProject = (feature: Graphic) => {
   const type: ProjectType = projectType2((attributes?.Type as string).trim());
 
   const locationScores: ProjectLocationScores = {
-    Location: attributes?.TotalScore || 0,
+    Location: attributes?.TotalScore / 11 || 0,
     ConnectToExisting: attributes?.Existing || 0,
     Metrobus: attributes?.Metrobus || 0,
     Transit: attributes?.TransitStation || 0,
@@ -63,7 +64,7 @@ export const makeProject = (feature: Graphic) => {
   };
 
   const benefitScores: ProjectBenefitScores = {
-    Benefit: attributes?.TotalBenefitScore || 0,
+    Benefit: attributes?.TotalBenefitScore / 3 || 0,
     Social: attributes?.BenefitSocial || 0,
     Environmental: attributes?.BenefitEnvironmental || 0,
     Economic: attributes?.BenefitEconomic || 0,

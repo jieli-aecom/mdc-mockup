@@ -4,8 +4,7 @@ import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../../../consts/top-percents";
 import { useGetProjects } from "../../../hooks/useGetProjects";
 import { CommissionDistrict } from "../../../types/District";
-import { makeMapGraphics } from "../../../utils/map";
-
+import { makeMapGraphicsByType } from "../../../utils/map";
 
 const filterProjects = (
   projects: Project[],
@@ -74,6 +73,7 @@ export function useProjectPriotizationContext() {
   // Highlighted project (singular)
   const [highlightedProjectId, setHighlightedProjectId] = useState<string>("");
 
+
   // Map zoom signal
   const [mapZoomSignal, setMapZoomSignal] = useState<boolean>(false);
   //#endregion
@@ -92,10 +92,8 @@ export function useProjectPriotizationContext() {
   console.log("filteredProjects", filteredProjects);
 
   const mapGraphics = useMemo(() => {
-    return makeMapGraphics(
+    return makeMapGraphicsByType(
       filteredProjects,
-      new Set(),
-      new Set()
     );
   }, [filteredProjects]);
 

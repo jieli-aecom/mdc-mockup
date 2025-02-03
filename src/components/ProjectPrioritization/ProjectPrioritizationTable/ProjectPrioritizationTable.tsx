@@ -1,95 +1,113 @@
-import React from "react";
-import SortUpIcon from "../../../icons/SortUpIcon";
+import React, { useMemo, useState } from "react";
 import "./ProjectPrioritizationTable.css";
-import SortDownIcon from "../../../icons/SortDownIcon";
 import { Project } from "../../../types/Project";
+import ArrowDown from "../../../icons/ArrowDown";
+import ArrowUp from "../../../icons/ArrowUp";
+import { DARK_ORANGE, MID_GRAY } from "../../../consts/colors";
+
+export type TableColumnConfiguration = {
+  label: string;
+  value: (project: Project) => string | number;
+  display: (project: Project) => string;
+  color?: (project: Project) => string;
+  align?: "left" | "center" | "right";
+  width: string;
+};
+
+export type TableConfiguration = TableColumnConfiguration[];
 
 interface ProjectPrioritizationTableProps {
   id: string;
   projects: Project[];
+  config: TableConfiguration;
   selectProject?: (newProject: any) => void;
 }
 
 const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
-  id,
   projects,
+  config,
   selectProject = () => {},
 }) => {
-  const getLocationScore = (data: any) => {
-    return Math.round(
-      (data.Safety + data.Resiliency + data.TravelTime + data.LandUse) / 4
-    );
-  };
+  const [sortByIndex, setSortByIndex] = useState<number>(0);
+  const [sortAscending, setSortAscending] = useState<boolean>(true);
 
-  const getBenefitScore = (data: any) => {
-    return Math.round(
-      (data.PopDensity + data.Existing + data.EmployDensity + data.Metrobus) / 4
-    );
-  };
+  const sortedProjects = useMemo(() => {
+    const sorted = [...projects];
+    sorted.sort((a, b) => {
+      const valueA: string | number = config[sortByIndex].value(a);
+      const valueB: string | number = config[sortByIndex].value(b);
 
-  const getCompositeScore = (data: any) => {
-    return Math.round((getLocationScore(data) + getBenefitScore(data)) / 2);
-  };
-
-  const getScoreClass = (value: number) => {
-    if (value >= 60) return "high-score";
-    else if (value >= 30) return "medium-score";
-    else return "low-score";
-  };
+      if (typeof valueA === "string" || typeof valueB === "string") {
+        if (sortAscending) {
+          return String(valueA).localeCompare(String(valueB));
+        } else {
+          return String(valueB).localeCompare(String(valueA));
+        }
+      } else {
+        if (sortAscending) {
+          return Number(valueA) - Number(valueB);
+        } else {
+          return Number(valueB) - Number(valueA);
+        }
+      }
+    });
+    return sorted;
+  }, [projects, config, sortByIndex, sortAscending]);
 
   return (
     <div className="project-prioritization-table-container">
       <table className="project-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>
-              <div className="table-sort-box">
-                <p>Composite Score</p>
-                <div className="table-sorts">
-                  <SortUpIcon />
-                  <SortDownIcon />
-                </div>
-              </div>
-            </th>
-            <th>
-              <div className="table-sort-box">
-                <p>Location Score</p>
-                <div className="table-sorts">
-                  <SortUpIcon />
-                  <SortDownIcon />
-                </div>
-              </div>
-            </th>
-            <th>
-              <div className="table-sort-box">
-                <p>Benefit Score</p>
-                <div className="table-sorts">
-                  <SortUpIcon />
-                  <SortDownIcon />
-                </div>
-              </div>
-            </th>
+            {config.map((col: TableColumnConfiguration, index) => {
+              const sortUpClick = () => {
+                setSortByIndex(index);
+                setSortAscending(true);
+              }
+
+              const sortDownClick = () => {
+                setSortByIndex(index);
+                setSortAscending(false);
+              }
+
+              const sortUpColor = sortByIndex === index && sortAscending ? DARK_ORANGE : MID_GRAY;
+              const sortDownColor = sortByIndex === index && !sortAscending ? DARK_ORANGE : MID_GRAY;
+
+              const sortUpLabel = "Sort by " + col.label + " ascending";
+              const sortDownLabel = "Sort by " + col.label + " descending";
+
+              return (
+                <th key={index} style={{ width: col.width, textAlign: "left" }}>
+                  <div className="table-sort-box">
+                    <p>{col.label}</p>
+                    <div className="table-sorts">
+                      <button onClick={sortUpClick} title={sortUpLabel} aria-label={sortUpLabel}>
+                        <ArrowUp color={sortUpColor} />
+                      </button>
+                      <button onClick={sortDownClick} title={sortDownLabel} aria-label={sortDownLabel}>
+                        <ArrowDown color={sortDownColor} />
+                      </button>
+                    </div>
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
-          {projects.map((project: Project, index) => (
+          {sortedProjects.map((project: Project, index) => (
             <tr
               key={index}
               style={{ backgroundColor: index % 2 ? "white" : "#ebebeb" }}
             >
-              <td style={{ width: "30%" }} onClick={() => {}}>
-                {project.Location}
-              </td>
-              <td
-                className={`composite-score ${getScoreClass(
-                  project.CompositeScore
-                )}`}
-              >
-                {project.CompositeScore}
-              </td>
-              <td>{project.LocationScores.Location}</td>
-              <td>{project.BenefitScores.Benefit}</td>
+              {config.map((col: TableColumnConfiguration, index) => (
+                <td
+                  style={{ width: col.width, textAlign: col.align }}
+                  onClick={() => {}}
+                >
+                  {col.display(project)}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>

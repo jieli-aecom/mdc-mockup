@@ -1,5 +1,5 @@
 import Graphic from "@arcgis/core/Graphic";
-import { Project } from "../types/Project";
+import { Project, ProjectType } from "../types/Project";
 import {
   PICKED_LINE_SYMBOL,
   PICKED_POINT_SYMBOL,
@@ -8,6 +8,7 @@ import {
   SELECTED_LINE_SYMBOL,
   SELECTED_POINT_SYMBOL,
 } from "../consts/map";
+import Color from "@arcgis/core/Color";
 
 export const makeMapGraphics = (
   mapProjects: Project[],
@@ -54,4 +55,35 @@ export const makeMapGraphics = (
     ...pickedGraphics,
   ]; // order matters
   return mapGraphics;
+};
+
+const colorByType: Record<ProjectType, string> = {
+  [ProjectType.Bike]: "#36A355",
+  [ProjectType.Pedestrian]: "#C0DA73",
+  [ProjectType.Roadway]: "#263C8C",
+  [ProjectType.Transit]: "#4D9FD7",
+  [ProjectType.Freight]: "#E61754",
+};
+
+export const makeMapGraphicsByType = (mapProjects: Project[]) => {
+  const graphics: Graphic[] = mapProjects.map((project: Project) => {
+    const geometry = project.Geometry;
+
+    let symbol;
+
+    if (project.IsLine) {
+      symbol = REGULAR_LINE_SYMBOL.clone();
+      symbol.color = new Color(colorByType[project.Type]);
+    } else {
+      symbol = REGULAR_POINT_SYMBOL.clone();
+      symbol.color = new Color(colorByType[project.Type]);
+    }
+
+    return new Graphic({
+      geometry,
+      symbol,
+    });
+  });
+
+  return graphics;
 };

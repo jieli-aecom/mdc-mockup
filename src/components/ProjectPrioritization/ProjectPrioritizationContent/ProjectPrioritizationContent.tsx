@@ -3,17 +3,20 @@ import { CSVLink } from "react-csv";
 import { DATA_URL } from "../../../consts";
 import FilterItem from "../../FilterItem/FilterItem";
 import ExportIcon from "../../../icons/ExportIcon";
-import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
+import ProjectPrioritizationTable, { TableConfiguration } from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
 import "./ProjectPrioritizationContent.css";
 import "../../../styles/button-styles.css";
 import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
 import { projectPrioritizationContext } from "../../../pages/ProjectPrioritization/ProjectPrioritization";
 import { Project } from "../../../types/Project";
+import { generalTableConfig } from "./table-configs";
 
 interface ProjectPrioritizationContentProps {
   tab: string;
   changeProject: (newProject: any) => void;
 }
+
+
 
 const ProjectPrioritizationContent: React.FC<
   ProjectPrioritizationContentProps
@@ -194,6 +197,7 @@ const ProjectPrioritizationContent: React.FC<
         </div>
         <ProjectPrioritizationTable
           id={tab}
+          config={generalTableConfig}
           projects={filteredProjects}
         />
       </div>
