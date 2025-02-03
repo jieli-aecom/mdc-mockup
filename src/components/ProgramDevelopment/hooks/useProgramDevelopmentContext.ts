@@ -15,19 +15,19 @@ import { useGetProjects } from "../../../hooks/useGetProjects";
 //#region Utility functions
 const makeMapGraphics = (
   mapProjects: Project[],
-  selectedProjectIds: Set<number> = new Set(),
-  pickedProjectIds: Set<number> = new Set()
+  selectedProjectIds: Set<string> = new Set(),
+  pickedProjectIds: Set<string> = new Set()
 ) => {
   const regularGraphics: Graphic[] = [];
   const selectedGraphics: Graphic[] = [];
   const pickedGraphics: Graphic[] = [];
   for (const project of mapProjects) {
-    if (!project.Shape) continue;
+    if (!project.Geometry) continue;
 
     if (pickedProjectIds.has(project.Id)) {
       const symbol = project.IsLine ? PICKED_LINE_SYMBOL : PICKED_POINT_SYMBOL;
       const graphic = new Graphic({
-        geometry: project.Shape,
+        geometry: project.Geometry,
         symbol,
       });
       pickedGraphics.push(graphic);
@@ -36,7 +36,7 @@ const makeMapGraphics = (
         ? SELECTED_LINE_SYMBOL
         : SELECTED_POINT_SYMBOL;
       const graphic = new Graphic({
-        geometry: project.Shape,
+        geometry: project.Geometry,
         symbol,
       });
       selectedGraphics.push(graphic);
@@ -45,7 +45,7 @@ const makeMapGraphics = (
         ? REGULAR_LINE_SYMBOL
         : REGULAR_POINT_SYMBOL;
       const graphic = new Graphic({
-        geometry: project.Shape,
+        geometry: project.Geometry,
         symbol,
       });
       regularGraphics.push(graphic);
@@ -66,7 +66,7 @@ const filterProjects = (
   filterType: ProjectType | null
 ) => {
   const filteredProjects = [...projects]
-    .filter((project) => !filterType || project.ProjectType === filterType)
+    .filter((project) => !filterType || project.Type === filterType)
     .slice(0, Math.ceil((topPercent / 100) * projects.length));
   return filteredProjects;
 };
@@ -75,16 +75,16 @@ const filterProjects = (
 //#region Interface
 export interface ProgramDevelopmentContext {
   filteredProjects: Project[];
-  selectedProjectIds: Set<number>;
+  selectedProjectIds: Set<string>;
   selectedProjects: Project[];
   isAllSelected: boolean;
-  toggleSelectProject: (projectId: number) => void;
+  toggleSelectProject: (projectId: string) => void;
   selectAllFilteredProjects: () => void;
   unselectAllFilteredProjects: () => void;
-  pickedProjectIds: Set<number>;
+  pickedProjectIds: Set<string>;
   pickedProjects: Project[];
   isAllPicked: boolean;
-  togglePickProject: (projectId: number) => void;
+  togglePickProject: (projectId: string) => void;
   pickAllSelectedProjects: () => void;
   unpickAllSelectedProjects: () => void;
   topPercents: TopPercent;
@@ -122,19 +122,19 @@ export const initialContext: ProgramDevelopmentContext = {
 export function useProgramDevelopmentContext() {
   //#region States
 
-  const { projects } = useGetProjects();
+  const { projects2: projects } = useGetProjects();
 
   // Tier 1: filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);
   const [filterType, setFilterType] = useState<ProjectType | null>(null);
 
   // Tier 2: selected as candidate for aggregation ("Selected")
-  const [selectedProjectIds, setSelectedProjectIds] = useState<Set<number>>(
+  const [selectedProjectIds, setSelectedProjectIds] = useState<Set<string>>(
     new Set()
   );
 
   // Tier 3: aggregated projects ("Picked")
-  const [pickedProjectIds, setPickedProjectIds] = useState<Set<number>>(
+  const [pickedProjectIds, setPickedProjectIds] = useState<Set<string>>(
     new Set()
   );
 
@@ -194,7 +194,7 @@ export function useProgramDevelopmentContext() {
     unpickAllSelectedProjects();
   };
 
-  const toggleSelectProject = (projectId: number) => {
+  const toggleSelectProject = (projectId: string) => {
     if (!allProjectIds.has(projectId)) {
       throw new Error(`Project with id ${projectId} not found in all projects`);
     }
@@ -218,7 +218,7 @@ export function useProgramDevelopmentContext() {
     setPickedProjectIds(new Set());
   };
 
-  const togglePickProject = (projectId: number) => {
+  const togglePickProject = (projectId: string) => {
     if (!selectedProjectIds.has(projectId)) {
       throw new Error(
         `Project with id ${projectId} not found in selected projects`
@@ -256,10 +256,6 @@ export function useProgramDevelopmentContext() {
 
   // When source projects change, update hook copy, and reset all filters
   useEffect(() => {
-    const allProjects = [...projects];
-    allProjects.sort((a: Project, b: Project) => {
-      return b.CompositeScore - a.CompositeScore;
-    });
     setTopPercents(100); // TODO: to reset other filters when added
     setSelectedProjectIds(new Set());
     setPickedProjectIds(new Set());
@@ -288,5 +284,5 @@ export function useProgramDevelopmentContext() {
     mapGraphics,
     mapZoomSignal,
     triggerMapZoomSignal,
-  };
+  } as ProgramDevelopmentContext;
 }

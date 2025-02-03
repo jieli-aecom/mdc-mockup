@@ -5,7 +5,7 @@ import "../../../../styles/button-styles.css";
 import ProjectDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import FilterItem from "../../../FilterItem/FilterItem";
 import { PROJECT_TYPES } from "../../../../consts/projects";
-import { DISTRICTS } from "../../../../consts/districts";
+import { COMMISSION_DISTRICTS } from "../../../../consts/districts";
 
 import ProgramDevelopmentPage1Screen1 from "../ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";
 import ProgramDevelopmentPage1Screen2 from "../ProgramDevelopmentPage1Screen2/ProgramDevelopmentPage1Screen2";
@@ -45,7 +45,7 @@ const ProgramDevelopmentPage1: React.FC<ProgramDevelopmentPage1Props> = ({
           />
           <FilterItem
             label="Commission District"
-            items={DISTRICTS}
+            items={COMMISSION_DISTRICTS}
             handleUpdate={() => {}}
           />
         </div>

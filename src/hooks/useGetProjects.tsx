@@ -1,153 +1,98 @@
 import Query from "@arcgis/core/rest/support/Query";
 import { useEffect, useState } from "react";
-import { LINE_PROJECTS_LAYER, POINT_PROJECTS_LAYER } from "../consts/projects";
+import {
+  LINE_PROJECTS_LAYER,
+  POINT_PROJECTS_LAYER,
+} from "../consts/projects";
 import {
   Project,
-  ProjectLevel1Category,
-  ProjectLevel2Category,
-  ProjectSummaryScore,
+  ProjectBenefitScores,
+  ProjectLocationScores,
   ProjectType,
 } from "../types/Project";
 import Graphic from "@arcgis/core/Graphic";
-import { REGULAR_LINE_SYMBOL, REGULAR_POINT_SYMBOL } from "../consts/map";
+import { CommissionDistrict } from "../types/District";
+import Geometry from "@arcgis/core/geometry/Geometry";
 
-const projectTypeLookup: { [key: string]: ProjectType } = {
-  "A&C": ProjectType.ArterialCollector,
-  Bridge: ProjectType.Other,
-  "P&B": ProjectType.BikePedestrian,
+
+const projectTypeLookup2: { [key: string]: ProjectType } = {
+  Bike: ProjectType.Bike,
+  Pedestrian: ProjectType.Pedestrian,
+  Roadway: ProjectType.Roadway,
+  Transit: ProjectType.Transit,
+  Freight: ProjectType.Freight,
 };
 
-const projectType = (type: string): ProjectType => {
-  if (projectTypeLookup[type]) return projectTypeLookup[type];
-  return ProjectType.Other;
+const projectType2 = (type: string): ProjectType => {
+  if (!projectTypeLookup2.hasOwnProperty(type)) {
+    throw new Error(`Unknown project type: ${type}`);
+  }
+  return projectTypeLookup2[type];
 };
 
-const makeProject = (feature: Graphic, id: number, isLine: boolean): Project | null => {
-  if (!feature?.attributes) {
-    return null;
-  };
 
-  const attributes = feature.attributes;
-  const type: ProjectType = projectType(attributes?.PrjType || "");
-
-  const scores: ProjectSummaryScore[] = [
-    {
-      label: ProjectLevel1Category.Safe,
-      value: (attributes?.Safe_Score as number) || 0,
-      details: [
-        {
-          label: ProjectLevel2Category.VehicularCrashes,
-          value: (attributes?.Safe_0 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.BikePedCrashes,
-          value: (attributes?.Safe_1 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.DecreaseInBikeCrash,
-          value: (attributes?.Safe_2 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.AtGradeRailCrossings,
-          value: (attributes?.Safe_3 as number) || 0,
-        },
-      ],
-    },
-    {
-      label: ProjectLevel1Category.Clean,
-      value: (attributes?.Clean_Score as number) || 0,
-      details: [
-        {
-          label: ProjectLevel2Category.SidewalkNetwork,
-          value: (attributes?.Clean_0 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.BikeNetwork,
-          value: (attributes?.Clean_1 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.DecreaseInPollutants,
-          value: (attributes?.Clean_2 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.DecreaseInHeatExposure,
-          value: (attributes?.Clean_3 as number) || 0,
-        },
-      ],
-    },
-    {
-      label: ProjectLevel1Category.Efficient,
-      value: (attributes?.Efficient_Score as number) || 0,
-      details: [
-        {
-          label: ProjectLevel2Category.DecreaseInTraffic,
-          value: (attributes?.Efficient_0 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.DecreaseInTravelTime,
-          value: (attributes?.Efficient_1 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.DecreaseInTruckVolume,
-          value: (attributes?.Efficient_2 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.IncreaseInTravelLanes,
-          value: (attributes?.Efficient_3 as number) || 0,
-        },
-      ],
-    },
-    {
-      label: ProjectLevel1Category.Connected,
-      value: (attributes?.Connected_Score as number) || 0,
-      details: [
-        {
-          label: ProjectLevel2Category.AccessToTransit,
-          value: (attributes?.Connected_0 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.AccessToParks,
-          value: (attributes?.Connected_1 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.OverlapWithSmartCorridors,
-          value: (attributes?.Connected_2 as number) || 0,
-        },
-        {
-          label: ProjectLevel2Category.PopulationTransitDependent,
-          value: (attributes?.Connected_3 as number) || 0,
-        }
-      ]
-    }
-  ];
-
-  const compositeScore = Math.round(scores.reduce((acc: number, score: ProjectSummaryScore) => {
-    return acc + score.value;
-  }, 0) / scores.length); 
-
-  if (!attributes?.TIPName || attributes?.TIPName === "temp") {
+export const makeProject2 = (feature: Graphic) => {
+  if (
+    !feature?.attributes ||
+    !feature?.attributes?.GlobalID ||
+    !feature?.attributes?.Type ||
+    !feature?.geometry
+  ) {
     return null;
   }
 
+  const geometry: Geometry = feature.geometry;
+  const isLine = geometry.type !== "point";
+
+  const attributes = feature.attributes;
+  const type: ProjectType = projectType2((attributes?.Type as string).trim());
+
+  const locationScores: ProjectLocationScores = {
+    Location: attributes?.TotalScore || 0,
+    ConnectToExisting: attributes?.Existing || 0,
+    Metrobus: attributes?.Metrobus || 0,
+    Transit: attributes?.TransitStation || 0,
+    ServiceArea: attributes?.ServiceArea || 0,
+    EquityArea: attributes?.Equity || 0,
+    Resiliency: attributes?.Resiliency || 0,
+    LandUse: attributes?.LandUse || 0,
+    PopDensity: attributes?.PopDensity || 0,
+    EmpDensity: attributes?.EmployDensity || 0,
+    TravelTime: attributes?.TravelTime || 0,
+    Safety: attributes?.Safety || 0,
+  };
+
+  const benefitScores: ProjectBenefitScores = {
+    Benefit: attributes?.TotalBenefitScore || 0,
+    Social: attributes?.BenefitSocial || 0,
+    Environmental: attributes?.BenefitEnvironmental || 0,
+    Economic: attributes?.BenefitEconomic || 0,
+  };
+
+  const commissionDistricts: CommissionDistrict[] =
+    attributes?.CommissionDistrict
+      ? (attributes?.CommissionDistrict as string)
+          .split(",")
+          .map((d: string) => d.trim() as CommissionDistrict)
+      : [];
+
   const project: Project = {
-    Id: id,
-    Name: attributes?.TIPName,
-    ProjectNumber: attributes?.TIPProject || "",
-    Description: attributes?.Descriptio || "",
-    Totalcost: attributes?.TotalCost || 0,
-    ProjectType: type,
-    Scores: scores,
-    CompositeScore: compositeScore,
-    Metrics: [],
-    Shape: feature?.geometry,
+    Id: attributes?.GlobalID as string,
+    Type: type,
+    Location: attributes?.Location || attributes?.LOCATION || "",
+    CommissionDistricts: commissionDistricts,
+    LocationScores: locationScores,
+    BenefitScores: benefitScores,
+    CompositeScore: (locationScores.Location + benefitScores.Benefit) / 2,
     IsLine: isLine,
+    Geometry: geometry,
   };
 
   return project;
-}
+};
 
 export function useGetProjects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects2, setProjects2] = useState<Project[]>([]);
 
   useEffect(() => {
     const query = new Query({
@@ -160,20 +105,21 @@ export function useGetProjects() {
 
     const fetchProjects = async () => {
       try {
-        const pointsResp = await POINT_PROJECTS_LAYER.queryFeatures(query);
-        const linesResp = await LINE_PROJECTS_LAYER.queryFeatures(query);
 
-        const projects: Project[] = [];
-        for (const feature of pointsResp?.features) {
-          const project = makeProject(feature, id++, false);
-          if (project) projects.push(project);
+        const pointsResp2 = await POINT_PROJECTS_LAYER.queryFeatures(query);
+        const linesResp2 = await LINE_PROJECTS_LAYER.queryFeatures(query);
+
+        const projects2: Project[] = [];
+        for (const feature of pointsResp2?.features) {
+          const project2 = makeProject2(feature);
+          if (project2) projects2.push(project2);
         }
 
-        for (const feature of linesResp?.features) {
-          const project = makeProject(feature, id++, true);
-          if (project) projects.push(project);
+        for (const feature of linesResp2?.features) {
+          const project2 = makeProject2(feature);
+          if (project2) projects2.push(project2);
         }
-        setProjects(projects);
+        setProjects2(projects2);
       } catch (error) {
         console.error(error);
       }
@@ -182,5 +128,5 @@ export function useGetProjects() {
     fetchProjects();
   }, []);
 
-  return { projects };
+  return { projects2 };
 }

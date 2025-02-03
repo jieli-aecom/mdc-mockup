@@ -4,11 +4,11 @@ import "./ProgramDevelopmentTable.css";
 
 export interface ProgramDevelopmentTableProps {
   projects: Project[];
-  selectedIds: Set<number>;
+  selectedIds: Set<string>;
   isAllSelected: boolean;
   handleUnselectAll: () => void;
   handleSelectAll: () => void;
-  handleSelect: (projectId: number) => void;
+  handleSelect: (projectId: string) => void;
 }
 
 const ProgramDevelopmentTable: FC<ProgramDevelopmentTableProps> = ({
@@ -59,9 +59,9 @@ const ProgramDevelopmentTable: FC<ProgramDevelopmentTableProps> = ({
                 }}
               ></div>
             </td>
-            <td width="30%">{project.Name}</td>
+            <td width="30%">{project.Location}</td>
             <td width="30%" className="td-center">
-              {project.ProjectType}
+              {project.Type}
             </td>
             <td width="30%" className="td-center">
               {project.CompositeScore}

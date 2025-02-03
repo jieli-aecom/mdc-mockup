@@ -13,16 +13,16 @@ export const POINT_PROJECTS_LAYER = new FeatureLayer({
 });
 
 export const LINE_PROJECTS_LAYER = new FeatureLayer({
-  id: "Line Projects",
+  id: "Line Projects 2",
   url: LINE_PROJECTS_LAYER_URL,
   outFields: ["*"],
   popupEnabled: true,
 });
 
 export const PROJECT_TYPES: ProjectType[] = [
-  ProjectType.ArterialCollector,
-  ProjectType.Assets,
-  ProjectType.BikePedestrian,
-  ProjectType.Congestion,
+  ProjectType.Bike,
+  ProjectType.Pedestrian,
+  ProjectType.Roadway,
+  ProjectType.Transit,
   ProjectType.Freight,
 ];

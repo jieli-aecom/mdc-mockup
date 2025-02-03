@@ -1,7 +1,7 @@
 export const POINT_PROJECTS_LAYER_URL =
-  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/arcgis/rest/services/Miami_Mock_Map_WFL1/FeatureServer/0";
+  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/arcgis/rest/services/CTMP_Projects_Points/FeatureServer/0";
 export const LINE_PROJECTS_LAYER_URL =
-  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/arcgis/rest/services/Miami_Mock_Map_WFL1/FeatureServer/1";
+  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/ArcGIS/rest/services/CTMP_Projects_Lines/FeatureServer/0";
 export const CORRIDOR_FEATURE_SERVICE_URL =
   // "https://services7.arcgis.com/wGTEYtsrVhoPXek1/arcgis/rest/services/CPT_Statewide/FeatureServer/0";
   "https://services7.arcgis.com/wGTEYtsrVhoPXek1/ArcGIS/rest/services/Corridor_Assessment_Statewide_Segments_20240506/FeatureServer/2";

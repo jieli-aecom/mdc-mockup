@@ -4,8 +4,6 @@ import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/
 import ProgramDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import LoadIcon from "../../../../icons/LoadIcon";
 import BackIcon from "../../../../icons/BackIcon";
-import PlusIcon from "../../../../icons/PlusIcon";
-import MinusIcon from "../../../../icons/MinusIcon";
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
 import ProgramDevelopmentTypeAggTable, {
   ProgramDevelopmentTypeAggDataRow,
@@ -73,14 +71,12 @@ const TitleSection: FC<TitleSectionProps> = ({ handleToPage1 }) => {
 //#region Util functions
 const aggregateByType = (projects: Project[]) => {
   const countByType: Partial<Record<ProjectType, number>> = {};
-  const costByType: Partial<Record<ProjectType, number>> = {};
   const totalScoreByType: Partial<Record<ProjectType, number>> = {};
   const avgScoreByType: Partial<Record<ProjectType, number>> = {};
 
   for (const project of projects) {
-    const type: ProjectType = project.ProjectType;
+    const type: ProjectType = project.Type;
     countByType[type] = (countByType[type] || 0) + 1;
-    costByType[type] = (costByType[type] || 0) + project.Totalcost;
     totalScoreByType[type] =
       (totalScoreByType[type] || 0) + project.CompositeScore;
   }
@@ -96,7 +92,6 @@ const aggregateByType = (projects: Project[]) => {
   ).map((type) => ({
     Name: type as ProjectType,
     TotalCount: countByType[type as ProjectType]!,
-    TotalCost: costByType[type as ProjectType]!,
     AverageScore: avgScoreByType[type as ProjectType]!,
   }));
 

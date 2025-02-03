@@ -1,27 +1,16 @@
-export enum District {
-  Abilene = "Abilene",
-  Amarillo = "Amarillo",
-  Atlanta = "Atlanta",
-  Austin = "Austin",
-  Beaumont = "Beaumont",
-  Brownwood = "Brownwood",
-  Bryan = "Bryan",
-  Childress = "Childress",
-  CorpusChristi = "Corpus Christi",
-  Dallas = "Dallas",
-  ElPaso = "El Paso",
-  FortWorth = "Fort Worth",
-  Houston = "Houston",
-  Laredo = "Laredo",
-  Lubbock = "Lubbock",
-  Lufkin = "Lufkin",
-  Odessa = "Odessa",
-  Paris = "Paris",
-  Pharr = "Pharr",
-  SanAngelo = "San Angelo",
-  SanAntonio = "San Antonio",
-  Tyler = "Tyler",
-  Waco = "Waco",
-  WichitaFalls = "Wichita Falls",
-  Yoakum = "Yoakum",
-}
+export type CommissionDistrict =
+  | "1"
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "7"
+  | "8"
+  | "9"
+  | "10"
+  | "11"
+  | "12"
+  | "13"
+  | "14"
+  | "15";
