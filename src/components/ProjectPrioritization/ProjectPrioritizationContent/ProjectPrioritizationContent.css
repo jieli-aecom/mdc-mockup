@@ -18,6 +18,7 @@
   padding: 3rem;
   gap: 24px;
   flex: 1;
+  max-width: 60%;
 }
 
 .project-prioritization-map {
@@ -27,6 +28,10 @@
 }
 
 @media only screen and (max-width: 1300px) {
+  .project-prioritization-main {
+    max-width: 100%;
+  }
+
   .project-prioritization-container {
     flex-direction: column;
   }

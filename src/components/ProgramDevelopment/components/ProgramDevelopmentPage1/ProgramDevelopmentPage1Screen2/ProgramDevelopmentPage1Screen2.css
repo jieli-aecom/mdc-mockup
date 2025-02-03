@@ -1,5 +1,5 @@
 .score-board-title-blue {
-  background-color: #456db5;
+  background-color: var(--dark-blue);
   color: white;
   padding: 14px;
   padding-right: 50px;

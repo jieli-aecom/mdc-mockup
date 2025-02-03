@@ -87,7 +87,7 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
                 key={index}
                 style={{ backgroundColor: index % 2 ? "white" : "#ebebeb" }}
               >
-                <td onClick={() => selectProject(project)}>
+                <td style={{width: "30%"}} onClick={() => selectProject(project)}>
                   {project.attributes.ProjectIDJoin}
                 </td>
                 <td

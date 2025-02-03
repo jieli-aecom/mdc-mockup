@@ -38,7 +38,6 @@ const ProjectPrioritizationContent: React.FC<
   const [mapData, setMapData] = useState<any>(null);
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [hasCovers, setHasHovers] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
