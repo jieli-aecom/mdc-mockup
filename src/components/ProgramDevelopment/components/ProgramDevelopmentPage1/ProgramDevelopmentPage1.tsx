@@ -7,8 +7,8 @@ import FilterItem from "../../../FilterItem/FilterItem";
 import { PROJECT_TYPES } from "../../../../consts/projects";
 import { COMMISSION_DISTRICTS } from "../../../../consts/districts";
 
-import ProgramDevelopmentPage1Screen1 from "../ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";
-import ProgramDevelopmentPage1Screen2 from "../ProgramDevelopmentPage1Screen2/ProgramDevelopmentPage1Screen2";
+import ProgramDevelopmentPage1Screen1 from "./ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";
+import ProgramDevelopmentPage1Screen2 from "./ProgramDevelopmentPage1Screen2/ProgramDevelopmentPage1Screen2";
 
 export interface ProgramDevelopmentPage1Props {
   handleToSecondPage: () => void;

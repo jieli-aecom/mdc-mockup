@@ -7,7 +7,7 @@ import BackIcon from "../../../../icons/BackIcon";
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
 import ProgramDevelopmentTypeAggTable, {
   ProgramDevelopmentTypeAggDataRow,
-} from "../ProgramDevelopmentTypeAggTable/ProgramDevelopmentTypeAggTable";
+} from "./ProgramDevelopmentTypeAggTable/ProgramDevelopmentTypeAggTable";
 import { Project, ProjectType } from "../../../../types/Project";
 
 export interface ProgramDevelopmentPage2Props {

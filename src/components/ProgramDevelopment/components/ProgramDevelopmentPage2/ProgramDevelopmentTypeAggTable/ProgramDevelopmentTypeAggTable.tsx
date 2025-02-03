@@ -1,6 +1,6 @@
 import { FC } from "react";
 import "./ProgramDevelopmentTypeAggTable.css";
-import { ProjectType } from "../../../../types/Project";
+import { ProjectType } from "../../../../../types/Project";
 
 export type ProgramDevelopmentTypeAggDataRow = {
   Name: ProjectType;
