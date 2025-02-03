@@ -1,19 +1,18 @@
 import { FC } from "react";
-import "./ProgramDevelopmentTypeAggTable.css";
-import { ProjectType } from "../../../../../types/Project";
+import "./ProgramDevelopmentAggTable.css";
 
-export type ProgramDevelopmentTypeAggDataRow = {
-  Name: ProjectType;
+export type ProgramDevelopmentAggDataRow = {
+  Name: string;
   TotalCount: number;
   AverageScore: number;
 };
 
-export interface ProgramDevelopmentTypeAggTableProps {
-  data: ProgramDevelopmentTypeAggDataRow[];
+export interface ProgramDevelopmentAggTableProps {
+  data: ProgramDevelopmentAggDataRow[];
 }
 
-const ProgramDevelopmentTypeAggTable: FC<
-  ProgramDevelopmentTypeAggTableProps
+const ProgramDevelopmentAggTable: FC<
+  ProgramDevelopmentAggTableProps
 > = ({ data }) => {
   return (
     <table className="program-development-type-agg-table">
@@ -25,7 +24,7 @@ const ProgramDevelopmentTypeAggTable: FC<
         </tr>
       </thead>
       <tbody>
-        {data.map((row: ProgramDevelopmentTypeAggDataRow) => (
+        {data.map((row: ProgramDevelopmentAggDataRow) => (
           <tr key={row.Name}>
             <td width="50%" className="program-development-type-agg-table-leftalign program-development-type-agg-table-bold">{row.Name}</td>
             <td width="25%">{Math.round(row.TotalCount)}</td>
@@ -37,4 +36,4 @@ const ProgramDevelopmentTypeAggTable: FC<
   );
 };
 
-export default ProgramDevelopmentTypeAggTable;
+export default ProgramDevelopmentAggTable;
