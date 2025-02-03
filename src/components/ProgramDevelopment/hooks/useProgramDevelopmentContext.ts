@@ -108,40 +108,58 @@ export function useProgramDevelopmentContext() {
 
   //#region Derived states
 
-  const allProjectIds = new Set(projects.map((project) => project.Id));
-
-  const filteredProjects: Project[] = filterProjects(
-    projects,
-    topPercents,
-    filteredTypes,
-    filteredDistricts
+  const allProjectIds = useMemo(
+    () => new Set(projects.map((project) => project.Id)),
+    [projects]
   );
+
+  const filteredProjects: Project[] = useMemo(() => {
+    return filterProjects(
+      projects,
+      topPercents,
+      filteredTypes,
+      filteredDistricts
+    );
+  }, [projects, topPercents, filteredTypes, filteredDistricts]);
+
   const filteredProjectIds = useMemo(
     () => new Set(filteredProjects.map((project) => project.Id)),
     [filteredProjects]
   );
 
-  const isAllSelected =
-    selectedProjectIds.size === filteredProjectIds.size &&
-    filteredProjectIds.size > 0;
+  const isAllSelected = useMemo(() => {
+    return (
+      selectedProjectIds.size === filteredProjectIds.size &&
+      filteredProjectIds.size > 0
+    );
+  }, [selectedProjectIds, filteredProjectIds]);
 
-  const selectedProjects: Project[] = [...projects].filter((project) => {
-    return selectedProjectIds.has(project.Id);
-  });
+  const selectedProjects: Project[] = useMemo(() => {
+    return [...projects].filter((project) => {
+      return selectedProjectIds.has(project.Id);
+    });
+  }, [projects, selectedProjectIds]);
 
-  const isAllPicked =
-    pickedProjectIds.size === selectedProjectIds.size &&
-    selectedProjectIds.size > 0;
+  const isAllPicked = useMemo(() => {
+    return (
+      pickedProjectIds.size === selectedProjectIds.size &&
+      selectedProjectIds.size > 0
+    );
+  }, [pickedProjectIds, selectedProjectIds]);
 
-  const pickedProjects: Project[] = [...projects].filter((project) => {
-    return pickedProjectIds.has(project.Id);
-  });
+  const pickedProjects: Project[] = useMemo(() => {
+    return [...projects].filter((project) => {
+      return pickedProjectIds.has(project.Id);
+    });
+  }, [projects, pickedProjectIds]);
 
-  const mapGraphics = makeMapGraphics(
-    filteredProjects,
-    selectedProjectIds,
-    pickedProjectIds
-  );
+  const mapGraphics = useMemo(() => {
+    return makeMapGraphics(
+      filteredProjects,
+      selectedProjectIds,
+      pickedProjectIds
+    );
+  }, [filteredProjects, selectedProjectIds, pickedProjectIds]);
 
   //#endregion
 

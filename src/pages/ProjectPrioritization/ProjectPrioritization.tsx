@@ -5,6 +5,7 @@ import "./ProjectPrioritization.css";
 import {
   initialContext,
   ProjectPrioritizationContext,
+  useProjectPriotizationContext,
 } from "../../components/ProjectPrioritization/hooks/useProjectPriotizationContext";
 
 export const projectPrioritizationContext =
@@ -15,8 +16,10 @@ const ProjectPrioritization: React.FC = () => {
   const [currentItem, setItem] = useState("");
   const [setProject] = useState<any>(null);
 
+  const context = useProjectPriotizationContext()
+
   return (
-    <projectPrioritizationContext.Provider value={initialContext}>
+    <projectPrioritizationContext.Provider value={context}>
       <div className="main-content-container">
         <SideBar
           tab={currentTab}

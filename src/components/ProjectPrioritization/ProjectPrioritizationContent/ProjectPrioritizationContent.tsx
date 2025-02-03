@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { DATA_URL } from "../../../consts";
 import FilterItem from "../../FilterItem/FilterItem";
@@ -7,6 +7,8 @@ import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPri
 import "./ProjectPrioritizationContent.css";
 import "../../../styles/button-styles.css";
 import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
+import { projectPrioritizationContext } from "../../../pages/ProjectPrioritization/ProjectPrioritization";
+import { Project } from "../../../types/Project";
 
 interface ProjectPrioritizationContentProps {
   tab: string;
@@ -16,6 +18,9 @@ interface ProjectPrioritizationContentProps {
 const ProjectPrioritizationContent: React.FC<
   ProjectPrioritizationContentProps
 > = ({ tab, changeProject }) => {
+
+  const {filteredProjects} = useContext(projectPrioritizationContext);
+
   const [isHover, setHover] = useState(false);
   const percentages = [5, 15, 25, 50, 75, 85, 95];
   const types = [
@@ -37,7 +42,6 @@ const ProjectPrioritizationContent: React.FC<
   ];
   const [mapData, setMapData] = useState<any>(null);
   const [projects, setProjects] = useState([]);
-  const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,11 +61,11 @@ const ProjectPrioritizationContent: React.FC<
     if (mapData) setProjects(mapData.features);
   }, [mapData]);
 
-  useEffect(() => {
-    if (projects) {
-      setFilteredProjects(projects);
-    }
-  }, [projects]);
+  // useEffect(() => {
+  //   if (projects) {
+  //     setFilteredProjects(projects);
+  //   }
+  // }, [projects]);
 
   const getLocationScore = (data: any) => {
     return Math.round(
@@ -81,38 +85,32 @@ const ProjectPrioritizationContent: React.FC<
 
   const getCurrentProjects = () => {
     if (tab === "") {
-      return filteredProjects.map((project: any) => ({
-        Name: project.attributes.ProjectIDJoin,
-        CompositeScore: getCompositeScore(project.attributes),
-        LocationScore: getLocationScore(project.attributes),
-        BenefitScore: getBenefitScore(project.attributes),
+      return filteredProjects.map((project: Project) => ({
+        Name: project.Location,
+        CompositeScore: project.CompositeScore,
+        LocationScore: project.LocationScores.Location,
+        BenefitScore: project.BenefitScores.Benefit,
         FundingOpportunities: "",
       }));
     } else if (tab === "Location") {
-      return filteredProjects.map((project: any) => ({
-        Name: project.attributes.ProjectIDJoin,
-        LocationScore: getLocationScore(project.attributes),
-        Safe: project.attributes.Safety,
-        Clean: project.attributes.Resiliency,
-        Efficient: project.attributes.TravelTime,
-        Connected: project.attributes.LandUse,
+      return filteredProjects.map((project: Project) => ({
+        Name: project.Location,
+        LocationScore: project.LocationScores.Location,
+        Safe: project.LocationScores.Safety,
+        Clean: project.LocationScores.Resiliency,
+        Efficient: project.LocationScores.TravelTime,
+        Connected: project.LocationScores.LandUse,
       }));
     } else if (tab === "Benefit") {
-      return filteredProjects.map((project: any) => ({
-        Name: project.attributes.ProjectIDJoin,
-        Benefit: getBenefitScore(project.attributes),
-        Social: project.attributes.PopDensity,
-        Environmental: project.attributes.Existing,
-        Economic: project.attributes.EmployDensity,
-        Transportation: project.attributes.Metrobus,
+      return filteredProjects.map((project: Project) => ({
+        Name: project.Location,
+        Benefit: project.BenefitScores.Benefit,
+        Social: project.BenefitScores.Social,
+        Environmental: project.BenefitScores.Environmental,
+        Economic: project.BenefitScores.Economic,
       }));
     } else {
-      return filteredProjects.map((project: any) => ({
-        Name: project.attributes.ProjectIDJoin,
-        FundingOpportunities: "",
-        TotalProjectCost: "",
-        ProjectType: project.attributes.ProjectType,
-      }));
+      return [];
     }
   };
 
@@ -153,17 +151,6 @@ const ProjectPrioritizationContent: React.FC<
     }
   };
 
-  const filterProjects = (p: number) => {
-    setFilteredProjects(
-      projects
-        .sort(
-          (a: any, b: any) =>
-            getCompositeScore(b.attributes) - getCompositeScore(a.attributes)
-        )
-        .slice(0, Math.ceil((p * projects.length) / 100))
-    );
-  };
-
   return (
     <div className="project-prioritization-container">
       <div className="project-prioritization-main">
@@ -176,7 +163,7 @@ const ProjectPrioritizationContent: React.FC<
               label="Rank"
               items={percentages.map((p) => `Top ${p}%`)}
               handleUpdate={(p: string) =>
-                filterProjects(parseInt(p.split(" ")[1]))
+              {}
               }
             />
             <FilterItem label="Type" items={types} handleUpdate={() => {}} />
@@ -208,7 +195,6 @@ const ProjectPrioritizationContent: React.FC<
         <ProjectPrioritizationTable
           id={tab}
           projects={filteredProjects}
-          selectProject={changeProject}
         />
       </div>
 

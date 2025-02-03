@@ -55,12 +55,12 @@ export const initialContext: ProjectPrioritizationContext = {
 
 //#endregion
 
-export function useProgramDevelopmentContext() {
+export function useProjectPriotizationContext() {
   //#region States
 
   const { projects } = useGetProjects();
 
-  // Tier 1: filters
+  // filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);
   const [filteredTypes, setFilteredTypes] = useState<Set<ProjectType>>(
     new Set()
@@ -69,24 +69,33 @@ export function useProgramDevelopmentContext() {
     Set<CommissionDistrict>
   >(new Set());
 
+  // Highlighted project (singular)
+  const [highlightedProjectId, setHighlightedProjectId] = useState<string>("");
+
   // Map zoom signal
   const [mapZoomSignal, setMapZoomSignal] = useState<boolean>(false);
   //#endregion
 
   //#region Derived states
 
-  const filteredProjects: Project[] = filterProjects(
-    projects,
-    topPercents,
-    filteredTypes,
-    filteredDistricts
-  );
+  const filteredProjects: Project[] = useMemo(() => {
+    return filterProjects(
+      projects,
+      topPercents,
+      filteredTypes,
+      filteredDistricts
+    )
+  }, [projects, topPercents, filteredTypes, filteredDistricts]);
 
-  const mapGraphics = makeMapGraphics(
-    filteredProjects,
-    new Set(),
-    new Set()
-  );
+  console.log("filteredProjects", filteredProjects);
+
+  const mapGraphics = useMemo(() => {
+    return makeMapGraphics(
+      filteredProjects,
+      new Set(),
+      new Set()
+    );
+  }, [filteredProjects]);
 
   //#endregion
 
