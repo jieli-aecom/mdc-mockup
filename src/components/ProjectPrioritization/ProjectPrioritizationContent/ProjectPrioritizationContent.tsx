@@ -28,6 +28,7 @@ const ProjectPrioritizationContent: React.FC<
 > = ({ tab, changeProject }) => {
   const {
     filteredProjects,
+    numFilteredProjectsUnsliced,
     toggleSetFilterDistrict,
     toggleSetFilterType,
     topPercents,
@@ -147,7 +148,7 @@ const ProjectPrioritizationContent: React.FC<
           value={topPercents}
           options={TOP_PERCENT_OPTIONS}
           onChange={toggleSetTopPercent}
-          totalProjects={filteredProjects.length}
+          totalProjects={numFilteredProjectsUnsliced}
         />
 
         <ProjectPrioritizationTable

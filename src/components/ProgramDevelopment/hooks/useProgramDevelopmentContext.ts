@@ -15,23 +15,31 @@ const filterProjects = (
   const sorted = [...projects];
   sorted.sort((a, b) => b.CompositeScore - a.CompositeScore);
 
-  return sorted
-    .filter((project: Project) => {
-      const typeMatch = filterType.size === 0 || filterType.has(project.Type);
-      const districtMatch =
-        filterDistrict.size === 0 ||
-        project.CommissionDistricts.some((district) =>
-          filterDistrict.has(district)
-        );
-      return typeMatch && districtMatch;
-    })
-    .slice(0, Math.ceil((topPercent / 100) * projects.length));
+  const filtered = sorted.filter((project: Project) => {
+    const typeMatch = filterType.size === 0 || filterType.has(project.Type);
+    const districtMatch =
+      filterDistrict.size === 0 ||
+      project.CommissionDistricts.some((district) =>
+        filterDistrict.has(district)
+      );
+    return typeMatch && districtMatch;
+  });
+
+  const numFilteredProjectsUnsliced = filtered.length;
+  return {
+    filteredProjects: filtered.slice(
+      0,
+      Math.ceil((topPercent / 100) * numFilteredProjectsUnsliced)
+    ),
+    numFilteredProjectsUnsliced,
+  };
 };
 //#endregion
 
 //#region Interface
 export interface ProgramDevelopmentContext {
   filteredProjects: Project[];
+  numFilteredProjectsUnsliced: number;
   selectedProjectIds: Set<string>;
   selectedProjects: Project[];
   isAllSelected: boolean;
@@ -55,6 +63,7 @@ export interface ProgramDevelopmentContext {
 
 export const initialContext: ProgramDevelopmentContext = {
   filteredProjects: [],
+  numFilteredProjectsUnsliced: 0,
   selectedProjectIds: new Set(),
   selectedProjects: [],
   isAllSelected: false,
@@ -113,11 +122,10 @@ export function useProgramDevelopmentContext() {
     [projects]
   );
 
-  const filteredProjects: Project[] = filterProjects(
-    projects,
-    topPercents,
-    filteredTypes,
-    filteredDistricts
+  const { filteredProjects, numFilteredProjectsUnsliced } = useMemo(
+    () =>
+      filterProjects(projects, topPercents, filteredTypes, filteredDistricts),
+    [projects, topPercents, filteredTypes, filteredDistricts]
   );
 
   const filteredProjectIds = useMemo(
@@ -175,7 +183,7 @@ export function useProgramDevelopmentContext() {
     } else {
       filteredTypes.add(type);
     }
-    setFilteredTypes(filteredTypes);
+    setFilteredTypes(new Set(filteredTypes));
   };
 
   const toggleSetFilterDistrict = (district: CommissionDistrict) => {
@@ -184,7 +192,7 @@ export function useProgramDevelopmentContext() {
     } else {
       filteredDistricts.add(district);
     }
-    setFilteredDistricts(filteredDistricts);
+    setFilteredDistricts(new Set(filteredDistricts));
   };
 
   const toggleSelectProject = (projectId: string) => {
@@ -258,6 +266,7 @@ export function useProgramDevelopmentContext() {
 
   return {
     filteredProjects,
+    numFilteredProjectsUnsliced,
     selectedProjectIds,
     selectedProjects,
     isAllSelected,

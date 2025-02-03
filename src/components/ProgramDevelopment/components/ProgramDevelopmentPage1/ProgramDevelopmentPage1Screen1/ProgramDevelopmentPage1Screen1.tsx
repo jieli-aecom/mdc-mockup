@@ -20,6 +20,7 @@ const ProgramDevelopmentPage1Screen1: React.FC<
   ProgramDevelopmentPage1Screen1Props
 > = ({ handleToScreen2 }) => {
   const {
+    numFilteredProjectsUnsliced,
     topPercents,
     toggleSetTopPercent,
     filteredProjects,
@@ -48,7 +49,7 @@ const ProgramDevelopmentPage1Screen1: React.FC<
         value={topPercents}
         options={TOP_PERCENT_OPTIONS}
         onChange={toggleSetTopPercent}
-        totalProjects={filteredProjects.length}
+        totalProjects={numFilteredProjectsUnsliced}
       /></div>
       <div className="score-board-title">
         <span>Step 2. Select projects</span>

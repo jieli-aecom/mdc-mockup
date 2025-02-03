@@ -1,6 +1,5 @@
 .project-prioritization-table-container {
-  height: 0;
-  flex-grow: 1;
+  max-height: 500px;
   border: 3px solid var(--dark-orange);
   box-sizing: border-box;
   max-width: 100%;
@@ -43,14 +42,15 @@
 }
 
 .project-table tbody {
-  display: block;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
-  flex-grow: 1;
   width: 100%;
 }
 
 .project-table tbody > tr {
   width: 100%;
+  display: flex;
 }
 
 .project-table th {

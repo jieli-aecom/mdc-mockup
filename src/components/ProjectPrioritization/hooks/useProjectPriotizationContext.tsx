@@ -15,7 +15,7 @@ const filterProjects = (
   const sorted = [...projects];
   sorted.sort((a, b) => b.CompositeScore - a.CompositeScore);
 
-  return sorted
+  const filtered =  sorted
     .filter((project: Project) => {
       const typeMatch = filterType.size === 0 || filterType.has(project.Type);
       const districtMatch =
@@ -25,13 +25,19 @@ const filterProjects = (
         );
       return typeMatch && districtMatch;
     })
-    .slice(0, Math.ceil((topPercent / 100) * projects.length));
+
+  const numFilteredProjectsUnsliced = filtered.length;
+  return {
+    filteredProjects: filtered.slice(0, Math.ceil((topPercent / 100) * numFilteredProjectsUnsliced)),
+    numFilteredProjectsUnsliced
+  };
 };
 //#endregion
 
 //#region Interface
 export interface ProjectPrioritizationContext {
   filteredProjects: Project[];
+  numFilteredProjectsUnsliced: number;
   topPercents: TopPercent;
   toggleSetTopPercent: (topPercent: TopPercent) => void;
   toggleSetFilterType: (type: ProjectType | null) => void;
@@ -44,6 +50,7 @@ export interface ProjectPrioritizationContext {
 
 export const initialContext: ProjectPrioritizationContext = {
   filteredProjects: [],
+  numFilteredProjectsUnsliced: 0,
   topPercents: 100,
   toggleSetTopPercent: () => {},
   toggleSetFilterType: () => {},
@@ -80,12 +87,12 @@ export function useProjectPriotizationContext() {
 
   //#region Derived states
 
-  const filteredProjects: Project[] = filterProjects(
+  const { filteredProjects, numFilteredProjectsUnsliced } = useMemo(() => filterProjects(
     projects,
     topPercents,
     filteredTypes,
     filteredDistricts
-  );
+  ), [projects, topPercents, filteredTypes, filteredDistricts]);
 
   const mapGraphics = useMemo(() => {
     return makeMapGraphicsByType(
@@ -107,8 +114,7 @@ export function useProjectPriotizationContext() {
     } else {
       filteredTypes.add(type);
     }
-    console.log("filteredTypes", filteredTypes);
-    setFilteredTypes(filteredTypes);
+    setFilteredTypes(new Set(filteredTypes));
   };
 
   const toggleSetFilterDistrict = (district: CommissionDistrict) => {
@@ -117,7 +123,7 @@ export function useProjectPriotizationContext() {
     } else {
       filteredDistricts.add(district);
     }
-    setFilteredDistricts(filteredDistricts);
+    setFilteredDistricts(new Set(filteredDistricts));
   };
 
   const triggerMapZoomSignal = useCallback(() => {
@@ -150,6 +156,7 @@ export function useProjectPriotizationContext() {
 
   return {
     filteredProjects,
+    numFilteredProjectsUnsliced,
     topPercents,
     toggleSetTopPercent,
     toggleSetFilterType,
