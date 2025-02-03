@@ -3,3 +3,37 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.project-prioritization-container {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.project-prioritization-main {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  gap: 24px;
+  flex: 1;
+}
+
+.project-prioritization-map {
+  width: 0;
+  flex: 1;
+  height: 100%;
+}
+
+@media only screen and (max-width: 1300px) {
+  .project-prioritization-container {
+    flex-direction: column;
+  }
+
+  .project-prioritization-map {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+  }
+}

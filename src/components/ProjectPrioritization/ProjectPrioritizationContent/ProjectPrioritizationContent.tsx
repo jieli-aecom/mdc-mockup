@@ -165,48 +165,52 @@ const ProjectPrioritizationContent: React.FC<
   };
 
   return (
-    <div className="project-manage-container">
-      <p className="project-manage-title">
-        {tab.length === 0 ? "Project Prioritization" : tab}
-      </p>
-      <div className="project-prioritization-buttons">
-        <div className="filters-container">
-          <FilterItem
-            label="Rank"
-            items={percentages.map((p) => `Top ${p}%`)}
-            handleUpdate={(p: string) => filterProjects(parseInt(p.split(" ")[1]))}
-          />
-          <FilterItem label="Type" items={types} handleUpdate={() => {}} />
-          <FilterItem
-            label="Commission District"
-            items={districts}
-            handleUpdate={() => {}}
-          />
-        </div>
-        <div
-          className="mdc-btn-export"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          <ExportIcon strokeColor={isHover ? "white" : "#263C8C"} />
-          <CSVLink
-            data={getCurrentProjects()}
-            headers={getCurrentHeaders()}
-            filename="data.csv"
-            style={{
-              textDecoration: "none",
-              color: isHover ? "white" : "#263C8C",
-            }}
+    <div className="project-prioritization-container">
+      <div className="project-prioritization-main">
+        <p className="project-manage-title">
+          {tab.length === 0 ? "Project Prioritization" : tab}
+        </p>
+        <div className="project-prioritization-buttons">
+          <div className="filters-container">
+            <FilterItem
+              label="Rank"
+              items={percentages.map((p) => `Top ${p}%`)}
+              handleUpdate={(p: string) =>
+                filterProjects(parseInt(p.split(" ")[1]))
+              }
+            />
+            <FilterItem label="Type" items={types} handleUpdate={() => {}} />
+            <FilterItem
+              label="Commission District"
+              items={districts}
+              handleUpdate={() => {}}
+            />
+          </div>
+          <div
+            className="mdc-btn-export"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
-            Export
-          </CSVLink>
+            <ExportIcon strokeColor={isHover ? "white" : "#263C8C"} />
+            <CSVLink
+              data={getCurrentProjects()}
+              headers={getCurrentHeaders()}
+              filename="data.csv"
+              style={{
+                textDecoration: "none",
+                color: isHover ? "white" : "#263C8C",
+              }}
+            >
+              Export
+            </CSVLink>
+          </div>
         </div>
+        <ProjectPrioritizationTable
+          id={tab}
+          projects={filteredProjects}
+          selectProject={changeProject}
+        />
       </div>
-      <ProjectPrioritizationTable
-        id={tab}
-        projects={filteredProjects}
-        selectProject={changeProject}
-      />
     </div>
   );
 };

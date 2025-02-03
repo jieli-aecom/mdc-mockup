@@ -1,6 +1,6 @@
 import { FC } from "react";
 import "./TopProjectSelector.css";
-import { SelectorOptionProps, TopPercent } from "../../consts/top-percents";
+import { SelectorOptionProps, TopPercent } from "../../../../consts/top-percents";
 
 interface TopProjectSelectorProps {
   value: TopPercent;

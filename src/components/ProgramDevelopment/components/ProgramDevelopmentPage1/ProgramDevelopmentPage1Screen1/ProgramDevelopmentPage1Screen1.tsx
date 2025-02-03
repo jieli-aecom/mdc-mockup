@@ -5,7 +5,7 @@ import LoadIcon from "../../../../../icons/LoadIcon";
 import "./ProgramDevelopmentPage1Screen1.css";
 import "../../../../../styles/button-styles.css";
 import TopProjectSelector from "../../TopProjectSelector/TopProjectSelector";
-import { TOP_PERCENT_OPTIONS } from "../../../consts/top-percents";
+import { TOP_PERCENT_OPTIONS } from "../../../../../consts/top-percents";
 import ProgramDevelopmentTable from "../../ProgramDevelopmentTable/ProgramDevelopmentTable";
 
 import { programDevelopmentContext } from "../../../../../pages/ProgramDevelopment/ProgramDevelopment";
