@@ -154,7 +154,7 @@ const ProjectPrioritizationContent: React.FC<
   return (
     <div className="project-prioritization-container">
       <div className="project-prioritization-main">
-        <p className="project-manage-title">
+        <p className="project-prioritization-title">
           {tab.length === 0 ? "Project Prioritization" : tab}
         </p>
         <div className="project-prioritization-buttons">

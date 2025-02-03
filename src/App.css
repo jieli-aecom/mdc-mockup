@@ -85,10 +85,3 @@
   font-weight: 700;
   margin: 0 0 17px 0;
 }
-
-.filters-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 25px;
-}

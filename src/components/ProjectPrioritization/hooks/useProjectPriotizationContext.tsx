@@ -40,6 +40,7 @@ export interface ProjectPrioritizationContext {
   mapGraphics: Graphic[];
   mapZoomSignal: boolean;
   triggerMapZoomSignal: () => void;
+  toggleHighlighProjectId: (projectId: string) => void;
 }
 
 export const initialContext: ProjectPrioritizationContext = {
@@ -51,6 +52,7 @@ export const initialContext: ProjectPrioritizationContext = {
   mapGraphics: [],
   mapZoomSignal: false,
   triggerMapZoomSignal: () => {},
+  toggleHighlighProjectId: () => {},
 };
 
 //#endregion
@@ -132,6 +134,14 @@ export function useProjectPriotizationContext() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const toggleHighlighProjectId = (projectId: string) => {
+    if (highlightedProjectId === projectId) {
+      setHighlightedProjectId("");
+    } else {
+      setHighlightedProjectId(projectId);
+    }
+  }
+
   //#endregion
 
   //#region Handle project changes
@@ -152,5 +162,6 @@ export function useProjectPriotizationContext() {
     mapGraphics,
     mapZoomSignal,
     triggerMapZoomSignal,
+    toggleHighlighProjectId,
   } as ProjectPrioritizationContext;
 }
