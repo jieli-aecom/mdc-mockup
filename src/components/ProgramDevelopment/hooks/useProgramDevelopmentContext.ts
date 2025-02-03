@@ -284,7 +284,7 @@ export function useProgramDevelopmentContext() {
 
   //#endregion
 
-  //#region Effects
+  //#region Handle project changes
 
   // When source projects change, update hook copy, and reset all filters
   useEffect(() => {
@@ -293,14 +293,6 @@ export function useProgramDevelopmentContext() {
     setPickedProjectIds(new Set());
     triggerMapZoomSignal();
   }, [projects, triggerMapZoomSignal]);
-
-  // useEffect(() => {
-  //   triggerMapZoomSignal();
-  //   unselectAllFilteredProjects();
-  //   unpickAllSelectedProjects();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [filterProjects, triggerMapZoomSignal]);
-
   //#endregion
 
   return {

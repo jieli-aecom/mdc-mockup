@@ -21,7 +21,9 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   const districtAggData = aggregateByCommissionDistrict(pickedProjects);
 
   useEffect(() => {
-    triggerMapZoomSignal();
+    setTimeout(() => {
+      triggerMapZoomSignal();
+    }, 500);
   }, [triggerMapZoomSignal]);
 
   return (
@@ -31,10 +33,7 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
         <ExpansionPanel title="Project Types" defaultExpanded={true}>
           <ProgramDevelopmentAggTable data={typeAggData || []} />
         </ExpansionPanel>
-        <ExpansionPanel
-          title="Commission Districts"
-          defaultExpanded={true}
-        >
+        <ExpansionPanel title="Commission Districts" defaultExpanded={true}>
           <ProgramDevelopmentAggTable data={districtAggData || []} />
         </ExpansionPanel>
       </div>
