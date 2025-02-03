@@ -31,7 +31,7 @@ const projectType2 = (type: string): ProjectType => {
 };
 
 
-export const makeProject2 = (feature: Graphic) => {
+export const makeProject = (feature: Graphic) => {
   if (
     !feature?.attributes ||
     !feature?.attributes?.GlobalID ||
@@ -69,6 +69,8 @@ export const makeProject2 = (feature: Graphic) => {
     Economic: attributes?.BenefitEconomic || 0,
   };
 
+  const compositeScore = (locationScores.Location + benefitScores.Benefit) / 2;
+
   const commissionDistricts: CommissionDistrict[] =
     attributes?.CommissionDistrict
       ? (attributes?.CommissionDistrict as string)
@@ -83,7 +85,7 @@ export const makeProject2 = (feature: Graphic) => {
     CommissionDistricts: commissionDistricts,
     LocationScores: locationScores,
     BenefitScores: benefitScores,
-    CompositeScore: (locationScores.Location + benefitScores.Benefit) / 2,
+    CompositeScore: compositeScore,
     IsLine: isLine,
     Geometry: geometry,
   };
@@ -92,7 +94,7 @@ export const makeProject2 = (feature: Graphic) => {
 };
 
 export function useGetProjects() {
-  const [projects2, setProjects2] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     const query = new Query({
@@ -101,25 +103,23 @@ export function useGetProjects() {
       returnGeometry: true,
     });
 
-    let id = 0;
-
     const fetchProjects = async () => {
       try {
 
-        const pointsResp2 = await POINT_PROJECTS_LAYER.queryFeatures(query);
-        const linesResp2 = await LINE_PROJECTS_LAYER.queryFeatures(query);
+        const pointsResp = await POINT_PROJECTS_LAYER.queryFeatures(query);
+        const linesResp = await LINE_PROJECTS_LAYER.queryFeatures(query);
 
-        const projects2: Project[] = [];
-        for (const feature of pointsResp2?.features) {
-          const project2 = makeProject2(feature);
-          if (project2) projects2.push(project2);
+        const projects: Project[] = [];
+        for (const feature of pointsResp?.features) {
+          const project = makeProject(feature);
+          if (project) projects.push(project);
         }
 
-        for (const feature of linesResp2?.features) {
-          const project2 = makeProject2(feature);
-          if (project2) projects2.push(project2);
+        for (const feature of linesResp?.features) {
+          const project = makeProject(feature);
+          if (project) projects.push(project);
         }
-        setProjects2(projects2);
+        setProjects(projects);
       } catch (error) {
         console.error(error);
       }
@@ -128,5 +128,5 @@ export function useGetProjects() {
     fetchProjects();
   }, []);
 
-  return { projects2 };
+  return { projects };
 }

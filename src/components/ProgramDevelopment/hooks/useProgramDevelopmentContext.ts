@@ -65,10 +65,12 @@ const filterProjects = (
   topPercent: TopPercent,
   filterType: ProjectType | null
 ) => {
-  const filteredProjects = [...projects]
-    .filter((project) => !filterType || project.Type === filterType)
+  const sorted = [...projects];
+  sorted.sort((a, b) => b.CompositeScore - a.CompositeScore);
+
+  return sorted
+    .filter((project: Project) => !filterType || project.Type === filterType)
     .slice(0, Math.ceil((topPercent / 100) * projects.length));
-  return filteredProjects;
 };
 //#endregion
 
@@ -122,7 +124,7 @@ export const initialContext: ProgramDevelopmentContext = {
 export function useProgramDevelopmentContext() {
   //#region States
 
-  const { projects2: projects } = useGetProjects();
+  const { projects } = useGetProjects();
 
   // Tier 1: filters
   const [topPercents, setTopPercents] = useState<TopPercent>(100);

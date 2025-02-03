@@ -64,7 +64,7 @@ const ProgramDevelopmentTable: FC<ProgramDevelopmentTableProps> = ({
               {project.Type}
             </td>
             <td width="30%" className="td-center">
-              {project.CompositeScore}
+              {Math.round(project.CompositeScore)}
             </td>
           </tr>
         ))}
