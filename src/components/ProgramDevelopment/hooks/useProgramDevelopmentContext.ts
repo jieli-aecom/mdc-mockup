@@ -294,17 +294,12 @@ export function useProgramDevelopmentContext() {
     triggerMapZoomSignal();
   }, [projects, triggerMapZoomSignal]);
 
-  useEffect(() => {
-    triggerMapZoomSignal();
-    unselectAllFilteredProjects();
-    unpickAllSelectedProjects();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    filterProjects,
-    triggerMapZoomSignal,
-    unselectAllFilteredProjects,
-    unpickAllSelectedProjects,
-  ]);
+  // useEffect(() => {
+  //   triggerMapZoomSignal();
+  //   unselectAllFilteredProjects();
+  //   unpickAllSelectedProjects();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [filterProjects, triggerMapZoomSignal]);
 
   //#endregion
 

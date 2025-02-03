@@ -20,7 +20,7 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
   const layerRef = useRef<GraphicsLayer | null>(null);
   const viewRef = useRef<MapView | null>(null);
 
-  const {mapGraphics, mapZoomSignal} = useContext(programDevelopmentContext);
+  const {mapGraphics, triggerMapZoomSignal, mapZoomSignal} = useContext(programDevelopmentContext);
 
   useEffect(() => {
     const map = new Map({
@@ -59,7 +59,13 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
 
     layerRef.current.removeAll();
     layerRef.current.addMany(mapGraphics);
-  }, [mapGraphics]);
+
+    triggerMapZoomSignal();
+
+    return () => {
+      layerRef.current?.removeAll();
+    };
+  }, [mapGraphics, triggerMapZoomSignal]);
 
   useEffect(() => {
     let tries = 0;
