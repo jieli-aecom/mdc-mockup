@@ -62,12 +62,23 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
   }, [mapGraphics]);
 
   useEffect(() => {
-    if(!mapZoomSignal || !viewRef.current || !layerRef.current || mapGraphics.length === 0) {
-      return;
-    }
-    viewRef.current.goTo(mapGraphics).catch((error) => {
-      console.error("Error in goTo", error);
-    })
+    let tries = 0;
+    const interval = setInterval(() => {
+      if (tries > 10) {
+        clearInterval(interval);
+        return;
+      }
+      try {
+        if(!mapZoomSignal || !viewRef.current || !viewRef.current.goTo || !layerRef.current || mapGraphics.length === 0) {
+          tries++;
+          return;
+        }
+        viewRef.current.goTo(mapGraphics);
+        clearInterval(interval);
+      } catch (error) {
+        tries++;
+      }
+    }, 1000);
   }, [mapZoomSignal, mapGraphics]);
 
   return <div className="map-view" ref={mapDiv}></div>;

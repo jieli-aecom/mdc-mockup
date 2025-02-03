@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "./ProgramDevelopmentPage2.css";
 import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
 import ProgramDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
@@ -102,12 +102,16 @@ const aggregateByType = (projects: Project[]) => {
 const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   handleToPage1,
 }) => {
-  const { pickedProjects } = useContext(programDevelopmentContext);
+  const { pickedProjects, triggerMapZoomSignal } = useContext(programDevelopmentContext);
   const typeAggData = aggregateByType(pickedProjects);
 
   const typeAggTable = (
     <ProgramDevelopmentTypeAggTable data={typeAggData || []} />
   );
+
+  useEffect(() => {
+    triggerMapZoomSignal();
+  }, [triggerMapZoomSignal]);
 
   return (
     <div className="program-development-page2-container">

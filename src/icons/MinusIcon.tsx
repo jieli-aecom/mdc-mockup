@@ -7,7 +7,7 @@ interface BackIconProps extends React.SVGProps<SVGSVGElement> {
 
 const MinusIcon: React.FC<BackIconProps> = ({ color = "#263d8c", ...props }) => (
   <svg
-    enable-background="new 0 0 50 50"
+    enableBackground="new 0 0 50 50"
     width="100%"
     height="100%"
     id="Layer_1"
@@ -19,8 +19,8 @@ const MinusIcon: React.FC<BackIconProps> = ({ color = "#263d8c", ...props }) => 
     <line
       fill="none"
       stroke={color}
-      stroke-miterlimit="10"
-      stroke-width="4"
+      strokeMiterlimit="10"
+      strokeWidth="4"
       x1="9"
       x2="41"
       y1="25"
