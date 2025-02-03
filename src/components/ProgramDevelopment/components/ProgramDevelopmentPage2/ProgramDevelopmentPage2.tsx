@@ -115,10 +115,9 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   );
 
   return (
-    <>
+    <div className="program-development-page2-container">
       <div
-        className="project-manage-container program-development-page2-container"
-        style={{ width: "70%", minWidth: "300px" }}
+        className="program-development-page2-main"
       >
         <TitleSection handleToPage1={handleToPage1} />
         <ExpansionPanel
@@ -142,8 +141,12 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
           defaultExpanded={false}
         />
       </div>
-      <ProgramDevelopmentMap />
-    </>
+
+      <div
+        className="program-development-page2-map"
+      >
+      <ProgramDevelopmentMap /></div>
+    </div>
   );
 };
 

@@ -9,7 +9,7 @@ import "./Home.css";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className="home-wrapper">
       <PerformanceDecisionSupport />
       <StrategicVision />
       <CountyBenefits />

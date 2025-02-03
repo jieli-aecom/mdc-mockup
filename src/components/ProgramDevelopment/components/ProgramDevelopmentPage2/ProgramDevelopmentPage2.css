@@ -1,5 +1,33 @@
 .program-development-page2-container {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.program-development-page2-main {
   display: flex;
   flex-direction: column;
+  padding: 3rem;
   gap: 24px;
+  flex: 1;
+}
+
+.program-development-page2-map {
+  width: 0;
+  flex: 1;
+  height: 100%;
+}
+
+@media only screen and (max-width: 1300px) {
+  .program-development-page2-container {
+    flex-direction: column;
+  }
+
+  .program-development-page2-map {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+  }
 }
