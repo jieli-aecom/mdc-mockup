@@ -11,10 +11,16 @@ import {
 export const projectPrioritizationContext =
   createContext<ProjectPrioritizationContext>(initialContext);
 
+export enum ProjectPrioritizationTab {
+  Overall = "Overall",
+  Location = "Location",
+  Benefit = "Benefit",
+  Funding = "Funding",
+}
+
 const ProjectPrioritization: React.FC = () => {
   const [currentTab, setTab] = useState("PROJECT PRIORITIZATION");
-  const [currentItem, setItem] = useState("");
-  const [setProject] = useState<any>(null);
+  const [currentItem, setItem] = useState<ProjectPrioritizationTab>(ProjectPrioritizationTab.Overall);
 
   const context = useProjectPriotizationContext()
 
@@ -29,7 +35,6 @@ const ProjectPrioritization: React.FC = () => {
         />
         <ProjectPrioritizationContent
           tab={currentItem}
-          changeProject={(newProject: any) => setProject(newProject)}
         />
       </div>
     </projectPrioritizationContext.Provider>

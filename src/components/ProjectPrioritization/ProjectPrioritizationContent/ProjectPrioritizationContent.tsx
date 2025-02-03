@@ -6,26 +6,29 @@ import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPri
 import "./ProjectPrioritizationContent.css";
 import "../../../styles/button-styles.css";
 import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
-import { projectPrioritizationContext } from "../../../pages/ProjectPrioritization/ProjectPrioritization";
+import {
+  projectPrioritizationContext,
+  ProjectPrioritizationTab,
+} from "../../../pages/ProjectPrioritization/ProjectPrioritization";
 import { Project, ProjectType } from "../../../types/Project";
-import { generalTableConfig } from "./table-configs";
+import {
+  benefitTableConfig,
+  generalTableConfig,
+  locationTableConfig,
+} from "./table-configs";
 import { COMMISSION_DISTRICTS } from "../../../consts/districts";
 import { CommissionDistrict } from "../../../types/District";
 import { PROJECT_TYPES } from "../../../consts/projects";
-import {
-  TOP_PERCENT_LABELS,
-  TOP_PERCENT_OPTIONS,
-} from "../../../consts/top-percents";
+import { TOP_PERCENT_OPTIONS } from "../../../consts/top-percents";
 import TopProjectSelector from "../../ProgramDevelopment/components/TopProjectSelector/TopProjectSelector";
 
 interface ProjectPrioritizationContentProps {
-  tab: string;
-  changeProject: (newProject: any) => void;
+  tab: ProjectPrioritizationTab;
 }
 
 const ProjectPrioritizationContent: React.FC<
   ProjectPrioritizationContentProps
-> = ({ tab, changeProject }) => {
+> = ({ tab }) => {
   const {
     filteredProjects,
     numFilteredProjectsUnsliced,
@@ -37,7 +40,7 @@ const ProjectPrioritizationContent: React.FC<
 
   const [isHover, setHover] = useState(false);
   const getCurrentProjects = () => {
-    if (tab === "") {
+    if (tab === ProjectPrioritizationTab.Overall) {
       return filteredProjects.map((project: Project) => ({
         Name: project.Location,
         CompositeScore: project.CompositeScore,
@@ -45,7 +48,7 @@ const ProjectPrioritizationContent: React.FC<
         BenefitScore: project.BenefitScores.Benefit,
         FundingOpportunities: "",
       }));
-    } else if (tab === "Location") {
+    } else if (tab === ProjectPrioritizationTab.Location) {
       return filteredProjects.map((project: Project) => ({
         Name: project.Location,
         LocationScore: project.LocationScores.Location,
@@ -54,7 +57,7 @@ const ProjectPrioritizationContent: React.FC<
         Efficient: project.LocationScores.TravelTime,
         Connected: project.LocationScores.LandUse,
       }));
-    } else if (tab === "Benefit") {
+    } else if (tab === ProjectPrioritizationTab.Benefit) {
       return filteredProjects.map((project: Project) => ({
         Name: project.Location,
         Benefit: project.BenefitScores.Benefit,
@@ -68,7 +71,7 @@ const ProjectPrioritizationContent: React.FC<
   };
 
   const getCurrentHeaders = () => {
-    if (tab === "") {
+    if (tab === ProjectPrioritizationTab.Overall) {
       return [
         { label: "Name", key: "Name" },
         { label: "Composite Score", key: "CompositeScore" },
@@ -76,7 +79,7 @@ const ProjectPrioritizationContent: React.FC<
         { label: "Benefit Score", key: "BenefitScore" },
         { label: "Funding Opportunities", key: "FundingOpportunities" },
       ];
-    } else if (tab === "Location") {
+    } else if (tab === ProjectPrioritizationTab.Location) {
       return [
         { label: "Name", key: "Name" },
         { label: "Location Score", key: "LocationScore" },
@@ -85,24 +88,27 @@ const ProjectPrioritizationContent: React.FC<
         { label: "Efficient", key: "Efficient" },
         { label: "Connected", key: "Connected" },
       ];
-    } else if (tab === "Benefit") {
+    } else if (tab === ProjectPrioritizationTab.Benefit) {
       return [
         { label: "Name", key: "Name" },
         { label: "Benefit Score", key: "BenefitScore" },
         { label: "Social", key: "Social" },
         { label: "Environmental", key: "Environmental" },
         { label: "Economic", key: "Economic" },
-        { label: "Transportation", key: "Transportation" },
       ];
     } else {
-      return [
-        { label: "Name", key: "Name" },
-        { label: "Funding Opportunities", key: "FundingOpportunities" },
-        { label: "Total Project Cost", key: "TotalProjectCost" },
-        { label: "Project Type", key: "ProjectType" },
-      ];
+      return [];
     }
   };
+
+  const tableConfig =
+    tab === ProjectPrioritizationTab.Location
+      ? locationTableConfig
+      : tab === ProjectPrioritizationTab.Benefit
+      ? benefitTableConfig
+      : generalTableConfig;
+  const minWidth =
+    tab === ProjectPrioritizationTab.Location ? "1500px" : "600px";
 
   return (
     <div className="project-prioritization-container">
@@ -153,8 +159,9 @@ const ProjectPrioritizationContent: React.FC<
 
         <ProjectPrioritizationTable
           id={tab}
-          config={generalTableConfig}
+          config={tableConfig}
           projects={filteredProjects}
+          minWidth={minWidth}
         />
       </div>
 

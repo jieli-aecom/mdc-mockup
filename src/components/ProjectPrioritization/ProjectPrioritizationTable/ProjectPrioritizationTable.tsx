@@ -20,20 +20,22 @@ interface ProjectPrioritizationTableProps {
   id: string;
   projects: Project[];
   config: TableConfiguration;
+  minWidth?: string;
   selectProject?: (newProject: any) => void;
 }
 
 const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
   projects,
   config,
+  minWidth = "100px",
   selectProject = () => {},
 }) => {
-  const [sortByIndex, setSortByIndex] = useState<number>(0);
-  const [sortAscending, setSortAscending] = useState<boolean>(true);
+  const [sortByIndex, setSortByIndex] = useState<number>(1);
+  const [sortAscending, setSortAscending] = useState<boolean>(false);
 
   useEffect(() => {
-    setSortByIndex(0);
-    setSortAscending(true);
+    setSortByIndex(1);
+    setSortAscending(false);
   }, [config])
 
   const sortedProjects = useMemo(() => {
@@ -61,7 +63,7 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
 
   return (
     <div className="project-prioritization-table-container">
-      <table className="project-table">
+      <table className="project-table" style={{minWidth: minWidth}}>
         <thead>
           <tr>
             {config.map((col: TableColumnConfiguration, index) => {

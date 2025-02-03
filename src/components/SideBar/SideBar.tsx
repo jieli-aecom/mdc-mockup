@@ -4,12 +4,13 @@ import { ReactComponent as CreateWhite } from "../../icons/2_Project_Prioritizat
 import { ReactComponent as PrioritizationGray } from "../../icons/2_Project_Prioritization/Prioritization_Gray.svg";
 import { ReactComponent as PrioritizationWhite } from "../../icons/2_Project_Prioritization/Prioritization_White.svg";
 import "./SideBar.css";
+import { ProjectPrioritizationTab } from "../../pages/ProjectPrioritization/ProjectPrioritization";
 
 interface SideBarProps {
   tab: string;
   handleChange: (newTab: string) => void;
   item: string;
-  handleItem: (newItem: string) => void;
+  handleItem: (newItem: ProjectPrioritizationTab) => void;
 }
 
 const SideBar: React.FC<SideBarProps> = ({
@@ -30,7 +31,7 @@ const SideBar: React.FC<SideBarProps> = ({
         }`}
         onClick={() => {
           handleChange("PROJECT PRIORITIZATION");
-          handleItem("");
+          handleItem(ProjectPrioritizationTab.Overall);
         }}
       >
         {tab === "PROJECT PRIORITIZATION" ? (
@@ -48,7 +49,7 @@ const SideBar: React.FC<SideBarProps> = ({
               className={`sidebar-project-prioritization-tab${
                 item === value ? " sidebar-tab-active" : ""
               }`}
-              onClick={() => handleItem(value)}
+              onClick={() => handleItem(value as ProjectPrioritizationTab)}
             >
               {value}
             </div>
@@ -65,7 +66,7 @@ const SideBar: React.FC<SideBarProps> = ({
           }`}
           onClick={() => {
             handleChange("CREATE PROJECT");
-            handleItem("");
+            handleItem(ProjectPrioritizationTab.Overall);
           }}
         >
           {tab === "CREATE PROJECT" ? <CreateWhite /> : <CreateGray />}
