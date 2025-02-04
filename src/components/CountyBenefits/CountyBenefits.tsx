@@ -2,12 +2,13 @@ import React from "react";
 import StarBorderIcon from "../../icons/StartBorderIcon";
 import benefitImage from "../../assets/0_Home/image_benefit.png";
 import "./CountyBenefits.css";
+import HomePageSection from "../HomePageSection/HomePageSection";
+import { DARK_BLUE } from "../../consts/colors";
 
 const CountyBenefits: React.FC = () => {
   return (
-    <section className="county-benefits-container">
-      <img src={benefitImage} alt="Icon" className="county-benefits-image" />
-      <div className="county-benefits-benefits-content">
+    <HomePageSection image={benefitImage} backgroundColor={DARK_BLUE}>
+      <div>
         <h2 className="county-benefits-title">Benefits of the Platform</h2>
         <ul className="county-benefits-benefit-list">
           <li>
@@ -42,7 +43,7 @@ const CountyBenefits: React.FC = () => {
           </li>
         </ul>
       </div>
-    </section>
+    </HomePageSection>
   );
 };
 
