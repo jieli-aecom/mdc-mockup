@@ -7,6 +7,11 @@
   box-sizing: border-box !important;
   gap: 1rem;
   box-sizing: border-box !important;
+  overflow-y: auto;
+}
+
+.performance-tracker-container * {
+  box-sizing: border-box !important;
 }
 
 .performance-tracker-title {
@@ -123,8 +128,8 @@
 }
 
 .performance-tracker-item {
-  height: 250px;
-  width: 300px;
+  height: 13rem;
+  width: 18rem;
   background-color: #ebebeb;
   display: flex;
   flex-direction: column;
@@ -132,15 +137,16 @@
 }
 
 .performance-tracker-item-content {
-  padding: 25px;
+  padding: 1rem;
 }
 
 .performance-tracker-item-status {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 14px;
-  font-size: 32px;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 .performance-tracker-item-progress {
@@ -149,7 +155,7 @@
 
 .performance-tracker-item-progress-text {
   color: #00aeb4;
-  font-size: 16px;
+  font-size: 0.9rem;
   text-align: right;
   font-style: italic;
   margin: 5px;
@@ -157,7 +163,7 @@
 
 .performance-tracker-item-description {
   color: #4f4f4f;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 500;
   margin: 25px 0 0 0;
 }

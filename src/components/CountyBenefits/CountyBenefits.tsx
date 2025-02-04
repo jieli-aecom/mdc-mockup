@@ -1,43 +1,44 @@
 import React from "react";
 import StarBorderIcon from "../../icons/StartBorderIcon";
+import benefitImage from "../../assets/0_Home/image_benefit.png";
 import "./CountyBenefits.css";
 
 const CountyBenefits: React.FC = () => {
   return (
     <section className="county-benefits-container">
-      <div className="county-benefits-icon-container">
-        <img
-          src="benefit-icon.png"
-          alt="Icon"
-          className="county-benefits-icon"
-        />
-      </div>
+      <img src={benefitImage} alt="Icon" className="county-benefits-image" />
       <div className="county-benefits-benefits-content">
-        <h2 className="county-benefits-title">County-Wide Benefits</h2>
+        <h2 className="county-benefits-title">Benefits of the Platform</h2>
         <ul className="county-benefits-benefit-list">
           <li>
             <div className="county-benefits-icon-box">
               <StarBorderIcon />
             </div>
-            Benefit 1
+            Promotes accountability and transparency
           </li>
           <li>
             <div className="county-benefits-icon-box">
               <StarBorderIcon />
             </div>
-            Benefit 2
+            Enables data-driven decision-making
           </li>
           <li>
             <div className="county-benefits-icon-box">
               <StarBorderIcon />
             </div>
-            Benefit 3
+            Identifies and addresses inefficiencies
           </li>
           <li>
             <div className="county-benefits-icon-box">
               <StarBorderIcon />
             </div>
-            Benefit 4
+            Aligns activities with strategic priorities
+          </li>{" "}
+          <li>
+            <div className="county-benefits-icon-box">
+              <StarBorderIcon />
+            </div>
+            Builds public trust
           </li>
         </ul>
       </div>

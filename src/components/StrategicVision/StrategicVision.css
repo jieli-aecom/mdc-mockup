@@ -17,9 +17,11 @@
   justify-content: space-around;
   gap: 30px;
   padding: 0 100px;
+  flex-wrap: wrap;
 }
 
 .strategic-vision-item {
+  min-width: 15rem;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -34,18 +36,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 80px;
-}
-
-.strategic-safe-icon {
-}
-
-.strategic-clean-icon {
-}
-
-.strategic-efficient-icon {
-}
-
-.strategic-connected-icon {
 }
 
 .strategic-vision-title {
