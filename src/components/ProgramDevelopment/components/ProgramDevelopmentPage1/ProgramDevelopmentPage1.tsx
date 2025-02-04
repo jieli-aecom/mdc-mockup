@@ -4,7 +4,7 @@ import "./ProgramDevelopmentPage1.css";
 import "../../../../styles/button-styles.css";
 import ProjectDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import FilterItem from "../../../FilterItem/FilterItem";
-import { PROJECT_TYPES } from "../../../../consts/projects";
+import { PROJECT_TYPES } from "../../../../consts/project-types";
 import { COMMISSION_DISTRICTS } from "../../../../consts/districts";
 
 import ProgramDevelopmentPage1Screen1 from "./ProgramDevelopmentPage1Screen1/ProgramDevelopmentPage1Screen1";

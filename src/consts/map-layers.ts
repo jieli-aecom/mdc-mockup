@@ -1,6 +1,6 @@
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
-import { ProjectType } from "../types/Project";
 import {
+  COMMISSION_DISTRICTS_URL,
   LINE_PROJECTS_LAYER_URL,
   POINT_PROJECTS_LAYER_URL,
 } from "./service-urls";
@@ -19,10 +19,23 @@ export const LINE_PROJECTS_LAYER = new FeatureLayer({
   popupEnabled: true,
 });
 
-export const PROJECT_TYPES: ProjectType[] = [
-  ProjectType.Bike,
-  ProjectType.Pedestrian,
-  ProjectType.Roadway,
-  ProjectType.Transit,
-  ProjectType.Freight,
-];
+export const COMMISSION_DISTRICTS_LAYER = new FeatureLayer({
+  id: "Commission Districts",
+  url: COMMISSION_DISTRICTS_URL,
+  outFields: ["*"],
+  popupEnabled: true,
+  popupTemplate: {
+    title: "Commission District",
+    content: [
+      {
+        type: "fields",
+        fieldInfos: [
+          {
+            fieldName: "COMMNAME",
+            label: "District",
+          },
+        ],
+      },
+    ],
+  },
+});

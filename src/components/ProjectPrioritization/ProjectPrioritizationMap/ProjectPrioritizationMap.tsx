@@ -163,6 +163,16 @@ const ProjectPrioritizationMap: React.FC<ProjectDevelopmentMapProps> = () => {
             {highlightedProject.Location}
           </div>
           <div className="map-highlighted-project-body">
+
+          <div className="map-highlighted-project-body-row">
+              <div className="map-highlighted-project-body-row-title">
+                Commission District(s):
+              </div>
+              <div className="map-highlighted-project-body-row-value">
+                {highlightedProject.CommissionDistricts.join(", ")}
+              </div>
+            </div>
+
             <div className="map-highlighted-project-body-row">
               <div className="map-highlighted-project-body-row-title">
                 Composite Score:

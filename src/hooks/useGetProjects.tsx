@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   LINE_PROJECTS_LAYER,
   POINT_PROJECTS_LAYER,
-} from "../consts/projects";
+} from "../consts/map-layers";
 import {
   Project,
   ProjectBenefitScores,

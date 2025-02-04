@@ -18,7 +18,7 @@ import {
 } from "./table-configs";
 import { COMMISSION_DISTRICTS } from "../../../consts/districts";
 import { CommissionDistrict } from "../../../types/District";
-import { PROJECT_TYPES } from "../../../consts/projects";
+import { PROJECT_TYPES } from "../../../consts/project-types";
 import { TOP_PERCENT_OPTIONS } from "../../../consts/top-percents";
 import TopProjectSelector from "../../ProgramDevelopment/components/TopProjectSelector/TopProjectSelector";
 

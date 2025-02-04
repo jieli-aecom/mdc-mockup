@@ -6,32 +6,42 @@ import Zoom from "@arcgis/core/widgets/Zoom";
 
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import "./ProgramDevelopmentMap.css";
-import { MAP_BASEMAP, MAP_CENTER, MAP_START_ZOOM } from "../../../../consts/map";
+import {
+  MAP_BASEMAP,
+  MAP_CENTER,
+  MAP_START_ZOOM,
+} from "../../../../consts/map";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 
 import Map from "@arcgis/core/Map";
 import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
+import { COMMISSION_DISTRICTS_LAYER } from "../../../../consts/map-layers";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 
-interface ProjectDevelopmentMapProps {
-}
+interface ProjectDevelopmentMapProps {}
 
 const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
   const mapDiv = useRef<HTMLDivElement>(null);
-  const layerRef = useRef<GraphicsLayer | null>(null);
+  const projectsLayerRef = useRef<GraphicsLayer | null>(null);
   const viewRef = useRef<MapView | null>(null);
 
-  const {mapGraphics, triggerMapZoomSignal, mapZoomSignal} = useContext(programDevelopmentContext);
+  const { mapGraphics, triggerMapZoomSignal, mapZoomSignal } = useContext(
+    programDevelopmentContext
+  );
 
   useEffect(() => {
     const map = new Map({
       basemap: MAP_BASEMAP,
     });
+    const commissionDistrictsLayer: FeatureLayer = COMMISSION_DISTRICTS_LAYER;
 
     const graphicsLayer = new GraphicsLayer({
       id: "project-graphics",
       title: "Project",
     });
-    layerRef.current = graphicsLayer;
+    projectsLayerRef.current = graphicsLayer;
+
+    map.add(commissionDistrictsLayer);
     map.add(graphicsLayer);
 
     const view = new MapView({
@@ -55,15 +65,15 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
   }, []);
 
   useEffect(() => {
-    if (mapGraphics.length === 0 || !layerRef.current) return;
+    if (mapGraphics.length === 0 || !projectsLayerRef.current) return;
 
-    layerRef.current.removeAll();
-    layerRef.current.addMany(mapGraphics);
+    projectsLayerRef.current.removeAll();
+    projectsLayerRef.current.addMany(mapGraphics);
 
     triggerMapZoomSignal();
 
     return () => {
-      layerRef.current?.removeAll();
+      projectsLayerRef.current?.removeAll();
     };
   }, [mapGraphics, triggerMapZoomSignal]);
 
@@ -75,7 +85,13 @@ const ProjectDevelopmentMap: React.FC<ProjectDevelopmentMapProps> = () => {
         return;
       }
       try {
-        if(!mapZoomSignal || !viewRef.current || !viewRef.current.goTo || !layerRef.current || mapGraphics.length === 0) {
+        if (
+          !mapZoomSignal ||
+          !viewRef.current ||
+          !viewRef.current.goTo ||
+          !projectsLayerRef.current ||
+          mapGraphics.length === 0
+        ) {
           tries++;
           return;
         }
