@@ -1,10 +1,11 @@
 import React from "react";
-import { PERFORMANCE_TRACKING_SIDEBAR_ITEMS } from "../../../consts";
 import "./PerformanceTrackingSidebar.css";
+import { PerformanceArea } from "../../../types/PerformanceArea";
+import { PERFORMANCE_AREAS } from "../../../consts/performance-areas";
 
 interface PerformanceTrackingSidebarProps {
-  tab: string;
-  handleChange: (newTab: string) => void;
+  tab: PerformanceArea;
+  handleChange: (newTab: PerformanceArea) => void;
 }
 
 const PerformanceTrackingSidebar: React.FC<PerformanceTrackingSidebarProps> = ({
@@ -13,14 +14,14 @@ const PerformanceTrackingSidebar: React.FC<PerformanceTrackingSidebarProps> = ({
 }) => {
   return (
     <div className="sidebar-container">
-      {PERFORMANCE_TRACKING_SIDEBAR_ITEMS.map((item, index) => (
+      {PERFORMANCE_AREAS.map((item, index) => (
         <div key={`sidebar-item-${item}`}>
           {index > 0 && <div className="sidebar-hr" />}
           <div
             className={`sidebar-item-container${
               item === tab ? " sidebar-item-active" : ""
             }`}
-            onClick={() => handleChange(item)}
+            onClick={() => handleChange(item as PerformanceArea)}
           >
             {item}
           </div>

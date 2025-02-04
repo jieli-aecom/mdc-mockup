@@ -1,4 +1,4 @@
-export enum PolicyAlignment {
+export enum PerformanceArea {
   Safe = "Safe",
   Clean = "Clean",
   Efficient = "Efficient",

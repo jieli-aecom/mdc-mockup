@@ -1,6 +1,6 @@
 import { ALIGNMENT_BY_PROJECT_TYPE } from "../../../../consts/alignment-by-project-type";
 import { CommissionDistrict } from "../../../../types/District";
-import { PolicyAlignment } from "../../../../types/PolicyAlignment";
+import { PerformanceArea } from "../../../../types/PerformanceArea";
 import { Project, ProjectType } from "../../../../types/Project";
 import { ProgramDevelopmentAggDataRow } from "./ProgramDevelopmentAggTable/ProgramDevelopmentTypeAggTable";
 
@@ -65,33 +65,33 @@ export const aggregateByCommissionDistrict = (projects: Project[]) => {
 };
 
 export const aggregateByPolicyAlignment = (projects: Project[]) => {
-  const alignments: Record<PolicyAlignment, number> = {
-    [PolicyAlignment.Safe]: 0,
-    [PolicyAlignment.Clean]: 0,
-    [PolicyAlignment.Efficient]: 0,
-    [PolicyAlignment.Connected]: 0,
+  const alignments: Record<PerformanceArea, number> = {
+    [PerformanceArea.Safe]: 0,
+    [PerformanceArea.Clean]: 0,
+    [PerformanceArea.Efficient]: 0,
+    [PerformanceArea.Connected]: 0,
   };
 
   // TODO: Enhance this function
   for (const project of projects) {
     const type = project.Type;
-    alignments[PolicyAlignment.Safe] +=
-      ALIGNMENT_BY_PROJECT_TYPE[type][PolicyAlignment.Safe];
+    alignments[PerformanceArea.Safe] +=
+      ALIGNMENT_BY_PROJECT_TYPE[type][PerformanceArea.Safe];
 
-    alignments[PolicyAlignment.Clean] +=
-      ALIGNMENT_BY_PROJECT_TYPE[type][PolicyAlignment.Clean];
+    alignments[PerformanceArea.Clean] +=
+      ALIGNMENT_BY_PROJECT_TYPE[type][PerformanceArea.Clean];
 
-    alignments[PolicyAlignment.Efficient] +=
-      ALIGNMENT_BY_PROJECT_TYPE[type][PolicyAlignment.Efficient];
+    alignments[PerformanceArea.Efficient] +=
+      ALIGNMENT_BY_PROJECT_TYPE[type][PerformanceArea.Efficient];
 
-    alignments[PolicyAlignment.Connected] +=
-      ALIGNMENT_BY_PROJECT_TYPE[type][PolicyAlignment.Connected];
+    alignments[PerformanceArea.Connected] +=
+      ALIGNMENT_BY_PROJECT_TYPE[type][PerformanceArea.Connected];
   }
 
   const result: ProgramDevelopmentAggDataRow[] = Object.keys(alignments).map(
     (alignment) => ({
       Name: alignment as string,
-      Field1: alignments[alignment as PolicyAlignment]!,
+      Field1: alignments[alignment as PerformanceArea]!,
     })
   );
 

@@ -15,11 +15,9 @@ interface PerformanceTrackingContentProps {
 const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
   data,
 }) => {
-  const [openSelectDivision, setOpenSelectDivision] = useState(false);
   const [selectedDivision, setDivision] = useState<Division | null>(null);
 
   const clearFilters = () => {
-    setOpenSelectDivision(false);
     setDivision(null);
   };
 
@@ -50,8 +48,8 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
         </div>
 
         {/* Search: DISABLED for now */}
-        {/* <div className="performance-tracking-input-container">
-          <input className="performance-tracking-input" placeholder="Search" />
+        {/* <div className="performance-tracker-input-container">
+          <input className="performance-tracker-input" placeholder="Search" />
           <div
             style={{
               height: "17px",
@@ -63,16 +61,16 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
         </div> */}
 
       </div>
-      <div className="performance-tracking-items">
+      <div className="performance-tracker-items">
         {data &&
           data.map((value, index) => (
             <div
               key={`${value.type}-item-${index}`}
-              className="performance-tracking-item"
+              className="performance-tracker-item"
             >
-              <div className="performance-tracking-item-content">
+              <div className="performance-tracker-item-content">
                 <div
-                  className="performance-tracking-item-status"
+                  className="performance-tracker-item-status"
                   style={{
                     color: value.direction === "down" ? "red" : "green",
                   }}
@@ -86,7 +84,7 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
                   )}
                   {value.value}
                 </div>
-                <div className="performance-tracking-item-progress">
+                <div className="performance-tracker-item-progress">
                   <ProgressBar
                     bgcolor="white"
                     color="#00aeb4"
@@ -94,14 +92,14 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
                     height={20}
                   />
                 </div>
-                <p className="performance-tracking-item-progress-text">
+                <p className="performance-tracker-item-progress-text">
                   {`Target: ${value.target}`}
                 </p>
-                <p className="performance-tracking-item-description">
+                <p className="performance-tracker-item-description">
                   {value.description}
                 </p>
               </div>
-              <div className="performance-tracking-item-bottom-hr"></div>
+              <div className="performance-tracker-item-bottom-hr"></div>
             </div>
           ))}
       </div>

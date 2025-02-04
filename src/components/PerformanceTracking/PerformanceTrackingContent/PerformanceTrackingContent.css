@@ -40,7 +40,7 @@
   align-items: center;
 }
 
-.performance-tracking-select {
+.performance-tracker-select {
   border: 2px solid #263c8c;
   border-radius: 5px;
   color: #263c8c;
@@ -52,11 +52,11 @@
   gap: 12px;
 }
 
-.performance-tracking-select:hover {
+.performance-tracker-select:hover {
   cursor: pointer;
 }
 
-.performance-tracking-select-active {
+.performance-tracker-select-active {
   background-color: #4d9fd7;
   border-color: #4d9fd7;
   color: white;
@@ -66,7 +66,7 @@
   outline-width: 2px;
 }
 
-.performance-tracking-select-text {
+.performance-tracker-select-text {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -91,7 +91,7 @@
   cursor: pointer;
 }
 
-.performance-tracking-input-container {
+.performance-tracker-input-container {
   width: 400px;
   border: 2px solid var(--deep-blue);
   border-radius: 5px;
@@ -101,28 +101,28 @@
   align-items: center;
 }
 
-.performance-tracking-input {
+.performance-tracker-input {
   font-size: 18px;
   border: none;
   margin-left: 10px;
 }
 
-.performance-tracking-input:focus {
+.performance-tracker-input:focus {
   outline: none;
 }
 
-.performance-tracking-input::placeholder {
+.performance-tracker-input::placeholder {
   color: #ebebeb;
 }
 
-.performance-tracking-items {
-  margin-top: 50px;
+.performance-tracker-items {
   display: flex;
+  margin-top: 1rem;
   flex-wrap: wrap;
-  gap: 53px;
+  gap: 3rem;
 }
 
-.performance-tracking-item {
+.performance-tracker-item {
   height: 250px;
   width: 300px;
   background-color: #ebebeb;
@@ -131,11 +131,11 @@
   justify-content: space-between;
 }
 
-.performance-tracking-item-content {
+.performance-tracker-item-content {
   padding: 25px;
 }
 
-.performance-tracking-item-status {
+.performance-tracker-item-status {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -143,11 +143,11 @@
   font-size: 32px;
 }
 
-.performance-tracking-item-progress {
+.performance-tracker-item-progress {
   margin-top: 10px;
 }
 
-.performance-tracking-item-progress-text {
+.performance-tracker-item-progress-text {
   color: #00aeb4;
   font-size: 16px;
   text-align: right;
@@ -155,14 +155,14 @@
   margin: 5px;
 }
 
-.performance-tracking-item-description {
+.performance-tracker-item-description {
   color: #4f4f4f;
   font-size: 18px;
   font-weight: 500;
   margin: 25px 0 0 0;
 }
 
-.performance-tracking-item-bottom-hr {
+.performance-tracker-item-bottom-hr {
   height: 4px;
   background-color: #00aeb4;
 }

@@ -1,132 +1,134 @@
+import { PerformanceArea } from "../types/PerformanceArea";
+
 export const PERFORMANCE_TRACKING_DATA = [
   {
-    type: "SAFE",
+    type: PerformanceArea.Safe,
     direction: "up",
     value: "20",
     target: "25",
     progress: 80,
     description:
-      'High Injury Network projects advanced to "completing 30% design"'
+      'High Injury Network projects advanced to "completing 30% design"',
   },
   {
-    type: "SAFE",
+    type: PerformanceArea.Safe,
     direction: "down",
     value: "20%",
     target: "30%",
     progress: 60,
-    description: "of vehicles inspected from due pool"
+    description: "of vehicles inspected from due pool",
   },
   {
-    type: "SAFE",
+    type: PerformanceArea.Safe,
     direction: "normal",
     value: "100%",
     target: "100%",
     progress: 100,
-    description: "scheduled emergency drills performed"
+    description: "scheduled emergency drills performed",
   },
   {
-    type: "CLEAN",
+    type: PerformanceArea.Clean,
     direction: "up",
     value: "20%",
     target: "30%",
     progress: 70,
-    description: "of total light fleet converted to fully electric"
+    description: "of total light fleet converted to fully electric",
   },
   {
-    type: "CLEAN",
+    type: PerformanceArea.Clean,
     direction: "down",
     value: "5%",
     target: "23%",
     progress: 10,
-    description: "of total transit fleet converted to fully electric"
+    description: "of total transit fleet converted to fully electric",
   },
   {
-    type: "CLEAN",
+    type: PerformanceArea.Clean,
     direction: "down",
     value: "25",
     target: "100",
     progress: 15,
-    description: "DC charging units installed in DTPW facilities"
+    description: "DC charging units installed in DTPW facilities",
   },
   {
-    type: "CLEAN",
+    type: PerformanceArea.Clean,
     direction: "up",
     value: "100",
     target: "200",
     progress: 40,
-    description: "housing units developed in 2023"
+    description: "housing units developed in 2023",
   },
   {
-    type: "CLEAN",
+    type: PerformanceArea.Clean,
     direction: "up",
     value: "50%",
     target: "100%",
     progress: 45,
     description:
-      "roadway projects completed compliant with RER flood plain criteria"
+      "roadway projects completed compliant with RER flood plain criteria",
   },
   {
-    type: "EFFICIENT",
+    type: PerformanceArea.Efficient,
     direction: "up",
     value: "50%",
     target: "95%",
     progress: 50,
-    description: "compliance with 5-year Drainage Cleaning Plan"
+    description: "compliance with 5-year Drainage Cleaning Plan",
   },
   {
-    type: "EFFICIENT",
+    type: PerformanceArea.Efficient,
     direction: "normal",
     value: "3,000",
     target: "3,000 miles",
     progress: 100,
-    description: "miles of mean distance between failure for rail"
+    description: "miles of mean distance between failure for rail",
   },
   {
-    type: "EFFICIENT",
+    type: PerformanceArea.Efficient,
     direction: "normal",
     value: "78%",
     target: "78%",
     progress: 100,
-    description: "of on-time performance for buses"
+    description: "of on-time performance for buses",
   },
   {
-    type: "EFFICIENT",
+    type: PerformanceArea.Efficient,
     direction: "up",
     value: "10,500",
     target: "20,000",
     progress: 50,
-    description: "total monthly boardings for buses"
+    description: "total monthly boardings for buses",
   },
   {
-    type: "CONNECTED",
+    type: PerformanceArea.Connected,
     direction: "down",
     value: "10",
     target: "30 miles",
     progress: 30,
-    description: "miles of new greenways"
+    description: "miles of new greenways",
   },
   {
-    type: "CONNECTED",
+    type: PerformanceArea.Connected,
     direction: "down",
     value: "20",
     target: "50 miles",
     progress: 30,
-    description: "miles of new on-street bicycle lanes"
+    description: "miles of new on-street bicycle lanes",
   },
   {
-    type: "CONNECTED",
+    type: PerformanceArea.Connected,
     direction: "down",
     value: "10",
     target: "30 miles",
     progress: 30,
-    description: "miles of new trails"
+    description: "miles of new trails",
   },
   {
-    type: "CONNECTED",
+    type: PerformanceArea.Connected,
     direction: "up",
     value: "5%",
     target: "20%",
     progress: 30,
-    description: "of all units are affordable"
-  }
+    description: "of all units are affordable",
+  },
 ];

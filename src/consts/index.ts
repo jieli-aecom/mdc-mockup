@@ -17,13 +17,6 @@ export const HEADER_NAV_NAMES = [
   "RESOURCES",
 ];
 
-export const PERFORMANCE_TRACKING_SIDEBAR_ITEMS = [
-  "SAFE",
-  "CLEAN",
-  "EFFICIENT",
-  "CONNECTED",
-];
-
 export const DEFAULT_SPATIAL_REF = { wkid: 3857 };
 export const DEFAULT_MAP_CENTRAL_POINT = [
   -99.13168096993665, 31.503809189893104,
