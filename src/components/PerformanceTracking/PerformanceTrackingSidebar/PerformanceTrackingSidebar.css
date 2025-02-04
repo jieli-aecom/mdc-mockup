@@ -1,6 +1,10 @@
 .sidebar-item-container.sidebar-prioritization-item-active {
-  background-color: #f15624;
   color: white;
+}
+
+.sidebar-item-container img {
+  height: 2rem;
+  opacity: 0.7;
 }
 
 .sidebar-project-prioritization-tabs {
