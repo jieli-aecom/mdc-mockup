@@ -35,7 +35,7 @@ export const makeProject = (feature: Graphic) => {
   if (
     !feature?.attributes ||
     !feature?.attributes?.GlobalID ||
-    !feature?.attributes?.Location ||
+    (!feature?.attributes?.Location && !feature?.attributes?.LOCATION) ||
     !feature?.attributes?.Type ||
     !feature?.geometry
   ) {
