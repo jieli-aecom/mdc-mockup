@@ -4,43 +4,62 @@ import "./ProgramDevelopmentAggTable.css";
 export type ProgramDevelopmentAggDataRow = {
   Name: string;
   Field1: number;
-  Field2: number;
+  Field2?: number;
 };
 
-export type ProgramDevelopmentAggTableFieldLabels = Partial<Record<string, string>>;
+export type ProgramDevelopmentAggTableFieldConfig = {
+  label: string;
+  width: string;
+};
+
+export type ProgramDevelopmentAggTableFieldConfigs = Partial<
+  Record<string, ProgramDevelopmentAggTableFieldConfig>
+>;
 
 export interface ProgramDevelopmentAggTableProps {
   data: ProgramDevelopmentAggDataRow[];
-  fieldLabels?: ProgramDevelopmentAggTableFieldLabels;
+  configs?: ProgramDevelopmentAggTableFieldConfigs;
 }
 
 const ProgramDevelopmentAggTable: FC<ProgramDevelopmentAggTableProps> = ({
   data,
-  fieldLabels = {},
+  configs = {},
 }) => {
   return (
     <table className="program-development-type-agg-table">
       <thead>
         <tr>
           <td
-            width="50%"
+            width={configs.Name?.width || "50%"}
             className="program-development-type-agg-table-leftalign"
           ></td>
-          <td width="25%">{fieldLabels?.Field1}</td>
-          <td width="25%">{fieldLabels?.Field2}</td>
+          <td width={configs.Field1?.width || "25%"}>
+            {configs?.Field1?.label || ""}
+          </td>
+          {configs.Field2 !== undefined && (
+            <td width={configs?.Field2?.width || "25%"}>
+              {configs?.Field2?.label || ""}
+            </td>
+          )}
         </tr>
       </thead>
       <tbody>
         {data.map((row: ProgramDevelopmentAggDataRow) => (
           <tr key={row.Name}>
             <td
-              width="50%"
+              width={configs.Name?.width || "50%"}
               className="program-development-type-agg-table-leftalign program-development-type-agg-table-bold"
             >
               {row.Name}
             </td>
-            <td width="25%">{Math.round(row.Field1)}</td>
-            <td width="25%">{Math.round(row.Field2)}</td>
+            <td width={configs.Field1?.width || "25%"}>
+              {Math.round(row.Field1)}
+            </td>
+            {row.Field2 !== undefined && (
+              <td width={configs.Field2?.width || "25%"}>
+                {Math.round(row.Field2)}
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

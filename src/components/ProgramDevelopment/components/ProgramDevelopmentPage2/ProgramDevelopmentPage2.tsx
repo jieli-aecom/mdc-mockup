@@ -4,14 +4,39 @@ import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/
 import ProgramDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
 import TitleSection from "./TitleSection";
-import { aggregateByType, aggregateByCommissionDistrict } from "./aggregate";
+import {
+  aggregateByType,
+  aggregateByCommissionDistrict,
+  aggregateByPolicyAlignment,
+} from "./aggregate";
 import ProgramDevelopmentAggTable, {
-  ProgramDevelopmentAggTableFieldLabels,
+  ProgramDevelopmentAggTableFieldConfigs,
 } from "./ProgramDevelopmentAggTable/ProgramDevelopmentTypeAggTable";
 
-const countAndAvgScoreFieldLabels: ProgramDevelopmentAggTableFieldLabels = {
-  Field1: "Total Count",
-  Field2: "Average Composite Score",
+const countAndAvgScoreFieldConfigs: ProgramDevelopmentAggTableFieldConfigs = {
+  Name: {
+    label: "Name",
+    width: "50%",
+  },
+  Field1: {
+    label: "Total Count",
+    width: "25%",
+  },
+  Field2: {
+    label: "Average Composite Score",
+    width: "25%",
+  },
+};
+
+const alignmentFieldConfigs: ProgramDevelopmentAggTableFieldConfigs = {
+  Name: {
+    label: "Name",
+    width: "50%",
+  },
+  Field1: {
+    label: "Alignment",
+    width: "50%",
+  },
 };
 
 export interface ProgramDevelopmentPage2Props {
@@ -26,6 +51,7 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   );
   const typeAggData = aggregateByType(pickedProjects);
   const districtAggData = aggregateByCommissionDistrict(pickedProjects);
+  const alignmentAggData = aggregateByPolicyAlignment(pickedProjects);
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,19 +70,21 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
           <ExpansionPanel title="Project Types" defaultExpanded={true}>
             <ProgramDevelopmentAggTable
               data={typeAggData || []}
-              fieldLabels={countAndAvgScoreFieldLabels}
+              configs={countAndAvgScoreFieldConfigs}
             />
           </ExpansionPanel>
           <ExpansionPanel title="Commission Districts" defaultExpanded={false}>
             <ProgramDevelopmentAggTable
               data={districtAggData || []}
-              fieldLabels={countAndAvgScoreFieldLabels}
+              configs={countAndAvgScoreFieldConfigs}
             />
           </ExpansionPanel>
-          <ExpansionPanel
-            title="Policy Alignment"
-            defaultExpanded={false}
-          ></ExpansionPanel>
+          <ExpansionPanel title="Policy Alignment" defaultExpanded={false}>
+            <ProgramDevelopmentAggTable
+              data={alignmentAggData || []}
+              configs={alignmentFieldConfigs}
+            />
+          </ExpansionPanel>
         </div>
       </div>
 
