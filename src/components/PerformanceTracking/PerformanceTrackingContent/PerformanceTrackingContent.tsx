@@ -29,8 +29,9 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
       <p className="performance-tracker-guide">
         Use the filters to narrow your search.
       </p>
-      <div className="performance-tracking-filters">
-        <div className="performance-tracking-selects">
+      <div className="performance-tracker-filters">
+        <div className="performance-tracker-selects">
+
           <FilterItem
             label="Division"
             items={DIVISIONS}
@@ -39,14 +40,17 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
             }
             handleUpdate={(item) => setDivision(item as Division)}
           />
-          <div
-            className="performance-tracking-select-clear"
+
+          <button
+            className="performance-tracker-clear"
             onClick={() => clearFilters()}
           >
-            CLEAR FILTERS
-          </div>
+            Clear Filters
+          </button>
         </div>
-        <div className="performance-tracking-input-container">
+
+        {/* Search: DISABLED for now */}
+        {/* <div className="performance-tracking-input-container">
           <input className="performance-tracking-input" placeholder="Search" />
           <div
             style={{
@@ -56,7 +60,8 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
               marginRight: "20px",
             }}
           ></div>
-        </div>
+        </div> */}
+
       </div>
       <div className="performance-tracking-items">
         {data &&
