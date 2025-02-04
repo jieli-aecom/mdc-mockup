@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as ImageIcon } from "../../icons/ImageIcon.svg";
+import headerImage from "../../assets/0_Home/image_headr.png";
 import "./PerformanceDecisionSupport.css";
 
 const PerformanceDecisionSupport: React.FC = () => {
@@ -8,9 +9,7 @@ const PerformanceDecisionSupport: React.FC = () => {
 
   return (
     <div className="performance-decision-support-container">
-      <div className="performance-decision-icon-container">
-        <ImageIcon />
-      </div>
+      <img src={headerImage} alt="header" className="performance-decision-image" />
       <h1 className="performance-decision-title">
         Performance & Decision Support Platform
       </h1>
