@@ -37,6 +37,8 @@ const filterProjects = (
 //#region Interface
 export interface ProjectPrioritizationContext {
   filteredProjects: Project[];
+  highlightedProjectId: string;
+  highlightedProject: Project | null;
   numFilteredProjectsUnsliced: number;
   topPercents: TopPercent;
   toggleSetTopPercent: (topPercent: TopPercent) => void;
@@ -50,6 +52,8 @@ export interface ProjectPrioritizationContext {
 
 export const initialContext: ProjectPrioritizationContext = {
   filteredProjects: [],
+  highlightedProjectId: "",
+  highlightedProject: null,
   numFilteredProjectsUnsliced: 0,
   topPercents: 100,
   toggleSetTopPercent: () => {},
@@ -99,6 +103,11 @@ export function useProjectPriotizationContext() {
       filteredProjects,
     );
   }, [filteredProjects]);
+
+  const highlightedProject = useMemo(() => {
+    if(highlightedProjectId === "") return null;
+    return projects.find((project) => project.Id === highlightedProjectId);
+  }, [projects, highlightedProjectId]);
 
   //#endregion
 
@@ -156,6 +165,8 @@ export function useProjectPriotizationContext() {
 
   return {
     filteredProjects,
+    highlightedProjectId,
+    highlightedProject,
     numFilteredProjectsUnsliced,
     topPercents,
     toggleSetTopPercent,

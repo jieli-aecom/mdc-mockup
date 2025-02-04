@@ -21,11 +21,14 @@ export const makeMapGraphics = (
   for (const project of mapProjects) {
     if (!project.Geometry) continue;
 
+    const attributes = { id: project.Id };
+
     if (pickedProjectIds.has(project.Id)) {
       const symbol = project.IsLine ? PICKED_LINE_SYMBOL : PICKED_POINT_SYMBOL;
       const graphic = new Graphic({
         geometry: project.Geometry,
         symbol,
+        attributes,
       });
       pickedGraphics.push(graphic);
     } else if (selectedProjectIds.has(project.Id)) {
@@ -35,6 +38,7 @@ export const makeMapGraphics = (
       const graphic = new Graphic({
         geometry: project.Geometry,
         symbol,
+        attributes,
       });
       selectedGraphics.push(graphic);
     } else {
@@ -44,6 +48,7 @@ export const makeMapGraphics = (
       const graphic = new Graphic({
         geometry: project.Geometry,
         symbol,
+        attributes,
       });
       regularGraphics.push(graphic);
     }
@@ -57,7 +62,7 @@ export const makeMapGraphics = (
   return mapGraphics;
 };
 
-const colorByType: Record<ProjectType, string> = {
+export const colorByType: Record<ProjectType, string> = {
   [ProjectType.Bike]: "#36A355",
   [ProjectType.Pedestrian]: "#C0DA73",
   [ProjectType.Roadway]: "#263C8C",
@@ -82,6 +87,10 @@ export const makeMapGraphicsByType = (mapProjects: Project[]) => {
     return new Graphic({
       geometry,
       symbol,
+      attributes: {
+        id: project.Id,
+        type: project.Type,
+      },
     });
   });
 

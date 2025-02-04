@@ -111,7 +111,7 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
                 <td
                   key={index}
                   style={{ width: col.width, textAlign: col.align }}
-                  onClick={() => {}}
+                  onClick={() => selectProject(project.Id)}
                 >
                   {col.display(project)}
                 </td>

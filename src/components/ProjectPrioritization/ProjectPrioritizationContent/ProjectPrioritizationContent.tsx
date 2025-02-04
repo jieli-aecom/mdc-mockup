@@ -36,6 +36,7 @@ const ProjectPrioritizationContent: React.FC<
     toggleSetFilterType,
     topPercents,
     toggleSetTopPercent,
+    toggleHighlighProjectId,
   } = useContext(projectPrioritizationContext);
 
   const [isHover, setHover] = useState(false);
@@ -162,6 +163,7 @@ const ProjectPrioritizationContent: React.FC<
           config={tableConfig}
           projects={filteredProjects}
           minWidth={minWidth}
+          selectProject={toggleHighlighProjectId}
         />
       </div>
 
