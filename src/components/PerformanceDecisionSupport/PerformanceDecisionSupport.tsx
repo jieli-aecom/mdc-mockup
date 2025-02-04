@@ -19,7 +19,7 @@ const PerformanceDecisionSupport: React.FC = () => {
           Performance & Decision Support Platform
         </h1>
         <button
-          className="home-headerimg-btn"
+          className="mdc-home-btn"
           onClick={() => navigate("/create-project")}
         >
           Get Started

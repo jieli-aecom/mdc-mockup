@@ -1,9 +1,21 @@
 .strategic-container {
   text-align: center;
-  padding: 40px 20px;
+  padding: 40px 8rem;
   display: flex;
   gap: 1rem;
   flex-direction: column;
+}
+
+@media only screen and (max-width: 1300px) {
+  .strategic-container {
+    padding: 40px 4rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .strategic-container {
+    padding: 40px 2rem;
+  }
 }
 
 .strategic-title {
@@ -16,7 +28,6 @@
   display: flex;
   justify-content: space-around;
   gap: 30px;
-  padding: 0 100px;
   flex-wrap: wrap;
 }
 

@@ -58,3 +58,50 @@
   outline-width: 0;
   cursor: not-allowed;
 }
+
+.mdc-home-btn {
+  background-color: white;
+  color: var(--dark-blue);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 120px;
+  transition: background-color, outline 0.1s ease-in;
+}
+
+.mdc-home-btn:hover {
+  background-color: var(--reg-blue);
+  color: white;
+  outline-color: #549ed4;
+  outline-offset: 5px;
+  outline-style: dotted;
+  outline-width: 3px;
+}
+
+.mdc-homeDark-btn {
+  background-color: var(--deep-blue);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 120px;
+  transition: background-color, outline 0.1s ease-in;
+}
+
+.mdc-homeDark-btn > a {
+  color: white;
+  text-decoration: none;
+}
+
+.mdc-homeDark-btn:hover {
+  background-color: var(--reg-blue);
+  color: white;
+  outline-color: #549ed4;
+  outline-offset: 5px;
+  outline-style: dotted;
+  outline-width: 3px;
+}
