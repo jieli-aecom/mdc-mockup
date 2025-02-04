@@ -36,6 +36,10 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
         <ExpansionPanel title="Commission Districts" defaultExpanded={true}>
           <ProgramDevelopmentAggTable data={districtAggData || []} />
         </ExpansionPanel>
+        <ExpansionPanel
+          title="Policy Alignment"
+          defaultExpanded={false}
+        ></ExpansionPanel>
       </div>
 
       <div className="program-development-page2-map">

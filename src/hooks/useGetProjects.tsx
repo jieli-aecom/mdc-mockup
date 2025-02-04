@@ -13,6 +13,7 @@ import {
 import Graphic from "@arcgis/core/Graphic";
 import { CommissionDistrict } from "../types/District";
 import Geometry from "@arcgis/core/geometry/Geometry";
+import { COMMISSION_DISTRICTS } from "../consts/districts";
 
 
 const projectTypeLookup2: { [key: string]: ProjectType } = {
@@ -75,7 +76,8 @@ export const makeProject = (feature: Graphic) => {
   const commissionDistricts: CommissionDistrict[] =
     attributes?.CommissionDistrict
       ? (attributes?.CommissionDistrict as string)
-          .split(",")
+          .split(/[,&]/)
+          .filter((d) => COMMISSION_DISTRICTS.includes(d.trim() as CommissionDistrict))
           .map((d: string) => d.trim() as CommissionDistrict)
       : [];
 

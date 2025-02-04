@@ -23,8 +23,8 @@ export const aggregateByType = (projects: Project[]) => {
   const result: ProgramDevelopmentAggDataRow[] = Object.keys(countByType).map(
     (type) => ({
       Name: type as string,
-      TotalCount: countByType[type as ProjectType]!,
-      AverageScore: avgScoreByType[type as ProjectType]!,
+      Field1: countByType[type as ProjectType]!,
+      Field2: avgScoreByType[type as ProjectType]!,
     })
   );
 
@@ -55,8 +55,8 @@ export const aggregateByCommissionDistrict = (projects: Project[]) => {
     countByDistrict
   ).map((district) => ({
     Name: "Commission District " + (district as string),
-    TotalCount: countByDistrict[district as CommissionDistrict]!,
-    AverageScore: avgScoreByDistrict[district as CommissionDistrict]!,
+    Field1: countByDistrict[district as CommissionDistrict]!,
+    Field2: avgScoreByDistrict[district as CommissionDistrict]!,
   }));
 
   return result;

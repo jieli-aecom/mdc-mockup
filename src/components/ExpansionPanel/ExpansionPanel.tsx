@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import "./ExpansionPanel.css";
 import MinusIcon from "../../icons/MinusIcon";
 import PlusIcon from "../../icons/PlusIcon";
@@ -11,6 +11,17 @@ export interface ExpansionPanelProps {
 
 const ExpansionPanel : FC<ExpansionPanelProps> = ({ title, children, defaultExpanded }) => {
   const [expanded, setExpanded] = useState<boolean>(defaultExpanded);
+  const [bodyOverflow, setBodyOverflow] = useState<string>('hidden');
+
+  useEffect(() => {
+    if (expanded) {
+      setTimeout(() => {
+        setBodyOverflow('auto');
+      }, 400);
+    } else {
+      setBodyOverflow('hidden');
+    }
+  }, [expanded]);
 
   const handleToggle = () => {
     setExpanded(!expanded);
@@ -19,10 +30,9 @@ const ExpansionPanel : FC<ExpansionPanelProps> = ({ title, children, defaultExpa
   const icon = useMemo(() => {
     return expanded ? <MinusIcon /> : <PlusIcon />;
   }, [expanded]);
-
   const ariaLabel = expanded ? 'Collapse' : 'Expand';
-
   const bodyClass = expanded ? 'mdc-expansionpanel-body' : 'mdc-expansionpanel-body mdc-expansionpanel-body-collapsed';
+
 
   
   return <div className="mdc-expansionpanel">
@@ -36,7 +46,7 @@ const ExpansionPanel : FC<ExpansionPanelProps> = ({ title, children, defaultExpa
         {icon}
       </button>
     </div>
-    <div className={bodyClass}>
+    <div className={bodyClass} style={{ overflow: bodyOverflow }}>
       {children ?? null}
     </div>
 

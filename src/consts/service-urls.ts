@@ -11,3 +11,5 @@ export const CORRIDOR_CREATE_NEW_SEGMENT_URL =
   "https://services7.arcgis.com/wGTEYtsrVhoPXek1/ArcGIS/rest/services/Corridor_Assessment_Create_Segments_20240419/FeatureServer/8";
 export const PERFORMANCE_TRACKING_SEGMENTS_URL =
   "https://services7.arcgis.com/wGTEYtsrVhoPXek1/ArcGIS/rest/services/Performance_Tracking_Segments_202403/FeatureServer/0";
+export const COMMISSION_DISTRICTS_URL =
+  "https://services7.arcgis.com/wGTEYtsrVhoPXek1/ArcGIS/rest/services/Mock_Projects_and_Commission_Districts_WFL1/FeatureServer/2";
