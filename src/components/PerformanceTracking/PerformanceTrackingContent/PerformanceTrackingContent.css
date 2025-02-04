@@ -1,8 +1,24 @@
-.performance-tracking-guide {
+.performance-tracker-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  box-sizing: border-box !important;
+  gap: 1rem;
+}
+
+.performance-tracker-title {
   color: #4f4f4f;
-  font-size: 18px;
+  font-size: 34px;
+  font-weight: 700;
   margin: 0;
-  padding-top: 38px;
+}
+
+.performance-tracker-guide {
+  color: #4f4f4f;
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 .performance-tracking-filters {

@@ -8,7 +8,7 @@ interface FilterItemProps {
   label: string;
   items: string[];
   selectedItems?: Set<string>;
-  handleUpdate: ((item: string) => void)
+  handleUpdate: (item: string) => void;
 }
 
 const FilterItem: React.FC<FilterItemProps> = ({
@@ -18,7 +18,9 @@ const FilterItem: React.FC<FilterItemProps> = ({
   handleUpdate,
 }) => {
   const [open, setOpen] = useState(false);
-  const [selectedItemsAuto, setSelectedItemsAuto] = useState<Set<string>>(new Set());
+  const [selectedItemsAuto, setSelectedItemsAuto] = useState<Set<string>>(
+    new Set()
+  );
 
   const handleToggleItemAuto = (item: string) => {
     if (selectedItemsAuto.has(item)) {
@@ -27,7 +29,7 @@ const FilterItem: React.FC<FilterItemProps> = ({
       selectedItemsAuto.add(item);
     }
     setSelectedItemsAuto(new Set(selectedItemsAuto));
-  }
+  };
 
   return (
     <div>
@@ -39,27 +41,32 @@ const FilterItem: React.FC<FilterItemProps> = ({
         <div>{label}</div>
       </div>
       {open && (
-        <div className="filter-dropdown-container">
-          {items.map((item, index) => {
-            const selected = selectedItems ? selectedItems.has(item) : selectedItemsAuto.has(item);
-            const onClick = () => {
-              handleUpdate(item);
-              handleToggleItemAuto(item);
-            }
-            return (
-            <div
-              key={`filter-dropdown-item-${label}-${index}`}
-              className="filter-dropdown-item"
-            >
-              <div
-                className={`filter-dropdown-circle${
-                  selected ? " filter-dropdown-circle-active" : ""
-                }`}
-                onClick={onClick}
-              ></div>
-              {item}
-            </div>
-          )})}
+        <div className="filter-dropdown-wrapper">
+          <div className="filter-dropdown-container">
+            {items.map((item, index) => {
+              const selected = selectedItems
+                ? selectedItems.has(item)
+                : selectedItemsAuto.has(item);
+              const onClick = () => {
+                handleUpdate(item);
+                handleToggleItemAuto(item);
+              };
+              return (
+                <div
+                  key={`filter-dropdown-item-${label}-${index}`}
+                  className="filter-dropdown-item"
+                >
+                  <div
+                    className={`filter-dropdown-circle${
+                      selected ? " filter-dropdown-circle-active" : ""
+                    }`}
+                    onClick={onClick}
+                  ></div>
+                  {item}
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

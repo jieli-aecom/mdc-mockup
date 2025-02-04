@@ -11,6 +11,23 @@
   gap: 12px;
   font-size: 0.9rem;
   width: fit-content;
+  overflow: auto;
+}
+
+.filter-item-wrapper {
+  background-color: white;
+  border: 1.5px solid #263c8c;
+  border-radius: 5px;
+  color: #263c8c;
+  padding: 6px 14px 5px 17px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  width: fit-content;
+  overflow: auto;
 }
 
 .filter-item-container:hover {
@@ -27,18 +44,29 @@
   outline-style: dotted;
 }
 
-.filter-dropdown-container {
-  width: 150px;
+.filter-dropdown-wrapper {
+  background-color: white;
+  border: 1.5px solid #263c8c;
+  border-radius: 5px;
+  color: #263c8c;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  width: 200px;
+  overflow: auto;
+  position: absolute;
   max-height: 200px;
-  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.filter-dropdown-container {
   display: flex;
+  width: max-content;
+  overflow-x: auto;
   flex-direction: column;
   justify-content: space-between;
   gap: 13px;
   padding: 14px;
-  position: absolute;
-  margin-top: 6px;
-  border: 1px solid #4d9fd7;
   background-color: white;
 }
 

@@ -1,0 +1,29 @@
+.sidebar-item-container.sidebar-prioritization-item-active {
+  background-color: #f15624;
+  color: white;
+}
+
+.sidebar-project-prioritization-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-project-prioritization-tab {
+  padding: 14px 44px 14px 10px;
+  border: 3px dotted #ebebeb;
+  background-color: #ebebeb;
+  font-size: 18px;
+  font-weight: bold;
+  color: #4f4f4f;
+}
+
+.sidebar-project-prioritization-tab:hover {
+  cursor: pointer;
+}
+
+.sidebar-tab-active {
+  border: 3px dotted #f15624;
+  background-color: white;
+  color: #f15624;
+}

@@ -4,57 +4,41 @@ import ArrowUp from "../../../icons/ArrowUp";
 import CheckIcon from "../../../icons/CheckIcon";
 import ProgressBar from "../../ProgressBar/ProgressBar";
 import "./PerformanceTrackingContent.css";
+import { Division } from "../../../types/Divisions";
+import FilterItem from "../../FilterItem/FilterItem";
+import { DIVISIONS } from "../../../consts/divisions";
 
 interface PerformanceTrackingContentProps {
   data: any[];
 }
 
 const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
-  data
+  data,
 }) => {
-  const [openSelectCommissionDistrict, setOpenSelectCommissionDistrict] =
-    useState(false);
   const [openSelectDivision, setOpenSelectDivision] = useState(false);
-  const [selectedCommissionDistrict, setCommissionDistrict] = useState("");
-  const [selectedDivision, setDivision] = useState("");
+  const [selectedDivision, setDivision] = useState<Division | null>(null);
 
   const clearFilters = () => {
-    setOpenSelectCommissionDistrict(false);
     setOpenSelectDivision(false);
-    setCommissionDistrict("");
-    setDivision("");
+    setDivision(null);
   };
 
   return (
-    <div className="project-manage-container">
-      <p className="project-manage-title">Performance Tracking</p>
-      <p className="performance-tracking-guide">
+    <div className="performance-tracker-container">
+      <p className="performance-tracker-title">Performance Tracking</p>
+      <p className="performance-tracker-guide">
         Use the filters to narrow your search.
       </p>
       <div className="performance-tracking-filters">
         <div className="performance-tracking-selects">
-          <div
-            className={`performance-tracking-select${
-              openSelectCommissionDistrict
-                ? " performance-tracking-select-active"
-                : ""
-            }`}
-            onClick={() =>
-              setOpenSelectCommissionDistrict(!openSelectCommissionDistrict)
+          <FilterItem
+            label="Division"
+            items={DIVISIONS}
+            selectedItems={
+              selectedDivision ? new Set([selectedDivision]) : undefined
             }
-          >
-            <p className="performance-tracking-select-text">
-              Commission District
-            </p>
-          </div>
-          <div
-            className={`performance-tracking-select${
-              openSelectDivision ? " performance-tracking-select-active" : ""
-            }`}
-            onClick={() => setOpenSelectDivision(!openSelectDivision)}
-          >
-            <p className="performance-tracking-select-text">Division</p>
-          </div>
+            handleUpdate={(item) => setDivision(item as Division)}
+          />
           <div
             className="performance-tracking-select-clear"
             onClick={() => clearFilters()}
@@ -69,7 +53,7 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
               height: "17px",
               width: "17px",
               backgroundColor: "black",
-              marginRight: "20px"
+              marginRight: "20px",
             }}
           ></div>
         </div>
@@ -85,7 +69,7 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
                 <div
                   className="performance-tracking-item-status"
                   style={{
-                    color: value.direction === "down" ? "red" : "green"
+                    color: value.direction === "down" ? "red" : "green",
                   }}
                 >
                   {value.direction === "up" ? (
