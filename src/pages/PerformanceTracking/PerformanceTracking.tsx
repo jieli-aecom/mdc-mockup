@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PerformanceTrackingSidebar from "../../components/PerformanceTracking/PerformanceTrackingSidebar/PerformanceTrackingSidebar";
 import PerformanceTrackingContent from "../../components/PerformanceTracking/PerformanceTrackingContent/PerformanceTrackingContent";
 import "./PerformanceTracking.css";
-import { PERFORMANCE_TRACKING_DATA } from "../../mockData";
+import { PERFORMANCE_TRACKING_DATA } from "../../mockData/performance-tracking";
 import { PerformanceArea } from "../../types/PerformanceArea";
 
 const PerformanceTracking: React.FC = () => {

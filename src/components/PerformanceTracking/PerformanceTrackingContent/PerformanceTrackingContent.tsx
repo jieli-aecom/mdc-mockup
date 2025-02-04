@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import ArrowDown from "../../../icons/ArrowDown";
 import ArrowUp from "../../../icons/ArrowUp";
 import CheckIcon from "../../../icons/CheckIcon";
@@ -16,6 +16,32 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
   data,
 }) => {
   const [selectedDivision, setDivision] = useState<Division | null>(null);
+  // Need a set to pass to FilterItem
+  const selectedDivisions: Set<string> = useMemo(() => {
+    if (!selectedDivision) return new Set();
+    return new Set([selectedDivision as string]);
+  }, [selectedDivision]);
+  const toggleSelectDivision = useCallback(
+    (clicked: string) => {
+      const item = clicked as Division;
+      if (selectedDivision === item) {
+        setDivision(null);
+      } else {
+        setDivision(item);
+      }
+    },
+    [selectedDivision]
+  );
+
+  // Data based on division selection
+  const filteredData = useMemo(() => {
+    if (!selectedDivision) return data;
+    const filtered = data.filter((item) => item.division === selectedDivision);
+    if (filtered.length === 0) {
+      return data.filter((item) => item.division === null);
+    }
+    return filtered;
+  }, [data, selectedDivision]);
 
   const clearFilters = () => {
     setDivision(null);
@@ -29,14 +55,11 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
       </p>
       <div className="performance-tracker-filters">
         <div className="performance-tracker-selects">
-
           <FilterItem
             label="Division"
             items={DIVISIONS}
-            selectedItems={
-              selectedDivision ? new Set([selectedDivision]) : undefined
-            }
-            handleUpdate={(item) => setDivision(item as Division)}
+            selectedItems={selectedDivisions}
+            handleUpdate={toggleSelectDivision}
           />
 
           <button
@@ -59,11 +82,10 @@ const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
             }}
           ></div>
         </div> */}
-
       </div>
       <div className="performance-tracker-items">
-        {data &&
-          data.map((value, index) => (
+        {filteredData &&
+          filteredData.map((value, index) => (
             <div
               key={`${value.type}-item-${index}`}
               className="performance-tracker-item"
