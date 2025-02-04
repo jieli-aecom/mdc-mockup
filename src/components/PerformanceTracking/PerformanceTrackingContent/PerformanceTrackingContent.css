@@ -15,10 +15,32 @@
 }
 
 .performance-tracker-title {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.performance-tracker-title > h1 {
   color: #4f4f4f;
-  font-size: 34px;
   font-weight: 700;
   margin: 0;
+}
+
+.performance-tracker-infoBtn {
+  all: unset;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--deep-blue);
+  color: var(--deep-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.performance-tracker-infoBtn:hover {
+  cursor: pointer;
 }
 
 .performance-tracker-guide {
@@ -171,4 +193,81 @@
 .performance-tracker-item-bottom-hr {
   height: 4px;
   background-color: #00aeb4;
+}
+
+.performance-tracker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.performance-tracker-modal-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.performance-tracker-modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.3;
+}
+
+.performance-tracker-modal-main {
+  width: 35rem;
+  background-color: white;
+  opacity: 1;
+  z-index: 100;
+  box-shadow: 0.5rem 0.5rem var(--blue-green);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box !important;
+}
+
+.performance-tracker-modal-header {
+  height: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.performance-tracker-modal-close {
+  all: unset;
+  rotate: 45deg;
+}
+
+.performance-tracker-modal-close:hover {
+  cursor: pointer;
+}
+
+.performance-tracker-modal-body {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.performance-tracker-modal-body img {
+  width: 100%;
+}
+
+.performance-tracker-modal-text {
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
