@@ -12,7 +12,7 @@ export const projectPrioritizationContext =
   createContext<ProjectPrioritizationContext>(initialContext);
 
 export enum ProjectPrioritizationTab {
-  Overall = "Overall",
+  Overall = "Summary",
   Location = "Location",
   Benefit = "Benefit",
   Funding = "Funding",

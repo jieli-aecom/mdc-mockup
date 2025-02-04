@@ -12,6 +12,7 @@ export type TableColumnConfiguration = {
   color?: (project: Project) => string;
   align?: "left" | "center" | "right";
   width: string;
+  bold?: boolean;
 };
 
 export type TableConfiguration = TableColumnConfiguration[];
@@ -110,7 +111,7 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
               {config.map((col: TableColumnConfiguration, index) => (
                 <td
                   key={index}
-                  style={{ width: col.width, textAlign: col.align }}
+                  style={{ width: col.width, textAlign: col.align, fontWeight: col.bold ? "bold" : "normal" }}
                   onClick={() => selectProject(project.Id)}
                 >
                   {col.display(project)}

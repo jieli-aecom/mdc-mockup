@@ -17,6 +17,7 @@ export const generalTableConfig: TableConfiguration = [
         maximumFractionDigits: 0,
       }),
     width: "20%",
+    bold: true,
   },
   {
     label: "Location Score",
@@ -54,6 +55,7 @@ export const locationTableConfig: TableConfiguration = [
         maximumFractionDigits: 0,
       }),
     width: "8.5%",
+    bold: true,
   },
   {
     label: "Connects to Existing",
@@ -172,6 +174,7 @@ export const benefitTableConfig: TableConfiguration = [
         maximumFractionDigits: 0,
       }),
     width: "20%",
+    bold: true,
   },
   {
     label: "Social",

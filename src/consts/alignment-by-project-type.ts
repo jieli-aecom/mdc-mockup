@@ -6,33 +6,33 @@ export const ALIGNMENT_BY_PROJECT_TYPE: Record<
   Record<PerformanceArea, number>
 > = {
   [ProjectType.Bike]: {
-    [PerformanceArea.Safe]: 0.8,
+    [PerformanceArea.Safe]: 1,
     [PerformanceArea.Clean]: 0.9,
     [PerformanceArea.Efficient]: 0.7,
-    [PerformanceArea.Connected]: 0.6,
+    [PerformanceArea.Connected]: 0.3,
   },
   [ProjectType.Pedestrian]: {
-    [PerformanceArea.Safe]: 0.9,
-    [PerformanceArea.Clean]: 0.6,
-    [PerformanceArea.Efficient]: 0.7,
-    [PerformanceArea.Connected]: 0.8,
+    [PerformanceArea.Safe]: 1,
+    [PerformanceArea.Clean]: 0.1,
+    [PerformanceArea.Efficient]: 0.2,
+    [PerformanceArea.Connected]: 0.6,
   },
   [ProjectType.Roadway]: {
-    [PerformanceArea.Safe]: 0.7,
-    [PerformanceArea.Clean]: 0.6,
-    [PerformanceArea.Efficient]: 0.9,
+    [PerformanceArea.Safe]: 1,
+    [PerformanceArea.Clean]: 0.2,
+    [PerformanceArea.Efficient]: 0.3,
     [PerformanceArea.Connected]: 0.8,
   },
   [ProjectType.Transit]: {
-    [PerformanceArea.Safe]: 0.6,
-    [PerformanceArea.Clean]: 0.8,
-    [PerformanceArea.Efficient]: 0.9,
+    [PerformanceArea.Safe]: 1,
+    [PerformanceArea.Clean]: 0.3,
+    [PerformanceArea.Efficient]: 0.4,
     [PerformanceArea.Connected]: 0.7,
   },
   [ProjectType.Freight]: {
-    [PerformanceArea.Safe]: 0.6,
-    [PerformanceArea.Clean]: 0.7,
-    [PerformanceArea.Efficient]: 0.8,
+    [PerformanceArea.Safe]: 1,
+    [PerformanceArea.Clean]: 0.4,
+    [PerformanceArea.Efficient]: 0.2,
     [PerformanceArea.Connected]: 0.9,
   },
 };
