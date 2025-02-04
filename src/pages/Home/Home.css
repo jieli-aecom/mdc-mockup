@@ -3,3 +3,85 @@
   height: 100%;
   overflow: auto;
 }
+
+.county-benefits-container {
+  display: flex;
+  align-items: center;
+  background-color: #ebebeb;
+  height: 25rem;
+  box-sizing: border-box !important;
+}
+
+.county-benefits-container * {
+  box-sizing: border-box !important;
+}
+
+.county-benefits-image {
+  height: 100% !important;
+  min-width: 20rem;
+  background-color: #ebebeb;
+  object-fit: cover;
+}
+
+.county-benefits-icon {
+  width: 80px;
+  height: 80px;
+  opacity: 0.5;
+}
+
+.county-benefits-benefits-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #486cb2;
+  padding: 3rem;
+  flex-grow: 1;
+}
+
+.county-benefits-title {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.county-benefits-benefit-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.county-benefits-benefit-list li {
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  gap: 20px;
+  color: white;
+  position: relative;
+}
+
+.county-benefits-benefit-list li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.county-benefits-icon-box {
+  height: 32px;
+  width: 32px;
+  color: white;
+  border: 3px dotted;
+  border-radius: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
