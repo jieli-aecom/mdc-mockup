@@ -6,8 +6,11 @@
   flex-direction: column;
   position: relative;
   --dark-blue: #456db5;
+  --reg-blue: #549ed4;
   --dark-green: #008001;
   --dark-orange: #f15624;
+  --blue-green: #00AEB4;
+  --light-green: #C0DA73;
 }
 
 .main-content-container {
