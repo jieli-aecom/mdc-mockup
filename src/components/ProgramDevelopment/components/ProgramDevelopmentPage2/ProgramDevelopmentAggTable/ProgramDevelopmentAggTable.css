@@ -33,6 +33,9 @@
 
 .program-development-type-agg-table thead td {
   padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .program-development-type-agg-table td {

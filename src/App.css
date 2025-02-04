@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  box-sizing: border-box;
   --dark-blue: #456db5;
   --reg-blue: #549ed4;
   --dark-green: #008001;

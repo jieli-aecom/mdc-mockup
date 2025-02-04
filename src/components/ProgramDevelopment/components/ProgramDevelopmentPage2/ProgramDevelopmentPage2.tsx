@@ -5,7 +5,14 @@ import ProgramDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMa
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
 import TitleSection from "./TitleSection";
 import { aggregateByType, aggregateByCommissionDistrict } from "./aggregate";
-import ProgramDevelopmentAggTable from "./ProgramDevelopmentAggTable/ProgramDevelopmentTypeAggTable";
+import ProgramDevelopmentAggTable, {
+  ProgramDevelopmentAggTableFieldLabels,
+} from "./ProgramDevelopmentAggTable/ProgramDevelopmentTypeAggTable";
+
+const countAndAvgScoreFieldLabels: ProgramDevelopmentAggTableFieldLabels = {
+  Field1: "Total Count",
+  Field2: "Average Composite Score",
+};
 
 export interface ProgramDevelopmentPage2Props {
   handleToPage1: () => void;
@@ -29,17 +36,28 @@ const ProgramDevelopmentPage2: FC<ProgramDevelopmentPage2Props> = ({
   return (
     <div className="program-development-page2-container">
       <div className="program-development-page2-main">
-        <TitleSection handleToPage1={handleToPage1} />
-        <ExpansionPanel title="Project Types" defaultExpanded={true}>
-          <ProgramDevelopmentAggTable data={typeAggData || []} />
-        </ExpansionPanel>
-        <ExpansionPanel title="Commission Districts" defaultExpanded={true}>
-          <ProgramDevelopmentAggTable data={districtAggData || []} />
-        </ExpansionPanel>
-        <ExpansionPanel
-          title="Policy Alignment"
-          defaultExpanded={false}
-        ></ExpansionPanel>
+        <div className="program-development-page2-header">
+          <TitleSection handleToPage1={handleToPage1} />
+        </div>
+
+        <div className="program-development-page2-main-body">
+          <ExpansionPanel title="Project Types" defaultExpanded={true}>
+            <ProgramDevelopmentAggTable
+              data={typeAggData || []}
+              fieldLabels={countAndAvgScoreFieldLabels}
+            />
+          </ExpansionPanel>
+          <ExpansionPanel title="Commission Districts" defaultExpanded={false}>
+            <ProgramDevelopmentAggTable
+              data={districtAggData || []}
+              fieldLabels={countAndAvgScoreFieldLabels}
+            />
+          </ExpansionPanel>
+          <ExpansionPanel
+            title="Policy Alignment"
+            defaultExpanded={false}
+          ></ExpansionPanel>
+        </div>
       </div>
 
       <div className="program-development-page2-map">

@@ -1,9 +1,9 @@
-const ArrowUp = ({color = "currentColor"}) => {
+const ArrowUp = ({color = "currentColor", width = "32px"}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
+      width={width}
+      height={width}
       viewBox="0 0 24 24"
     >
       <path

@@ -89,10 +89,10 @@ const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
                     <p>{col.label}</p>
                     <div className="table-sorts">
                       <button onClick={sortUpClick} title={sortUpLabel} aria-label={sortUpLabel}>
-                        <ArrowUp color={sortUpColor} />
+                        <ArrowUp color={sortUpColor} width="100%"/>
                       </button>
                       <button onClick={sortDownClick} title={sortDownLabel} aria-label={sortDownLabel}>
-                        <ArrowDown color={sortDownColor} />
+                        <ArrowDown color={sortDownColor} width="100%" />
                       </button>
                     </div>
                   </div>
