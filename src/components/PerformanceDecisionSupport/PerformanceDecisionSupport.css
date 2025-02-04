@@ -8,7 +8,7 @@
 }
 
 .home-headerimg-image {
-  height: 70vh;
+  width: 100%;
   object-fit: cover;
 }
 

@@ -1,12 +1,14 @@
 .strategic-container {
   text-align: center;
   padding: 40px 20px;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
 }
 
 .strategic-title {
-  font-size: 48px;
-  color: #333;
-  margin-bottom: 40px;
+  font-size: 2.5rem;
+  color: var(--dark-gray);
   font-weight: 600;
 }
 
@@ -23,16 +25,15 @@
   align-items: start;
   width: 20%;
   text-align: left;
+  gap: 1rem;
 }
 
 .strategic-icon {
   width: 80px;
   height: 80px;
-  margin-bottom: 20px;
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 80px;
-  border: 3px dotted;
 }
 
 .strategic-safe-icon {
@@ -48,8 +49,9 @@
 }
 
 .strategic-vision-title {
-  font-size: 48px;
-  color: #333;
+  margin: 0;
+  font-size: 2rem;
+  color: var(--dark-gray);
   margin-bottom: 5px;
 }
 
@@ -74,7 +76,6 @@
   height: 1px;
   width: 100%;
   margin-top: 0;
-  margin-bottom: 20px;
 }
 
 .strategic-safe-line {
@@ -98,7 +99,8 @@
 }
 
 .strategic-vision-description {
-  font-size: 20px;
   color: #333;
   line-height: 1.5;
+  margin: 0;
+  font-size: 1rem;
 }
