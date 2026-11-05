@@ -1,4 +1,6 @@
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
+import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import {
   COMMISSION_DISTRICTS_URL,
   LINE_PROJECTS_LAYER_URL,
@@ -22,6 +24,12 @@ export const LINE_PROJECTS_LAYER = new FeatureLayer({
 export const COMMISSION_DISTRICTS_LAYER = new FeatureLayer({
   id: "Commission Districts",
   url: COMMISSION_DISTRICTS_URL,
+  renderer: new SimpleRenderer({
+    symbol: new SimpleFillSymbol({
+      color: [0, 0, 0, 0],
+      outline: { color: "#666666", width: "1px" },
+    }),
+  }),
   outFields: ["*"],
   popupEnabled: true,
   popupTemplate: {
