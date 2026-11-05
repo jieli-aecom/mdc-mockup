@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactComponent as CreateGray } from "../../icons/2_Project_Prioritization/Create_Gray.svg";
 import { ReactComponent as CreateWhite } from "../../icons/2_Project_Prioritization/Create_White.svg";
 import { ReactComponent as PrioritizationGray } from "../../icons/2_Project_Prioritization/Prioritization_Gray.svg";

@@ -1,6 +1,6 @@
 import { FC, SVGProps } from "react";
 
-interface SaveIconProps extends React.SVGProps<SVGSVGElement> {
+interface SaveIconProps extends SVGProps<SVGSVGElement> {
   strokeColor?: string;
   strokeWidth?: number;
 }

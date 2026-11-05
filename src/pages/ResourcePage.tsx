@@ -14,23 +14,6 @@ const CATEGORIES = {
   "TECHNICAL DOCUMENTS": ["All Documents", "Memorandums", "Technical Reports"],
 };
 
-const FILTER_CATEGORY = {
-  "Filter Category1": [
-    "Category 1-1",
-    "Category 1-2",
-    "Category 1-3",
-    "Category 1-4",
-    "Category 1-5",
-  ],
-  "Filter Category2": [
-    "Category 2-1",
-    "Category 2-2",
-    "Category 2-3",
-    "Category 2-4",
-    "Category 2-5",
-  ],
-};
-
 const DATAS = [
   {
     id: "0000-0000-0000",
@@ -119,7 +102,6 @@ const ResourcesPage: React.FC = () => {
     useState<string>("DATA DOWNLOADS");
   const [selectedTab, setSelectedTab] = useState<string>("");
   const [searchKey, setSearchKey] = useState("");
-  const [selectedFilterCategory, setSelectedFilterCategory] = useState([]);
 
   useEffect(() => {
     setSelectedTab(CATEGORIES[selectedCategory as keyof typeof CATEGORIES][0]);
