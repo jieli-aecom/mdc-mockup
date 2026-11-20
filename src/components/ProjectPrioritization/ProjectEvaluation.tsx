@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DemoProject, goalMeasures } from "../../mockData/showcase";
+import { corridorForecast, DemoProject, goalMeasures } from "../../mockData/showcase";
 import { PERFORMANCE_AREAS } from "../../consts/performance-areas";
 import { ProjectType } from "../../types/Project";
 import safeIcon from "../../icons/0_Home/Safe.svg";
@@ -37,10 +37,15 @@ export default function ProjectEvaluation({ project, animate, onComplete, onRetu
     return () => window.clearTimeout(timer);
   }, [stage, animate, onComplete]);
   const i = project.inputs;
+  const forecast = corridorForecast(project);
+  const runningTime = forecast && `${forecast.current} min baseline · ${forecast.planned} min projected`;
+  const efficiencyEvidence = `${i.signalPriority} priority intersections · ${i.routes} routes served`;
+  const source = project.technical?.evidenceSource;
+  const observationPeriod = project.technical?.observationPeriod;
   const evidence = {
     Safe: `${i.safeCrossings} crossing upgrades · ${i.trainingHours} training hours`,
     Clean: i.zeroEmission ? "Zero-emission operations supported" : project.type === ProjectType.Bike || project.type === ProjectType.Pedestrian ? "Active transportation improvement" : "No clean mobility provision selected",
-    Efficient: `${i.signalPriority} priority intersections · ${i.routes} routes served`,
+    Efficient: runningTime ? `${efficiencyEvidence} · ${runningTime}` : efficiencyEvidence,
     Connected: `${i.improvedStops} improved stops · ${i.accessible ? "Accessibility upgrades" : "No accessibility upgrades"}`,
   };
   const footprint = <ProjectPrioritizationMap title="Project footprint" projects={[project]}
@@ -69,7 +74,14 @@ export default function ProjectEvaluation({ project, animate, onComplete, onRetu
     <h2>Score breakdown</h2>
     <div className="pp-score-grid">
       <Breakdown label="Location score" score={project.location} values={project.locationBreakdown}>Each factor averages nearby CTMP reference scores across the project footprint. The location score averages these factors.</Breakdown>
-      <Breakdown label="Benefit score" score={project.benefit} values={project.benefitBreakdown}>Estimated users, service improvements and access provisions inform three equally weighted benefit categories.</Breakdown>
+      <Breakdown label="Benefit score" score={project.benefit} values={project.benefitBreakdown}>
+        Estimated users, service improvements and access provisions inform three equally weighted benefit categories.
+        {forecast && (forecast.reduction > 0
+          ? <> The submitted peak travel times imply a {(forecast.reduction * 100).toLocaleString(undefined, { maximumFractionDigits: 1 })}% reduction. This earns the same share of any efficiency points remaining after routes and signals are scored. Efficiency contributes to the economic score.</>
+          : <> The projected peak travel time yields no time savings. Routes and priority intersections determine the efficiency contribution.</>)}
+        {forecast && source && <> Reported source — {source}</>}
+        {forecast && observationPeriod && <> Observation period — {observationPeriod}</>}
+      </Breakdown>
     </div>
   </section>{footprint}</div>;
 }

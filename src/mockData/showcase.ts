@@ -1,10 +1,14 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import isEqual from "lodash/isEqual";
 import { PerformanceArea } from "../types/PerformanceArea";
 import { ProjectType } from "../types/Project";
 import { getDistricts, locationScores, MapPoint } from "./geography";
+import { biscayneIntake, corridorForecast, TechnicalIntake } from "./projectIntake";
 
 export type { MapPoint } from "./geography";
+export type { TechnicalIntake } from "./projectIntake";
+export { resolveTechnicalIntake, usesCorridorTravelTime, corridorForecast } from "./projectIntake";
 export { getDistricts } from "./geography";
 export const deliveryStatuses = ["Approved", "Planning", "In Pipeline", "In Progress", "Completed"] as const;
 export type DeliveryStatus = typeof deliveryStatuses[number];
@@ -64,6 +68,7 @@ export interface ProjectDraft {
   districts: string[];
   geometry: MapPoint[];
   inputs: ProjectInputs;
+  technical?: Partial<TechnicalIntake>;
   reviewStatus: ReviewStatus;
   deliveryStatus: DeliveryStatus;
   comments: PublicComment[];
@@ -87,7 +92,7 @@ export interface DemoProgram {
 export const goalMeasures: Record<PerformanceArea, string> = {
   Safe: "Safer crossings and operator training",
   Clean: "Zero-emission and active transportation improvements",
-  Efficient: "Priority signals and routes served",
+  Efficient: "Priority signals, routes served and projected peak travel time savings",
   Connected: "Improved stops and accessible connections",
 };
 
@@ -99,10 +104,14 @@ export function evaluateProject(draft: ProjectDraft): DemoProject {
   const i = draft.inputs;
   const activeTravel = draft.type === ProjectType.Bike || draft.type === ProjectType.Pedestrian;
   const reach = intensity(i.dailyUsers, 2200);
+  const scopeEfficiency = Math.max(intensity(i.signalPriority, 8), intensity(i.routes, 5));
+  const forecast = corridorForecast(draft);
+  // Apply the projected fraction of running time saved to the remaining efficiency points.
+  const efficiency = scopeEfficiency + (1 - scopeEfficiency) * Math.max(0, forecast?.reduction ?? 0);
   const goals = {
     Safe: Math.round(100 * Math.max(intensity(i.safeCrossings, 6), intensity(i.trainingHours, 120))),
     Clean: i.zeroEmission ? 100 : activeTravel ? 80 : 0,
-    Efficient: Math.round(100 * Math.max(intensity(i.signalPriority, 8), intensity(i.routes, 5))),
+    Efficient: Math.round(100 * efficiency),
     Connected: Math.round(100 * Math.min(1, intensity(i.improvedStops, 8) * 0.65 + (i.accessible ? 0.5 : 0))),
   };
   const locationBreakdown = locationScores(draft.geometry);
@@ -172,7 +181,8 @@ const seeds: Seed[] = [
 ];
 const initialProjects = seeds.map(([id,name,type,subtype,reviewStatus,deliveryStatus,geometry,inputs,description,comments]) =>
   evaluateProject({id,name,type,subtype:projectSubtypes[type][subtype],description,geometry,districts:getDistricts(geometry),
-    reviewStatus,deliveryStatus,inputs:{...emptyInputs,...inputs},comments}));
+    reviewStatus,deliveryStatus,inputs:{...emptyInputs,...inputs},comments,
+    ...(id === "biscayne" ? {technical: biscayneIntake} : {})}));
 const initialPrograms: DemoProgram[] = [
   {id:"transit-access",name:"Transit access and reliability",tags:["Transit","Accessibility"],status:"Approved",projectIds:["flagler","southdade","training"]},
   {id:"safe-routes",name:"Neighborhood safe routes",tags:["Safety","Active transportation"],status:"Submitted",projectIds:["hialeah","ludlam","beach"]},
@@ -193,9 +203,25 @@ interface ShowcaseStore {
 function upsert<T extends {id: string}>(items: T[], item: T) {
   return items.some(old => old.id === item.id) ? items.map(old => old.id === item.id ? item : old) : [item, ...items];
 }
+
+type StoredPortfolio = Pick<ShowcaseStore, "projects" | "programs">;
+
+function migratePortfolio(state: unknown, version: number): StoredPortfolio {
+  const saved = state as StoredPortfolio;
+  if (version !== 1 || !Array.isArray(saved?.projects)) return saved;
+  const example = initialProjects.find(project => project.id === "biscayne")!;
+  const projects = saved.projects.map(project => {
+    if (project.id !== example.id || project.technical || project.type !== example.type ||
+        project.subtype !== example.subtype || project.name !== example.name || project.description !== example.description ||
+        !isEqual(project.inputs, example.inputs) || !isEqual(project.geometry, example.geometry)) return project;
+    return evaluateProject({ ...project, technical: biscayneIntake });
+  });
+  return { ...saved, projects };
+}
+
 export const useShowcase = create<ShowcaseStore>()(persist(set => ({
   projects: initialProjects,
   programs: initialPrograms,
   saveProject: project => set(state => ({projects: upsert(state.projects, project)})),
   saveProgram: program => set(state => ({programs: upsert(state.programs, program)})),
-}), {name: "mdc-planning-portfolio", version: 1}));
+}), {name: "mdc-planning-portfolio", version: 2, migrate: migratePortfolio}));
