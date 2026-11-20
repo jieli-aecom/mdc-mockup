@@ -3,17 +3,17 @@ export const MAP_API_KEY =
 
 export const HEADER_NAV_LINKS = [
   "/",
-  "/performance-tracking",
   "/project-prioritization",
   "/program-development",
+  "/performance-tracking",
   "/resources",
 ];
 
 export const HEADER_NAV_NAMES = [
   "HOME",
-  "PERFORMANCE TRACKING",
   "PROJECT PRIORITIZATION",
   "PROGRAM DEVELOPMENT",
+  "PERFORMANCE TRACKING",
   "RESOURCES",
 ];
 

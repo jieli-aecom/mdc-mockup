@@ -1,177 +1,80 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CSVLink } from "react-csv";
-import FilterItem from "../../FilterItem/FilterItem";
-import ExportIcon from "../../../icons/ExportIcon";
-import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
-import "./ProjectPrioritizationContent.css";
-import "../../../styles/button-styles.css";
-import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
-import {
-  projectPrioritizationContext,
-  ProjectPrioritizationTab,
-} from "../../../pages/ProjectPrioritization/ProjectPrioritization";
-import { Project, ProjectType } from "../../../types/Project";
-import {
-  benefitTableConfig,
-  generalTableConfig,
-  locationTableConfig,
-} from "./table-configs";
-import { COMMISSION_DISTRICTS } from "../../../consts/districts";
-import { CommissionDistrict } from "../../../types/District";
-import { PROJECT_TYPES } from "../../../consts/project-types";
+import { DemoProject } from "../../../mockData/showcase";
+import { ProjectType } from "../../../types/Project";
 import { TOP_PERCENT_OPTIONS } from "../../../consts/top-percents";
-import TopProjectSelector from "../../ProgramDevelopment/components/TopProjectSelector/TopProjectSelector";
+import ProjectPrioritizationTable from "../ProjectPrioritizationTable/ProjectPrioritizationTable";
+import ProjectPrioritizationMap from "../ProjectPrioritizationMap/ProjectPrioritizationMap";
+import { columnsFor, SummaryTab } from "./table-configs";
+import "./ProjectPrioritizationContent.css";
 
-interface ProjectPrioritizationContentProps {
-  tab: ProjectPrioritizationTab;
+interface Props {
+  tab: SummaryTab;
+  projects: DemoProject[];
+  initialProjectId: string;
+  onCreate: () => void;
+  onEdit: (id: string) => void;
+  onEngagement: (id: string) => void;
+  onEvaluation: (id: string) => void;
 }
 
-const ProjectPrioritizationContent: React.FC<
-  ProjectPrioritizationContentProps
-> = ({ tab }) => {
-  const {
-    filteredProjects,
-    numFilteredProjectsUnsliced,
-    toggleSetFilterDistrict,
-    toggleSetFilterType,
-    topPercents,
-    toggleSetTopPercent,
-    toggleHighlighProjectId,
-  } = useContext(projectPrioritizationContext);
+function PortfolioFilter({ label, options, values, onChange }: {
+  label: string; options: string[]; values: string[]; onChange: (values: string[]) => void;
+}) {
+  return <details className="pp-filter"><summary>{label}{values.length > 0 && <b>{values.length}</b>}</summary>
+    <div className="pp-filter-menu">{options.map((option) => <label key={option}>
+      <input type="checkbox" checked={values.includes(option)} onChange={(event) => onChange(event.target.checked ? [...values, option] : values.filter((item) => item !== option))} />
+      {option}</label>)}</div>
+  </details>;
+}
 
-  const [isHover, setHover] = useState(false);
-  const getCurrentProjects = () => {
-    if (tab === ProjectPrioritizationTab.Overall) {
-      return filteredProjects.map((project: Project) => ({
-        Name: project.Location,
-        CompositeScore: project.CompositeScore,
-        LocationScore: project.LocationScores.Location,
-        BenefitScore: project.BenefitScores.Benefit,
-        FundingOpportunities: "",
-      }));
-    } else if (tab === ProjectPrioritizationTab.Location) {
-      return filteredProjects.map((project: Project) => ({
-        Name: project.Location,
-        LocationScore: project.LocationScores.Location,
-        Safe: project.LocationScores.Safety,
-        Clean: project.LocationScores.Resiliency,
-        Efficient: project.LocationScores.TravelTime,
-        Connected: project.LocationScores.LandUse,
-      }));
-    } else if (tab === ProjectPrioritizationTab.Benefit) {
-      return filteredProjects.map((project: Project) => ({
-        Name: project.Location,
-        Benefit: project.BenefitScores.Benefit,
-        Social: project.BenefitScores.Social,
-        Environmental: project.BenefitScores.Environmental,
-        Economic: project.BenefitScores.Economic,
-      }));
-    } else {
-      return [];
-    }
-  };
+export default function ProjectPrioritizationContent({ tab, projects, initialProjectId, onCreate, onEdit, onEngagement, onEvaluation }: Props) {
+  const [types, setTypes] = useState<string[]>([]);
+  const [districts, setDistricts] = useState<string[]>([]);
+  const [statuses, setStatuses] = useState<string[]>([]);
+  const [top, setTop] = useState(100);
+  const [selectedId, setSelectedId] = useState(initialProjectId);
+  useEffect(() => { setSelectedId(initialProjectId); }, [initialProjectId]);
+  const filtered = projects.filter((p) =>
+    (!types.length || types.includes(p.type)) && (!statuses.length || statuses.includes(p.reviewStatus)) &&
+    (!districts.length || p.districts.some((district) => districts.includes(district)))
+  ).sort((a, b) => b.composite - a.composite);
+  const ranked = filtered.slice(0, Math.ceil(filtered.length * top / 100));
+  const selected = ranked.find((project) => project.id === selectedId);
+  const columns = useMemo(() => columnsFor(tab, projects), [tab, projects]);
+  const districtOptions = Array.from(new Set(projects.flatMap((p) => p.districts))).sort((a,b) => Number(a) - Number(b));
+  const exportData = ranked.map((p) => [p.name, p.type, p.districts.join(", "), ...columns.map((col) => col.value(p))]);
+  const subtitle = {
+    Summary: "Review project scores, submissions and community feedback.",
+    Location: "Compare the geographic factors behind each location score.",
+    Benefit: "Compare the social, environmental and economic benefits of each project.",
+    Funding: "Explore funding opportunities matched to project scope and eligibility."
+  }[tab];
 
-  const getCurrentHeaders = () => {
-    if (tab === ProjectPrioritizationTab.Overall) {
-      return [
-        { label: "Name", key: "Name" },
-        { label: "Composite Score", key: "CompositeScore" },
-        { label: "Location Score", key: "LocationScore" },
-        { label: "Benefit Score", key: "BenefitScore" },
-        { label: "Funding Opportunities", key: "FundingOpportunities" },
-      ];
-    } else if (tab === ProjectPrioritizationTab.Location) {
-      return [
-        { label: "Name", key: "Name" },
-        { label: "Location Score", key: "LocationScore" },
-        { label: "Safe", key: "Safe" },
-        { label: "Clean", key: "Clean" },
-        { label: "Efficient", key: "Efficient" },
-        { label: "Connected", key: "Connected" },
-      ];
-    } else if (tab === ProjectPrioritizationTab.Benefit) {
-      return [
-        { label: "Name", key: "Name" },
-        { label: "Benefit Score", key: "BenefitScore" },
-        { label: "Social", key: "Social" },
-        { label: "Environmental", key: "Environmental" },
-        { label: "Economic", key: "Economic" },
-      ];
-    } else {
-      return [];
-    }
-  };
-
-  const tableConfig =
-    tab === ProjectPrioritizationTab.Location
-      ? locationTableConfig
-      : tab === ProjectPrioritizationTab.Benefit
-      ? benefitTableConfig
-      : generalTableConfig;
-  const minWidth =
-    tab === ProjectPrioritizationTab.Location ? "1500px" : "600px";
-
-  return (
-    <div className="project-prioritization-container">
-      <div className="project-prioritization-main">
-        <p className="project-prioritization-title">
-          {tab.length === 0 ? "Project Prioritization" : tab}
-        </p>
-        <div className="project-prioritization-buttons">
-          <div className="filters-container">
-            <FilterItem
-              label="Type"
-              items={PROJECT_TYPES}
-              handleUpdate={(e) => toggleSetFilterType(e as ProjectType)}
-            />
-            <FilterItem
-              label="Commission District"
-              items={COMMISSION_DISTRICTS}
-              handleUpdate={(e) =>
-                toggleSetFilterDistrict(e as CommissionDistrict)
-              }
-            />
-          </div>
-          <div
-            className="mdc-btn-export"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            <ExportIcon strokeColor={isHover ? "white" : "#263C8C"} />
-            <CSVLink
-              data={getCurrentProjects()}
-              headers={getCurrentHeaders()}
-              filename="data.csv"
-              style={{
-                textDecoration: "none",
-                color: isHover ? "white" : "#263C8C",
-              }}
-            >
-              Export
-            </CSVLink>
-          </div>
-        </div>
-        <TopProjectSelector
-          value={topPercents}
-          options={TOP_PERCENT_OPTIONS}
-          onChange={toggleSetTopPercent}
-          totalProjects={numFilteredProjectsUnsliced}
-        />
-
-        <ProjectPrioritizationTable
-          id={tab}
-          config={tableConfig}
-          projects={filteredProjects}
-          minWidth={minWidth}
-          selectProject={toggleHighlighProjectId}
-        />
+  return <section className="pp-overview">
+    <div className="pp-overview-main">
+      <div className="pp-page-heading"><div><h1>{tab}</h1><p>{subtitle}</p></div>
+        <button type="button" className="pp-primary" onClick={onCreate}>Create Project</button></div>
+      {tab === "Summary" && <div className="pp-metrics">
+        <div><strong>{projects.length}</strong><span>Projects</span></div>
+        <div><strong>{projects.filter((p) => p.reviewStatus === "Submitted").length}</strong><span>Submitted for review</span></div>
+        <div><strong>{projects.reduce((count, p) => count + p.comments.length, 0)}</strong><span>Project comments</span></div>
+      </div>}
+      <div className="pp-toolbar">
+        <PortfolioFilter label="Type" options={Object.values(ProjectType)} values={types} onChange={setTypes}/>
+        <PortfolioFilter label="Commission district" options={districtOptions} values={districts} onChange={setDistricts}/>
+        <PortfolioFilter label="Status" options={["Created","Submitted","Approved"]} values={statuses} onChange={setStatuses}/>
+        <CSVLink className="pp-export" filename={`project-${tab.toLowerCase()}.csv`} data={exportData}
+          headers={["Project", "Type", "Commission districts", ...columns.map((col) => col.label)]}>Export</CSVLink>
       </div>
-
-      <div className="project-prioritization-map">
-        <ProjectPrioritizationMap />
-      </div>
+      <div className="pp-ranking"><select aria-label="Top percentage of ranked projects" value={top} onChange={(e) => setTop(Number(e.target.value))}>
+        {TOP_PERCENT_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+      </select><span>of <b>{filtered.length}</b> projects</span></div>
+      {ranked.length ? <ProjectPrioritizationTable tab={tab} columns={columns} projects={ranked}
+        selectedId={selected?.id || ""} onSelect={setSelectedId} onEdit={onEdit} onEngagement={onEngagement} onEvaluation={onEvaluation} /> :
+        <div className="pp-empty"><h3>No matching projects</h3><p>Adjust the portfolio filters to see projects.</p>
+          <button className="pp-secondary" onClick={() => { setTypes([]); setDistricts([]); setStatuses([]); }}>Clear filters</button></div>}
     </div>
-  );
-};
-
-export default ProjectPrioritizationContent;
+    <ProjectPrioritizationMap projects={ranked} selectedId={selected?.id || ""} onSelect={setSelectedId}/>
+  </section>;
+}

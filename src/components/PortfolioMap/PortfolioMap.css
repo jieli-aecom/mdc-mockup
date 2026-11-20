@@ -1,0 +1,56 @@
+.portfolio-map { position: relative; width: 100%; height: 100%; min-height: 320px; overflow: hidden; background: #cce5eb; isolation: isolate; color: #314450; font-family: inherit; }
+.portfolio-map-surface { width: 100%; height: 100%; position: absolute; inset: 0; cursor: grab; touch-action: none; user-select: none; }
+.portfolio-map-surface:active { cursor: grabbing; }
+.portfolio-map-edit .portfolio-map-surface { cursor: crosshair; }
+.portfolio-map path, .portfolio-feature circle, .portfolio-footprint circle { vector-effect: non-scaling-stroke; }
+.portfolio-land path { stroke: #a9c1bc; stroke-width: .6px; }
+.portfolio-land.with-districts path { stroke: #969e87; stroke-width: 1px; stroke-dasharray: 4 2; }
+.portfolio-highway, .portfolio-highway-casing, .portfolio-reference path, .portfolio-feature path, .portfolio-footprint path { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.portfolio-highway-casing { stroke: #d8cab3; stroke-width: 4px; }
+.portfolio-highway { stroke: #fff8df; stroke-width: 2.6px; }
+.portfolio-reference path { stroke: #a7b8b6; stroke-width: 1px; }
+.portfolio-reference circle { fill: #95aaa8; }
+.portfolio-place-labels, .portfolio-district-labels, .portfolio-water-label, .portfolio-footprint { pointer-events: none; }
+.portfolio-district-labels circle { fill: #ffffffc9; stroke: #98a58f; }
+.portfolio-district-labels text { fill: #63785b; text-anchor: middle; font: 600 9px Arial,sans-serif; }
+.portfolio-place-labels text { fill: #54666a; font-weight: 600; paint-order: stroke; stroke: #f5f5ef; text-anchor: middle; }
+.portfolio-water-label { fill: #578894; font-family: Georgia,serif; font-style: italic; letter-spacing: .05em; text-anchor: middle; }
+.portfolio-feature { cursor: pointer; }
+.portfolio-feature:focus, .portfolio-map-surface:focus-visible { outline: 2px dotted #364f94; outline-offset: -3px; }
+.portfolio-map-edit .portfolio-feature { pointer-events: none; }
+.portfolio-map button { font: inherit; cursor: pointer; color: #31446a; }
+.portfolio-map-nav, .portfolio-map-layers > button, .portfolio-map-layers > div, .portfolio-map-popup, .portfolio-drawing-controls { background: white; border: 1px solid #8a979b; border-radius: 2px; box-shadow: 2px 2px 3px #29405226; }
+.portfolio-map-nav { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; overflow: hidden; }
+.portfolio-map-nav button { width: 32px; height: 32px; background: white; border: 0; font: 22px Arial,sans-serif; }
+.portfolio-map-nav button + button { border-top: 1px solid #e0e4e5; }
+.portfolio-map-nav button:hover, .portfolio-map-layers button:hover { background: #eef4f8; }
+.portfolio-map-layers { position: absolute; top: 12px; right: 12px; display: grid; justify-items: end; gap: 4px; }
+.portfolio-map-layers > button { padding: 7px 12px; font-size: 14px; font-weight: 700; }
+.portfolio-map-layers > div { padding: 8px 12px; font-size: 12px; }
+.portfolio-map-layers label { display: flex; align-items: center; gap: 6px; padding: 4px 0; }
+.portfolio-type-key { display: grid; grid-template-columns: repeat(2, auto); gap: 5px 10px; font-size: 10px; padding: 8px 0 2px; margin-top: 4px; border-top: 1px solid #dce3e5; }
+.portfolio-type-key span { display: flex; align-items: center; gap: 5px; }
+.portfolio-type-key i { width: 8px; height: 8px; border-radius: 50%; }
+.portfolio-attribution { position: absolute; bottom: 0; right: 0; padding: 3px 6px; font-size: 9px; background: #ffffffe8; }
+.portfolio-map-popup, .portfolio-drawing-controls { position: absolute; bottom: 26px; left: 12px; right: 12px; max-width: 400px; padding: 12px 14px; box-sizing: border-box; }
+.portfolio-map-popup { border-top: 4px solid var(--deep-blue); max-height: 70%; overflow-y: auto; }
+.portfolio-map-popup small { font-size: 11px; color: #51687e; }
+.portfolio-map-popup h3 { font-size: 16px; color: #283b65; margin: 5px 20px 9px 0; line-height: 1.25; }
+.portfolio-map-popup dl { display: flex; gap: 16px; padding: 8px 0; margin: 0 0 8px; border-block: 1px solid #e4e8ea; }
+.portfolio-map-popup dt, .portfolio-map-goals { font-size: 11px; }
+.portfolio-map-popup dd { font-size: 17px; font-weight: bold; margin: 2px 0 0; }
+.portfolio-map-popup strong, .portfolio-drawing-controls strong { font-size: 12px; }
+.portfolio-map-popup p { font-size: 11px; line-height: 1.5; margin: 3px 0 0; }
+.portfolio-map-popup .portfolio-delivery { margin-bottom: 7px; font-size: 12px; }
+.portfolio-map-popup .portfolio-delivery strong { margin-right: 5px; }
+.portfolio-pin { cursor: pointer; }
+.portfolio-pin:focus-visible { outline: 3px dotted var(--deep-blue); outline-offset: 2px; }
+.portfolio-map button:focus-visible { outline: 2px dotted var(--deep-blue); outline-offset: -3px; }
+.portfolio-popup-close { position: absolute; top: 6px; right: 6px; font-size: 20px !important; border: 0; background: white; }
+.portfolio-map-goals { display: flex; flex-wrap: wrap; gap: 4px 8px; margin: 4px 0 8px; color: #6e747a; }
+.portfolio-map-goals .aligned { color: #31705a; font-weight: 600; }
+.portfolio-drawing-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; border-left: 4px solid #b74720; }
+.portfolio-drawing-controls span { font-size: 11px; }
+.portfolio-drawing-controls button { font-size: 11px; padding: 3px 5px; border: 1px solid #ced7de; background: #f6f8fa; border-radius: 3px; }
+.portfolio-map-reticle { color: #735f48; font: 17px Arial,sans-serif; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; display: none; }
+.portfolio-map-surface:focus-visible ~ .portfolio-map-reticle { display: block; }

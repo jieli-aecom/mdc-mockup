@@ -1,128 +1,60 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { DemoProject } from "../../../mockData/showcase";
+import { ProjectColumn, SummaryTab } from "../ProjectPrioritizationContent/table-configs";
 import "./ProjectPrioritizationTable.css";
-import { Project } from "../../../types/Project";
-import ArrowDown from "../../../icons/ArrowDown";
-import ArrowUp from "../../../icons/ArrowUp";
-import { DARK_ORANGE, MID_GRAY } from "../../../consts/colors";
 
-export type TableColumnConfiguration = {
-  label: string;
-  value: (project: Project) => string | number;
-  display: (project: Project) => string;
-  color?: (project: Project) => string;
-  align?: "left" | "center" | "right";
-  width: string;
-  bold?: boolean;
-};
-
-export type TableConfiguration = TableColumnConfiguration[];
-
-interface ProjectPrioritizationTableProps {
-  id: string;
-  projects: Project[];
-  config: TableConfiguration;
-  minWidth?: string;
-  selectProject?: (newProject: any) => void;
+interface Props {
+  tab: SummaryTab;
+  columns: ProjectColumn[];
+  projects: DemoProject[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+  onEdit: (id: string) => void;
+  onEngagement: (id: string) => void;
+  onEvaluation: (id: string) => void;
 }
 
-const ProjectPrioritizationTable: React.FC<ProjectPrioritizationTableProps> = ({
-  projects,
-  config,
-  minWidth = "100px",
-  selectProject = () => {},
-}) => {
-  const [sortByIndex, setSortByIndex] = useState<number>(1);
-  const [sortAscending, setSortAscending] = useState<boolean>(false);
-
+export default function ProjectPrioritizationTable({ tab, columns, projects, selectedId, onSelect, onEdit, onEngagement, onEvaluation }: Props) {
+  const [sort, setSort] = useState({ label: "Composite", ascending: false });
+  const selectedRow = useRef<HTMLTableRowElement>(null);
   useEffect(() => {
-    setSortByIndex(1);
-    setSortAscending(false);
-  }, [config])
-
-  const sortedProjects = useMemo(() => {
-    const sorted = [...projects];
-    sorted.sort((a, b) => {
-      const valueA: string | number = config[sortByIndex].value(a);
-      const valueB: string | number = config[sortByIndex].value(b);
-
-      if (typeof valueA === "string" || typeof valueB === "string") {
-        if (sortAscending) {
-          return String(valueA).localeCompare(String(valueB));
-        } else {
-          return String(valueB).localeCompare(String(valueA));
-        }
-      } else {
-        if (sortAscending) {
-          return Number(valueA) - Number(valueB);
-        } else {
-          return Number(valueB) - Number(valueA);
-        }
-      }
-    });
-    return sorted;
-  }, [projects, config, sortByIndex, sortAscending]);
+    selectedRow.current?.scrollIntoView?.({block: "nearest", inline: "nearest"});
+  }, [selectedId]);
+  useEffect(() => { setSort({ label: tab === "Summary" ? "Composite" : tab + " score", ascending: false }); }, [tab]);
+  const headerColumns: ProjectColumn[] = [{ label: "Project", value: (p) => p.name }, ...columns];
+  const sortedColumn = headerColumns.find((column) => column.label === sort.label);
+  const sorted = sortedColumn ? [...projects].sort((a, b) => {
+    const first = sortedColumn.value(a);
+    const second = sortedColumn.value(b);
+    const difference = typeof first === "number" && typeof second === "number" ? first - second : String(first).localeCompare(String(second));
+    return sort.ascending ? difference : -difference;
+  }) : projects;
 
   return (
-    <div className="project-prioritization-table-container">
-      <table className="project-table" style={{minWidth: minWidth}}>
-        <thead>
-          <tr>
-            {config.map((col: TableColumnConfiguration, index) => {
-              const sortUpClick = () => {
-                setSortByIndex(index);
-                setSortAscending(true);
-              }
-
-              const sortDownClick = () => {
-                setSortByIndex(index);
-                setSortAscending(false);
-              }
-
-              const sortUpColor = sortByIndex === index && sortAscending ? DARK_ORANGE : MID_GRAY;
-              const sortDownColor = sortByIndex === index && !sortAscending ? DARK_ORANGE : MID_GRAY;
-
-              const sortUpLabel = "Sort by " + col.label + " ascending";
-              const sortDownLabel = "Sort by " + col.label + " descending";
-
-              return (
-                <th key={index} style={{ width: col.width, textAlign: "left" }}>
-                  <div className="table-sort-box">
-                    <p>{col.label}</p>
-                    <div className="table-sorts">
-                      <button onClick={sortUpClick} title={sortUpLabel} aria-label={sortUpLabel}>
-                        <ArrowUp color={sortUpColor} width="100%"/>
-                      </button>
-                      <button onClick={sortDownClick} title={sortDownLabel} aria-label={sortDownLabel}>
-                        <ArrowDown color={sortDownColor} width="100%" />
-                      </button>
-                    </div>
-                  </div>
-                </th>
-              );
-            })}
+    <div className="pp-table-scroll">
+      <table className={`pp-table pp-table-${tab.toLowerCase()}`}>
+        <thead><tr>{headerColumns.map((column) => (
+          <th scope="col" key={column.label} aria-sort={sort.label !== column.label ? undefined : sort.ascending ? "ascending" : "descending"}>
+            <button type="button" onClick={() => setSort({ label: column.label, ascending: sort.label === column.label ? !sort.ascending : typeof column.value(projects[0]) !== "number" })}>
+              {column.label}<span aria-hidden="true">{column.label === sort.label ? sort.ascending ? "↑" : "↓" : ""}</span>
+            </button>
+          </th>
+        ))}</tr></thead>
+        <tbody>{sorted.map((p) => (
+          <tr key={p.id} ref={selectedId === p.id ? selectedRow : undefined} className={selectedId === p.id ? "pp-row-selected" : ""}>
+            <th scope="row"><button type="button" className="pp-project-link" onClick={() => onSelect(p.id)} aria-pressed={selectedId === p.id}>{p.name}</button>
+              <small>{p.type}{p.districts.length > 0 && ` · District${p.districts.length === 1 ? "" : "s"} ${p.districts.join(", ")}`}</small>
+              {selectedId === p.id && <button type="button" className="pp-text-button pp-row-evaluation"
+                onClick={() => onEvaluation(p.id)}>View evaluation →</button>}</th>
+            {columns.map((col) => <td key={col.label} className={col.label === "Composite" || col.label.endsWith(" score") ? "pp-score-cell" : undefined}>
+              {col.label === "Status" ? <><span className={`pp-status pp-status-${p.reviewStatus.toLowerCase()}`}>{p.reviewStatus}</span>
+                {p.reviewStatus !== "Approved" && <button type="button" className="pp-text-button pp-edit" aria-label={`Edit ${p.name}`} onClick={() => onEdit(p.id)}>Edit</button>}</>
+                : col.label === "Comments" ? <button type="button" className="pp-comment-link" aria-label={`View ${p.comments.length} comments on ${p.name}`} onClick={() => onEngagement(p.id)}>{p.comments.length}</button>
+                : col.value(p)}
+            </td>)}
           </tr>
-        </thead>
-        <tbody>
-          {sortedProjects.map((project: Project, index) => (
-            <tr
-              key={index}
-              style={{ backgroundColor: index % 2 ? "white" : "#ebebeb" }}
-            >
-              {config.map((col: TableColumnConfiguration, index) => (
-                <td
-                  key={index}
-                  style={{ width: col.width, textAlign: col.align, fontWeight: col.bold ? "bold" : "normal" }}
-                  onClick={() => selectProject(project.Id)}
-                >
-                  {col.display(project)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        ))}</tbody>
       </table>
     </div>
   );
-};
-
-export default ProjectPrioritizationTable;
+}

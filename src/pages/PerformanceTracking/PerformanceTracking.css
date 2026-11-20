@@ -1,0 +1,73 @@
+.performance-tracking-page {
+  min-height: 0;
+}
+
+.tracking-goals {
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.tracking-goals button {
+  font-family: inherit;
+  box-sizing: content-box;
+  background-color: transparent;
+  border: 0;
+}
+
+.tracking-goals button.sidebar-item-active {
+  background-color: var(--blue-green);
+}
+
+.tracking-goals button:focus-visible {
+  outline: 3px solid var(--deep-blue);
+  outline-offset: -3px;
+}
+
+@media (max-height: 820px) and (min-width: 901px) {
+  .tracking-goals {
+    gap: 12px;
+  }
+
+  .tracking-goals .sidebar-hr {
+    margin-bottom: 12px;
+  }
+
+  .tracking-goals button {
+    height: 63px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .main-content-container.performance-tracking-page {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .performance-tracking-page .tracking-goals {
+    flex-flow: row wrap;
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    height: auto;
+    padding: 7px 12px;
+  }
+
+  .tracking-goals .sidebar-hr {
+    display: none;
+  }
+
+  .tracking-goals button {
+    height: auto;
+    width: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    font-size: .85rem;
+  }
+
+  .tracking-goals button img {
+    height: 21px;
+  }
+}

@@ -7,19 +7,15 @@ import { PerformanceArea } from "../../types/PerformanceArea";
 
 const PerformanceTracking: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<PerformanceArea>(PerformanceArea.Safe);
-  const data = PERFORMANCE_TRACKING_DATA;
-
   return (
-    <div className="main-content-container">
+    <div className="main-content-container performance-tracking-page">
       <PerformanceTrackingSidebar
         tab={currentTab}
-        handleChange={(newTab: PerformanceArea) => {
-          console.log(newTab);
-          setCurrentTab(newTab);
-        }}
+        handleChange={setCurrentTab}
       />
       <PerformanceTrackingContent
-        data={data.filter((item) => item.type === currentTab)}
+        goal={currentTab}
+        data={PERFORMANCE_TRACKING_DATA.filter((item) => item.type === currentTab)}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect } from "react";
 import "./ProgramDevelopmentPage2.css";
-import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
+import { programDevelopmentContext } from "../../hooks/useProgramDevelopmentContext";
 import ProgramDevelopmentMap from "../ProgramDevelopmentMap/ProgramDevelopmentMap";
 import ExpansionPanel from "../../../ExpansionPanel/ExpansionPanel";
 import TitleSection from "./TitleSection";

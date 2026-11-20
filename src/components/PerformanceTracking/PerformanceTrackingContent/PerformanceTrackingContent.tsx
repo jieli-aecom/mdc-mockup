@@ -1,194 +1,76 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useRef, useState } from "react";
+import { DIVISIONS } from "../../../consts/divisions";
+import { Division } from "../../../types/Divisions";
+import { PerformanceArea } from "../../../types/PerformanceArea";
+import { PerformanceTrackingItem } from "../../../types/PerformanceTrackingItem";
+import wheelDiagram from "../../../assets/1_Performance Tracking/wheel-diagram.png";
+import ProgressBar from "../../ProgressBar/ProgressBar";
 import ArrowDown from "../../../icons/ArrowDown";
 import ArrowUp from "../../../icons/ArrowUp";
 import CheckIcon from "../../../icons/CheckIcon";
-import ProgressBar from "../../ProgressBar/ProgressBar";
+import TrackingPortfolio from "./TrackingPortfolio";
 import "./PerformanceTrackingContent.css";
-import { Division } from "../../../types/Divisions";
-import FilterItem from "../../FilterItem/FilterItem";
-import { DIVISIONS } from "../../../consts/divisions";
-import wheelDiagram from "../../../assets/1_Performance Tracking/wheel-diagram.png";
-import PlusIcon from "../../../icons/PlusIcon";
 
 interface PerformanceTrackingContentProps {
-  data: any[];
+  goal: PerformanceArea;
+  data: PerformanceTrackingItem[];
 }
 
-const PerformanceTrackingContent: React.FC<PerformanceTrackingContentProps> = ({
-  data,
-}) => {
-  // Modal
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const closeModel = useCallback(() => {
-    setShowModal(false);
-  }, []);
-  const openModel = useCallback(() => {
-    setShowModal(true);
-  }, []);
-
-  const modalClass = useMemo(() => {
-    return showModal
-      ? "performance-tracker-modal performance-tracker-modal-open"
-      : "performance-tracker-modal";
-  }, [showModal]);
-
-  const [selectedDivision, setDivision] = useState<Division | null>(null);
-  // Need a set to pass to FilterItem
-  const selectedDivisions: Set<string> = useMemo(() => {
-    if (!selectedDivision) return new Set();
-    return new Set([selectedDivision as string]);
-  }, [selectedDivision]);
-  const toggleSelectDivision = useCallback(
-    (clicked: string) => {
-      const item = clicked as Division;
-      if (selectedDivision === item) {
-        setDivision(null);
-      } else {
-        setDivision(item);
-      }
-    },
-    [selectedDivision]
-  );
-
-  // Data based on division selection
-  const filteredData = useMemo(() => {
-    if (!selectedDivision) return data;
-    const filtered = data.filter((item) => item.division === selectedDivision);
-    if (filtered.length === 0) {
-      return data.filter((item) => item.division === null);
-    }
-    return filtered;
-  }, [data, selectedDivision]);
-
-  const clearFilters = () => {
-    setDivision(null);
-  };
+export default function PerformanceTrackingContent({ goal, data }: PerformanceTrackingContentProps) {
+  const [division, setDivision] = useState<Division | "">("");
+  const infoDialog = useRef<HTMLDialogElement>(null);
+  const divisionData = division ? data.filter(item => item.division === division) : data;
+  const shown = divisionData.length ? divisionData : data.filter(item => !item.division);
 
   return (
-    <>
-      <div className="performance-tracker-container">
-        <div className="performance-tracker-title">
-          <h1>Performance Tracking</h1>
-          <button className="performance-tracker-infoBtn" onClick={openModel}>
-            i
-          </button>
-        </div>
-        <p className="performance-tracker-guide">
-          Use the filters to narrow your search.
-        </p>
-        <div className="performance-tracker-filters">
-          <div className="performance-tracker-selects">
-            <FilterItem
-              label="Division"
-              items={DIVISIONS}
-              selectedItems={selectedDivisions}
-              handleUpdate={toggleSelectDivision}
-            />
-
-            <button
-              className="performance-tracker-clear"
-              onClick={() => clearFilters()}
-            >
-              Clear Filters
-            </button>
-          </div>
-
-          {/* Search: DISABLED for now */}
-          {/* <div className="performance-tracker-input-container">
-            <input className="performance-tracker-input" placeholder="Search" />
-            <div
-              style={{
-                height: "17px",
-                width: "17px",
-                backgroundColor: "black",
-                marginRight: "20px",
-              }}
-            ></div>
-          </div> */}
-        </div>
-        <div className="performance-tracker-items">
-          {filteredData &&
-            filteredData.map((value, index) => (
-              <div
-                key={`${value.type}-item-${index}`}
-                className="performance-tracker-item"
-              >
-                <div className="performance-tracker-item-content">
-                  <div
-                    className="performance-tracker-item-status"
-                    style={{
-                      color: value.direction === "down" ? "red" : "green",
-                    }}
-                  >
-                    {value.direction === "up" ? (
-                      <ArrowUp />
-                    ) : value.direction === "down" ? (
-                      <ArrowDown />
-                    ) : (
-                      <CheckIcon />
-                    )}
-                    {value.value}
-                  </div>
-                  <div className="performance-tracker-item-progress">
-                    <ProgressBar
-                      bgcolor="white"
-                      color="#00aeb4"
-                      progress={value.progress}
-                      height={20}
-                    />
-                  </div>
-                  <p className="performance-tracker-item-progress-text">
-                    {`Target: ${value.target}`}
-                  </p>
-                  <p className="performance-tracker-item-description">
-                    {value.description}
-                  </p>
-                </div>
-                <div className="performance-tracker-item-bottom-hr"></div>
-              </div>
-            ))}
-        </div>
+    <div className="performance-tracker-container">
+      <div className="performance-tracker-title">
+        <h1>Performance Tracking</h1>
+        <button
+          className="performance-tracker-infoBtn"
+          aria-label="About the strategic goals"
+          title="About the strategic goals"
+          onClick={() => infoDialog.current?.showModal()}
+        >i</button>
       </div>
-
-      <div className={modalClass}>
-        <div className="performance-tracker-modal-overlay"></div>
-        <div className="performance-tracker-modal-main">
-          <div className="performance-tracker-modal-header">
-            <button
-              className="performance-tracker-modal-close"
-              onClick={closeModel}
-              title="Close Modal"
-              aria-label="Close Modal"
-            >
-              <PlusIcon />
-            </button>
-          </div>
-          <div className="performance-tracker-modal-body">
-            <div className="performance-tracker-modal-text">
-              <div>
-                <span>
-                  The County and DTPW planning documents are interconnected and
-                  inform or shape other plans. This interconnected approach
-                  ensures alignment with the core pillars:{" "}
-                </span>
-                <strong>Safe, Clean, Connected, and Efficient</strong>.
-              </div>
-              <div>
-                <span>
-                  The Action Agenda has the potential to play a critical role in
-                  translating high-level priorities into short-term, measurable
-                  actions. It serves as a roadmap for DTPW’s priority
-                  initiatives, enabling the department to track progress and
-                  remain focused on its core pillars.
-                </span>
-              </div>
-            </div>
-            <img src={wheelDiagram} alt="Wheel Diagram" />
-          </div>
+      <TrackingPortfolio goal={goal} />
+      <details className="tracking-division">
+        <summary>Department and division indicators</summary>
+        <div className="tracking-division-controls">
+          <label>Division
+            <select value={division} onChange={event => setDivision(event.target.value as Division | "")}>
+              <option value="">All divisions</option>
+              {DIVISIONS.map(item => <option key={item}>{item}</option>)}
+            </select>
+          </label>
+          {division && <button onClick={() => setDivision("")}>Clear filter</button>}
         </div>
-      </div>
-    </>
+        {division && !divisionData.length && <p className="tracking-note">Showing department indicators. This division has no separate {goal.toLowerCase()} indicators.</p>}
+        <div className="tracking-division-indicators">
+          {shown.map(item => (
+            <article className="tracking-division-indicator" key={item.description}>
+              <span className="tracking-division-name">{item.division || "Department-wide"}</span>
+              <div className="tracking-division-value" data-direction={item.direction}>
+                {item.direction === "up" ? <ArrowUp /> : item.direction === "down" ? <ArrowDown /> : <CheckIcon />}
+                <strong>{item.value}</strong>
+              </div>
+              <p>{item.description}</p>
+              <div className="tracking-division-target">
+                <ProgressBar bgcolor="#dce4e7" color="#00aeb4" progress={item.progress} height={5} />
+                <small>Target {item.target}</small>
+              </div>
+            </article>
+          ))}
+        </div>
+      </details>
+      <dialog className="tracking-goal-dialog" ref={infoDialog} aria-labelledby="tracking-about-title">
+        <div>
+          <h2 id="tracking-about-title">DTPW strategic goals</h2>
+          <button aria-label="Close strategic goals" onClick={() => infoDialog.current?.close()}>×</button>
+        </div>
+        <p>The County and DTPW planning documents guide the department’s four strategic goals. The Action Agenda translates those goals into measurable initiatives.</p>
+        <img src={wheelDiagram} alt="Diagram showing how the County and DTPW plans align" />
+      </dialog>
+    </div>
   );
-};
-
-export default PerformanceTrackingContent;
+}

@@ -1,26 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ProjectSelector.css";
 
-interface Project {
-  id: number;
-  name: string;
+interface Props {
+  projects: { name: string }[];
+  selectedProject: string;
+  onSelect: (name: string) => void;
 }
 
-const projects: Project[] = [
-  { id: 1, name: "Downtown Miami (Micromobility)" },
-  { id: 2, name: "SouthCom Pedestrian Bridge" },
-  { id: 3, name: "Underline" },
-  { id: 4, name: "Ludlam Bikepath" },
-  { id: 5, name: "Mast Arm Upgrades" }
-];
-
-const ProjectSelector: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<string>("");
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProject(event.target.value);
-  };
-
+const ProjectSelector: React.FC<Props> = ({projects, selectedProject, onSelect}) => {
   return (
     <div className="project-selector-container">
       <label htmlFor="project-select" className="project-label">
@@ -29,14 +16,11 @@ const ProjectSelector: React.FC = () => {
       <select
         id="project-select"
         value={selectedProject}
-        onChange={handleSelectChange}
+        onChange={event => onSelect(event.target.value)}
         className="project-dropdown"
       >
-        <option value="" disabled>
-          Select a Project Name
-        </option>
         {projects.map((project) => (
-          <option key={project.id} value={project.name}>
+          <option key={project.name} value={project.name}>
             {project.name}
           </option>
         ))}

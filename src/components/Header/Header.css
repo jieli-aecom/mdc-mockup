@@ -107,24 +107,28 @@
 
 /* Medium Screens */
 @media (max-width: 768px) {
+  .header-top-bar { box-sizing: border-box; width: 100%; padding: 4px 12px; }
+  .header-user-icon { width: 27px; height: 27px; font-size: 11px; }
   .header-nav-container {
-    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    gap: 12px;
     align-items: center;
-    padding: 10px;
+    padding: 6px 12px;
   }
 
   .header-logo-container {
-    margin-bottom: 10px;
+    height: 42px;
   }
 
   .header-nav-items {
-    flex-direction: column;
-    gap: 10px;
+    gap: 2px 4px;
+    justify-content: flex-end;
   }
 
   .header-nav-item {
-    font-size: 14px;
-    padding: 6px 10px;
+    font-size: 12px;
+    padding: 4px 6px;
   }
 }
 

@@ -1,159 +1,87 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowDown from "../../icons/ArrowDown";
-import "./ProjectInfo.css";
 import ProjectSelector from "../../components/ProjectInfo/ProjectSelector/ProjectSelector";
+import PortfolioMap from "../../components/PortfolioMap/PortfolioMap";
+import { projectRecords, scoreColors, ScoreName } from "./projectRecords";
+import "./ProjectInfo.css";
 
-const projectData: any = {
-  name: "Downtown Miami (Micromobility)",
-  number: "PW0001165",
-  type: "Arterial/Collector Road",
-  status: "Under construction",
-  description:
-    "Resurfacing (N/S Miami Avenue, NE/SE 1 Avenue, NW/NE 6 Street, NW/NE 5 Street). Prior Years' Funding as follows: $1,700,000 for CST.",
-  performanceScores: [
-    { label: "SAFE", value: 95, color: "#3fbf3f" },
-    { label: "CLEAN", value: 75, color: "#39bfcf" },
-    { label: "EFFICIENT", value: 65, color: "#65c78b" },
-    { label: "CONNECTED", value: 85, color: "#b9e769" },
-    { label: "SOCIAL", value: 76, color: "#ec4c56" },
-    { label: "ECONOMY", value: 85, color: "#ed8e46" }
-  ],
-  details: {
-    safe: {
-      vehicularCrashes: 385,
-      bikePedCrashes: 25,
-      decreaseInBikeCrash: 75,
-      atGradeRailCrossings: 2
-    },
-    clean: {
-      sidewalkNetwork: 1.4,
-      bikeNetwork: 1.2,
-      decreaseInPollutants: 14,
-      decreaseInHeatExposure: 14
-    },
-    efficient: {
-      decreaseInTraffic: 14,
-      decreaseInTravelTime: 16,
-      decreaseInTruckVolume: 10,
-      increaseInTravelLanes: 0
-    },
-    connected: {
-      accessToTransit: 14,
-      accessToParks: 16,
-      overlapWithSmartCorridors: 14,
-      populationTransitDependent: 25
-    }
-  }
-};
+const projectLocations = projectRecords.map(record => ({
+  id: record.name,
+  point: record.geometry[Math.floor(record.geometry.length / 2)],
+  label: "View " + record.name,
+  color: "#456db5",
+}));
 
 const ProjectInfo: React.FC = () => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState("SAFE");
+  const [project, setProject] = useState(projectRecords[0]);
+  const [activeSection, setActiveSection] = useState<ScoreName>("SAFE");
+  const details = project.details?.[activeSection];
 
-  const renderSectionDetails = () => {
-    const details = projectData.details[activeSection.toLowerCase()];
-    return (
-      <div className="details-section">
-        {Object.keys(details).map((key, index) => (
-          <div key={index} className="details-item">
-            <p>{key.replace(/([A-Z])/g, " $1").toLowerCase()}</p>
-            <p>{details[key]}</p>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  function selectProject(name: string) {
+    const record = projectRecords.find(item => item.name === name);
+    if (!record) return;
+    setProject(record);
+    setActiveSection("SAFE");
+  }
 
   return (
     <div className="project-information">
       <div className="project-info-header">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "18px"
-          }}
-        >
-          <ArrowDown />
-          <p
-            style={{
-              fontSize: "36px",
-              fontWeight: "bold",
-              lineHeight: "44px",
-              color: "#4F4F4F",
-              margin: "0"
-            }}
-          >
-            Project Information
-          </p>
-        </div>
-        <button
-          className="create-project-button"
-          onClick={() => {
-            navigate("/create-project");
-          }}
-        >
+        <h1><ArrowDown />Project Information</h1>
+        <button className="create-project-button" onClick={() => navigate("/project-prioritization?view=Create+Project")}>
           Create Project
         </button>
       </div>
-      <ProjectSelector />
+      <ProjectSelector projects={projectRecords} selectedProject={project.name} onSelect={selectProject} />
       <div className="project-content">
         <div className="project-content-main">
           <div className="project-summary">
-            <h2>{projectData.name}</h2>
+            <h2>{project.name}</h2>
             <hr />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between"
-              }}
-            >
-              <div className="project-summary-header">
-                <p>Project Number</p>
-                <p>Project Type</p>
-                <p>Project Status</p>
-                <p>Description</p>
-              </div>
-              <div
-                className="project-summary-header"
-                style={{ fontWeight: "bold", width: "540px" }}
-              >
-                <p>{projectData.number}</p>
-                <p>{projectData.type}</p>
-                <p>{projectData.status}</p>
-                <p>{projectData.description}</p>
-              </div>
+            <dl className="project-summary-header">
+              {project.number && <><dt>Project Number</dt><dd>{project.number}</dd></>}
+              <dt>Project Type</dt><dd>{project.type}</dd>
+              {project.status && <><dt>Project Status</dt><dd>{project.status}</dd></>}
+              <dt>Description</dt><dd>{project.description}</dd>
+            </dl>
+            <hr />
+          </div>
+          <h2 className="project-scores-title">Performance Scores</h2>
+          {project.scores ? (
+            <div className="performance-scores">
+              {Object.entries(project.scores).map(([key, value]) => {
+                const label = key as ScoreName;
+                const color = scoreColors[label];
+                const content = <><span className="score-label">{label}</span><span className="score-value" style={{color}}>{value}</span></>;
+                return project.details?.[label] ? (
+                  <button key={label} className="score-box" style={{borderColor: color}} aria-pressed={activeSection === label}
+                    type="button" onClick={() => setActiveSection(label)}>{content}</button>
+                ) : <div key={label} className="score-box" style={{borderColor: color}}>{content}</div>;
+              })}
             </div>
-            <hr />
-          </div>
-          <p style={{ fontSize: "24px", lineHeight: "29px", color: "#4F4F4F" }}>
-            Performance Scores
-          </p>
-          <div className="performance-scores">
-            {projectData.performanceScores.map((score: any, index: any) => (
-              <div
-                key={index}
-                className={`score-box ${score.label.toLowerCase()}`}
-                style={{ borderColor: score.color }}
-                onClick={() => setActiveSection(score.label)}
-              >
-                <p className="score-label">{score.label}</p>
-                <p className="score-value" style={{ color: score.color }}>
-                  {score.value}
-                </p>
+          ) : <p>Project scores are pending.</p>}
+          {details && (
+            <section className="score-details" aria-label={activeSection + " measures"}>
+              <h3>{activeSection}</h3>
+              <div className="details-section">
+                {Object.entries(details).map(([label, value]) => (
+                  <div className="details-item" key={label}><p>{label}</p><strong>{value}</strong></div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="score-details">
-            <h3>{activeSection}</h3>
-            {renderSectionDetails()}
-          </div>
+            </section>
+          )}
         </div>
-        <div className="map-placeholder">Map Placeholder</div>
+        <aside className="project-info-map" aria-label="Project location">
+          <div className="project-info-map-heading"><h2>Project map</h2>
+            <span>{project.illustrative ? "Illustrative location" : "Project footprint"}</span></div>
+          <div className="project-info-map-body">
+            <PortfolioMap key={project.name} projects={[]} geometry={project.geometry}
+              markers={projectLocations.filter(marker => marker.id !== project.name)} onMarkerSelect={selectProject}
+              ariaLabel={project.name + " location"} />
+          </div>
+        </aside>
       </div>
     </div>
   );

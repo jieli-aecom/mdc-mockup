@@ -8,7 +8,7 @@ import TopProjectSelector from "../../TopProjectSelector/TopProjectSelector";
 import { TOP_PERCENT_OPTIONS } from "../../../../../consts/top-percents";
 import ProgramDevelopmentTable from "../../ProgramDevelopmentTable/ProgramDevelopmentTable";
 
-import { programDevelopmentContext } from "../../../../../pages/ProgramDevelopment/ProgramDevelopment";
+import { programDevelopmentContext } from "../../../hooks/useProgramDevelopmentContext";
 
 export type ProgramDevelopmentPage1Screen = 1 | 2;
 

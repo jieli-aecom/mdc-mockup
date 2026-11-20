@@ -14,7 +14,7 @@ import {
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 
 import Map from "@arcgis/core/Map";
-import { programDevelopmentContext } from "../../../../pages/ProgramDevelopment/ProgramDevelopment";
+import { programDevelopmentContext } from "../../hooks/useProgramDevelopmentContext";
 import { COMMISSION_DISTRICTS_LAYER } from "../../../../consts/map-layers";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 

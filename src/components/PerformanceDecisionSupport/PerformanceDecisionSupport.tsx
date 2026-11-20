@@ -20,7 +20,7 @@ const PerformanceDecisionSupport: React.FC = () => {
         </h1>
         <button
           className="mdc-home-btn"
-          onClick={() => navigate("/create-project")}
+          onClick={() => navigate("/project-prioritization")}
         >
           Get Started
         </button>

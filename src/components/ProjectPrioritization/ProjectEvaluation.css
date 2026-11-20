@@ -1,0 +1,56 @@
+.pp-wide-page { min-width: 0; flex: 1; overflow: auto; box-sizing: border-box; padding: clamp(16px, 2vw, 36px); }
+.pp-review-page { container-type: inline-size; }
+.pp-review-page h2 { margin: 22px 0 12px; color: var(--dark-gray); font-size: 22px; }
+.pp-result-overview { display: flex; gap: 16px; align-items: center; border-block: 2px solid var(--dark-blue); border-left: 6px solid var(--dark-blue); background: #f0f0f0; padding: 12px 14px; margin-top: 20px; }
+.pp-result-total { display: flex; gap: 8px; flex-shrink: 0; align-items: center; color: #263c8c; padding-right: 16px; border-right: 2px solid #b9b9b9; }
+.pp-result-total b { font-size: 42px; line-height: 1.1; }
+.pp-result-total span { font-size: 14px; font-weight: 700; }
+.pp-result-total small { color: #677183; font-size: 11px; font-weight: 500; }
+.pp-result-overview > div:last-child { font-size: 13px; }
+.pp-result-overview p { margin: 4px 0 0; line-height: 1.5; color: #586476; }
+.pp-goal-cards { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.pp-goal-cards article { border: 1px solid #aaa; border-top: 4px solid #999; padding: 10px; }
+.pp-goal-cards article.aligned { border-top-color: var(--blue-green); }
+.pp-goal-cards article.aligned:nth-child(2) { border-top-color: #6ebf93; }
+.pp-goal-cards article.aligned:nth-child(3) { border-top-color: #009473; }
+.pp-goal-cards article.aligned:nth-child(4) { border-top-color: #a5c52d; }
+.pp-goal-cards article > div { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.pp-goal-cards img { width: 36px; height: 36px; }
+.pp-goal-cards h3 { font-size: 17px; margin: 0; }
+.pp-goal-cards strong { font-size: 12px; color: #657181; }
+.pp-goal-cards .aligned strong { color: #067475; }
+.pp-goal-cards p { font-size: 12px; line-height: 1.45; color: #4f5b68; margin: 4px 0 0; }
+.pp-funding ul { padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+.pp-funding li { border-left: 3px solid var(--dark-orange); background: #ebebeb; padding: 6px 9px; color: var(--dark-gray); font-size: 13px; }
+.pp-score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+.pp-score-card { border: 2px solid #999; padding: 12px; }
+.pp-score-card header { display: flex; justify-content: space-between; align-items: center; }
+.pp-score-card h3 { font-size: 16px; margin: 0; }
+.pp-score-card header strong { color: #263c8c; font-size: 24px; }
+.pp-score-card header small { color: #6a7584; font-size: 11px; margin-left: 2px; }
+.pp-score-card p { line-height: 1.5; color: #637081; font-size: 12px; }
+.pp-score-card dl { margin: 0; }
+.pp-score-card dl > div { display: flex; justify-content: space-between; gap: 8px; align-items: center; border-top: 1px solid #e6e9ed; padding: 7px 0; font-size: 12px; }
+.pp-score-card dd { margin: 0; display: flex; align-items: center; gap: 7px; }
+.pp-score-card dd b { min-width: 20px; text-align: right; }
+.pp-score-bar { width: 50px; height: 4px; border-radius: 2px; background: #edf1f5; overflow: hidden; }
+.pp-score-bar i { display: block; height: 100%; background: #549ed4; }
+.pp-evaluating { display: grid; place-items: center; }
+.pp-eval-progress { max-width: 460px; width: 100%; }
+.pp-eval-progress h1 { margin: 14px 0 5px; }
+.pp-eval-progress p { margin: 0; color: #5b6777; }
+.pp-eval-progress progress { width: 100%; height: 8px; accent-color: #456db5; margin-top: 15px; }
+.pp-eval-progress ol { padding: 0; list-style: none; }
+.pp-eval-progress li { display: flex; align-items: center; gap: 10px; color: #6b7280; font-size: 14px; padding: 8px 0; }
+.pp-eval-progress li span { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #eef0f2; font-weight: 650; font-size: 12px; }
+.pp-eval-progress li.active { color: #263c8c; font-weight: 650; }
+.pp-eval-progress li.complete span { color: #096660; background: #e4f3ee; }
+.pp-loading-ring { width: 32px; height: 32px; border: 4px solid #dce4ed; border-top-color: #f15624; border-radius: 50%; animation: pp-turn .85s linear infinite; }
+@keyframes pp-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pp-loading-ring { animation: none; } }
+@container (max-width: 690px) { .pp-goal-cards { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@container (max-width: 500px) {
+  .pp-score-grid { grid-template-columns: 1fr; }
+  .pp-result-overview { flex-wrap: wrap; gap: 8px; }
+  .pp-result-total { border: 0; }
+}

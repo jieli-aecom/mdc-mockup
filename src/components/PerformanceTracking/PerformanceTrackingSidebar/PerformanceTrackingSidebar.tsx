@@ -14,26 +14,28 @@ const PerformanceTrackingSidebar: React.FC<PerformanceTrackingSidebarProps> = ({
   handleChange
 }) => {
   return (
-    <div className="sidebar-container">
+    <nav className="sidebar-container tracking-goals" aria-label="Strategic goals">
       {PERFORMANCE_AREAS.map((item, index) => {
         const active = item === tab;
         const icon = active ? whiteIcons[item] : grayIcons[item];
         return (
           <div key={`sidebar-item-${item}`}>
             {index > 0 && <div className="sidebar-hr" />}
-            <div
+            <button
+              type="button"
+              aria-pressed={active}
               className={`sidebar-item-container${
                 active ? " sidebar-item-active" : ""
               }`}
-              onClick={() => handleChange(item as PerformanceArea)}
+              onClick={() => handleChange(item)}
             >
-              <img src={icon} alt="icon" />
-              {(item as string).toUpperCase()}
-            </div>
+              <img src={icon} alt="" />
+              {item.toUpperCase()}
+            </button>
           </div>
         )
       })}
-    </div>
+    </nav>
   );
 };
 

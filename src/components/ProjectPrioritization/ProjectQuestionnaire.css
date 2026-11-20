@@ -1,0 +1,58 @@
+.pp-editor { min-width: 0; height: 100%; flex: 1; display: grid; grid-template-columns: minmax(395px, 1.15fr) minmax(270px, 1fr); }
+.pp-editor-panel { min-width: 0; overflow: auto; padding: clamp(18px, 2.3vw, 36px); }
+.pp-editor-map { min-width: 0; border-left: 1px solid #dce1e6; background: #eef3f4; display: flex; flex-direction: column; }
+.pp-steps { display: flex; border-bottom: 2px solid #aaa; margin: 22px 0; }
+.pp-steps button { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; text-align: left; font: inherit; font-weight: 600; font-size: 12px; color: #626d7a; padding: 7px 5px 10px; border: 0; border-bottom: 3px solid transparent; cursor: pointer; background: transparent; }
+.pp-steps button span { display: inline-grid; place-items: center; flex: 0 0 20px; height: 20px; border-radius: 50%; color: #515d6c; background: #ebedf0; }
+.pp-steps button.is-active { color: #91350f; font-weight: 700; background: #fff0e8; border-bottom-color: var(--dark-orange); }
+.pp-steps button.is-active span { color: white; background: #b74720; }
+.pp-form-section { display: flex; flex-direction: column; gap: 14px; }
+.pp-form-section h2 { margin: 0; font-size: 21px; color: #3d4651; }
+.pp-form-section h3 { margin: 4px 0 -6px; font-size: 16px; color: #3d4651; }
+.pp-help { font-size: 13px; line-height: 1.5; color: #596473; margin: 0; }
+.pp-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; }
+.pp-input-label { display: flex; flex-direction: column; gap: 6px; color: var(--dark-gray); font-size: 14px; font-weight: 700; }
+.pp-input-label small, .pp-provisions small { font-size: 12px; line-height: 1.45; font-weight: 400; color: #626d79; }
+.pp-input-label input, .pp-input-label select, .pp-input-label textarea { box-sizing: border-box; width: 100%; padding: 9px 10px; background: white; border: 1.5px solid #929292; border-radius: 3px; font: inherit; font-weight: 500; color: var(--dark-gray); }
+.pp-input-label textarea { min-height: 69px; resize: vertical; }
+.pp-field-readout { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px; background: #f1f4f7; border-radius: 4px; font-size: 12px; }
+.pp-field-readout strong { color: #354660; }
+.pp-provisions { border: 1px solid #dae0e6; border-radius: 4px; }
+.pp-provisions label { display: flex; cursor: pointer; align-items: flex-start; gap: 10px; padding: 13px; border-bottom: 1px solid #dce1e6; }
+.pp-provisions label:last-child { border-bottom: 0; }
+.pp-provisions input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: #263c8c; }
+.pp-provisions strong, .pp-provisions small { display: block; }
+.pp-provisions strong { margin-bottom: 4px; color: #3c4858; font-size: 14px; }
+.pp-review-box { border-left: 3px solid #456db5; background: #f2f5fa; padding: 12px 15px; font-size: 14px; }
+.pp-review-box p { margin: 5px 0 0; font-size: 12px; line-height: 1.5; }
+.pp-form-actions { margin-top: 20px; display: flex; align-items: center; gap: 12px; border-top: 1px solid #e1e4e9; padding: 16px 0; }
+.pp-form-actions .pp-primary { margin-left: auto; }
+.pp-error { padding: 10px 13px; background: #fce9e4; color: #842f20; font-weight: 650; font-size: 13px; border-left: 3px solid #be4e38; margin-bottom: 12px; }
+@media (min-width: 921px) {
+ .pp-editor-panel { display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding-bottom: 0; }
+ .pp-editor-panel form { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+ .pp-editor-panel .pp-page-heading, .pp-steps, .pp-form-actions { flex-shrink: 0; }
+ .pp-form-scroll { flex: 1; min-height: 0; overflow-y: auto; margin: 0 -4px; padding: 2px 4px 12px; }
+ .pp-form-actions { margin: 0; padding: 12px 0; }
+}
+@media (min-width: 921px) and (max-height: 790px) {
+ .pp-editor-panel { padding-top: 18px; }
+ .pp-steps { margin: 12px 0; }
+ .pp-form-section { gap: 10px; }
+ .pp-form-section h2 { font-size: 20px; }
+ .pp-field-grid { gap: 10px 12px; }
+ .pp-input-label { gap: 4px; }
+ .pp-input-label input, .pp-input-label select { padding: 7px 9px; }
+ .pp-provisions label { padding: 9px 12px; }
+}
+@media (max-width: 920px) and (min-width: 731px) {
+ .pp-editor { grid-template-columns: minmax(0,1.25fr) minmax(250px,1fr); }
+ .pp-editor-panel { padding: 15px; }
+}
+@media (max-width: 730px) {
+ .pp-editor { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+ .pp-editor-panel { min-height: 0; flex: 1; overflow: auto; }
+ .pp-editor-map { flex: 0 0 36%; min-height: 160px; }
+ .pp-editor-map .pp-map-canvas, .pp-editor-map .portfolio-map { min-height: 0; }
+ .pp-editor-map .pp-map-heading { padding-block: 5px; }
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PerformanceDecisionSupport from "../../components/PerformanceDecisionSupport/PerformanceDecisionSupport";
 import StrategicVision from "../../components/StrategicVision/StrategicVision";
 import CountyBenefits from "../../components/CountyBenefits/CountyBenefits";
@@ -20,6 +21,17 @@ import {
   WHITE,
 } from "../../consts/colors";
 
+const modules = [
+  { title: "Project Prioritization", image: projectPrioritizationImage, color: DARK_ORANGE, link: "/project-prioritization",
+    description: "Compare project scores, funding opportunities and public feedback." },
+  { title: "Program Development", image: programDevelopmentImage, color: DARK_GREEN, link: "/program-development",
+    description: "Bundle projects and evaluate their combined contribution to county goals." },
+  { title: "Performance Tracking", image: performanceTrackingImage, color: BLUE_GREEN, link: "/performance-tracking",
+    description: "Track the performance of projects and programs across the four strategic goals." },
+  { title: "Resources", image: resourcesImage, color: BRIGHT_RED, link: "/resources",
+    description: "Access relevant datasets and technical documents." },
+];
+
 const Home: React.FC = () => {
   return (
     <div className="home-wrapper">
@@ -30,120 +42,19 @@ const Home: React.FC = () => {
         <CountyBenefits />
       </HomePageSection>
 
-      <HomePageSection
-        image={performanceTrackingImage}
-        backgroundColor={WHITE}
-        align="left"
-        paddingSide="6rem"
-        paddingTopDown="2rem"
-      >
-        <div className="home-sectionEntry-content-leftAlgn">
-          <h2 className="home-sectionEntry-title" style={{ color: BLUE_GREEN }}>
-            Performance Tracking
-          </h2>
-          <div className="home-sectionEntry-description">
-            Displays performance for key performance indicators
-          </div>
-          <button className="mdc-homeDark-btn">
-            <a
-              href="/performance-tracking"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Project Prioritization"
-            >
-              Explore
-            </a>
-          </button>
-        </div>
-      </HomePageSection>
-
-      <HomePageSection
-        image={projectPrioritizationImage}
-        backgroundColor={LIGHT_GRAY}
-        align="right"
-        paddingSide="6rem"
-        paddingTopDown="2rem"
-      >
-        <div className="home-sectionEntry-content-rightAlign">
-          <h2
-            className="home-sectionEntry-title"
-            style={{ color: DARK_ORANGE }}
-          >
-            Project Prioritization
-          </h2>
-          <div className="home-sectionEntry-description">
-            Assesses individual projects and compare projects to each other
-          </div>
-          <button className="mdc-homeDark-btn">
-            <a
-              href="/project-prioritization"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Project Prioritization"
-            >
-              Explore
-            </a>
-          </button>
-        </div>
-      </HomePageSection>
-
-      <HomePageSection
-        image={programDevelopmentImage}
-        backgroundColor={WHITE}
-        align="left"
-        paddingSide="6rem"
-        paddingTopDown="2rem"
-      >
-        <div className="home-sectionEntry-content-leftAlgn">
-          <h2 className="home-sectionEntry-title" style={{ color: DARK_GREEN }}>
-            Program Development
-          </h2>
-          <div className="home-sectionEntry-description">
-            Evaluates the aggregated impact of mulitple projects to visualize
-            alignment in equity and policy
-          </div>
-          <button className="mdc-homeDark-btn">
-            <a
-              href="/program-development"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Project Prioritization"
-            >
-              Explore
-            </a>
-          </button>
-        </div>
-      </HomePageSection>
-
-      <HomePageSection
-        image={resourcesImage}
-        backgroundColor={LIGHT_GRAY}
-        align="right"
-        paddingSide="6rem"
-        paddingTopDown="2rem"
-      >
-        <div className="home-sectionEntry-content-rightAlign">
-          <h2
-            className="home-sectionEntry-title"
-            style={{ color: BRIGHT_RED }}
-          >
-            Resources
-          </h2>
-          <div className="home-sectionEntry-description">
-          Provides access to relevant datasets and technical documents
-          </div>
-          <button className="mdc-homeDark-btn">
-            <a
-              href="/resources"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Project Prioritization"
-            >
-              Explore
-            </a>
-          </button>
-        </div>
-      </HomePageSection>
+      {modules.map(({ title, image, color, description, link }, index) => {
+        const left = index % 2 === 0;
+        return (
+          <HomePageSection key={link} image={image} backgroundColor={left ? WHITE : LIGHT_GRAY}
+            align={left ? "left" : "right"} paddingSide="6rem" paddingTopDown="2rem">
+            <div className={left ? "home-sectionEntry-content-leftAlgn" : "home-sectionEntry-content-rightAlign"}>
+              <h2 className="home-sectionEntry-title" style={{color}}>{title}</h2>
+              <div className="home-sectionEntry-description">{description}</div>
+              <Link className="mdc-homeDark-btn home-explore" to={link} aria-label={"Explore " + title}>Explore</Link>
+            </div>
+          </HomePageSection>
+        );
+      })}
       <Footer />
     </div>
   );

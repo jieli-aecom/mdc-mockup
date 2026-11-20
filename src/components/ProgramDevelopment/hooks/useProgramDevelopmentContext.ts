@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { Project, ProjectType } from "../../../types/Project";
 import Graphic from "@arcgis/core/Graphic";
 import { TopPercent } from "../../../consts/top-percents";
@@ -86,6 +86,8 @@ export const initialContext: ProgramDevelopmentContext = {
 };
 
 //#endregion
+
+export const programDevelopmentContext = createContext<ProgramDevelopmentContext>(initialContext);
 
 export function useProgramDevelopmentContext() {
   //#region States

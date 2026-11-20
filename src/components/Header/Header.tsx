@@ -34,6 +34,7 @@ const Header: React.FC = () => {
             <Link
               key={`header-nav-${link}`}
               to={link}
+              aria-current={link === location.pathname ? "page" : undefined}
               className={`header-nav-item${
                 link === location.pathname ? " header-nav-item-selected" : ""
               }`}
