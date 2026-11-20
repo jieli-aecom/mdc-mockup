@@ -10,9 +10,12 @@ interface Props {
   projectIds: string[];
   setProjectIds: (ids: string[]) => void;
   onReview: () => void;
+  editing?: boolean;
+  draftName?: string;
+  onCancel?: () => void;
 }
 
-export default function ProgramBuilder({ projects, projectIds, setProjectIds, onReview }: Props) {
+export default function ProgramBuilder({ projects, projectIds, setProjectIds, onReview, editing, draftName, onCancel }: Props) {
   const [type, setType] = useState("");
   const [district, setDistrict] = useState("");
   const [percent, setPercent] = useState<TopPercent>(100);
@@ -27,7 +30,9 @@ export default function ProgramBuilder({ projects, projectIds, setProjectIds, on
   return <ProgramMapLayout title="Project locations" projects={ranked} highlightedIds={projectIds}
     selectedId={visibleHighlight} onSelect={setHighlight}>
     <header className="pd-heading">
-      <div><h1>Create New Program</h1><p>Select projects for the bundle. Open a project to review its scores, strategic goals and public feedback.</p></div>
+      <div><h1>{editing ? "Edit bundle" : "Create New Program"}</h1>
+        <p>{editing ? draftName : "Select projects for the bundle. Open a project to review its scores, strategic goals and public feedback."}</p></div>
+      {editing && onCancel && <button className="mdc-btn-export" type="button" onClick={onCancel}>Cancel</button>}
     </header>
     <div className="pd-builder-controls">
       <label className="pd-field">Project type

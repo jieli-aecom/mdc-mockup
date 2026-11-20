@@ -199,6 +199,7 @@ interface ShowcaseStore {
   programs: DemoProgram[];
   saveProject: (project: DemoProject) => void;
   saveProgram: (program: DemoProgram) => void;
+  deleteProgram: (id: string) => void;
 }
 function upsert<T extends {id: string}>(items: T[], item: T) {
   return items.some(old => old.id === item.id) ? items.map(old => old.id === item.id ? item : old) : [item, ...items];
@@ -224,4 +225,5 @@ export const useShowcase = create<ShowcaseStore>()(persist(set => ({
   programs: initialPrograms,
   saveProject: project => set(state => ({projects: upsert(state.projects, project)})),
   saveProgram: program => set(state => ({programs: upsert(state.programs, program)})),
+  deleteProgram: id => set(state => ({programs: state.programs.filter(program => program.id !== id)})),
 }), {name: "mdc-planning-portfolio", version: 2, migrate: migratePortfolio}));

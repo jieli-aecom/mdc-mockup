@@ -82,7 +82,7 @@ export default function ProgramCatalog({ programs, projects, notice, onOpen, onC
           })}
         </tbody>
       </table>
-      {!visible.length && <p className="pd-empty">No programs match this status.</p>}
+      {!visible.length && <p className="pd-empty">{programs.length ? "No programs match this status." : "No programs yet. Create a program to bundle projects."}</p>}
     </div>
   </ProgramMapLayout>;
 }

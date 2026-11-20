@@ -256,6 +256,27 @@
 }
 .pd-back { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 12px; font-size: 13px; }
 .pd-back svg { width: 16px; }
+.pd-summary-nav, .pd-bundle-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.pd-summary-nav { justify-content: space-between; margin-bottom: 12px; }
+.pd-summary-nav .pd-back { margin: 0; }
+.pd-summary-nav .mdc-btn-main, .pd-summary-nav .mdc-btn-export { font-size: 14px; }
+.pd-delete-button { background: #fff; color: #983b31; border: 1px solid #b68b86; box-shadow: none; }
+.pd-delete-button:hover { background: #faecea; color: #802f27; outline-color: #b68b86; }
+.pd-delete-dialog {
+  width: min(420px, calc(100% - 32px));
+  padding: 22px;
+  color: #404040;
+  background: #fff;
+  border: 1px solid #aaa;
+  border-top: 4px solid #983b31;
+  border-radius: 4px;
+  box-shadow: 0 8px 28px #0003;
+}
+.pd-delete-dialog::backdrop { background: #202a3690; }
+.pd-delete-dialog p { margin: 10px 0 20px; line-height: 1.45; overflow-wrap: anywhere; }
+.pd-delete-dialog .pd-bundle-actions { justify-content: flex-end; }
+.pd-confirm-delete { background: #983b31; color: #fff; }
+.pd-confirm-delete:hover { background: #802f27; outline-color: #b68b86; }
 .pd-review-form { max-width: 450px; }
 .pd-stats {
   display: flex;

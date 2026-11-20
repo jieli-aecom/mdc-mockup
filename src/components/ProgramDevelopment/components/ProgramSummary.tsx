@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PERFORMANCE_AREAS } from "../../../consts/performance-areas";
 import { DemoProgram, DemoProject } from "../../../mockData/showcase";
 import { ProjectType } from "../../../types/Project";
@@ -15,9 +15,14 @@ interface Props {
   members: DemoProject[];
   program?: DemoProgram;
   draftName?: string;
+  editing?: boolean;
+  notice?: string;
   onName?: (name: string) => void;
   onSubmit?: (name: string) => void;
   onBack: () => void;
+  onCancel?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 const icons = { Safe: SafeIcon, Clean: CleanIcon, Efficient: EfficientIcon, Connected: ConnectedIcon };
@@ -72,17 +77,50 @@ function Distribution({ members, byDistrict }: { members: DemoProject[]; byDistr
   </details>;
 }
 
-export default function ProgramSummary({ members, program, draftName = "", onName, onSubmit, onBack }: Props) {
+export default function ProgramSummary({
+  members, program, draftName = "", editing = false, notice, onName, onSubmit, onBack, onCancel, onEdit, onDelete,
+}: Props) {
   const [highlight, setHighlight] = useState("");
+  const deleteDialog = useRef<HTMLDialogElement>(null);
+  const deleteButton = useRef<HTMLButtonElement>(null);
+  const cancelDelete = useRef<HTMLButtonElement>(null);
   const districts = districtList(members);
+
+  function requestDelete() {
+    deleteDialog.current?.showModal();
+    cancelDelete.current?.focus();
+  }
+
   return <ProgramMapLayout title="Member project locations" projects={members} selectedId={highlight} onSelect={setHighlight}>
-    <button className="pd-back" type="button" onClick={onBack}><BackIcon color="currentColor" />{program ? "Back to programs" : "Edit selection"}</button>
+    <div className="pd-summary-nav">
+      <button className="pd-back" type="button" onClick={onBack}><BackIcon color="currentColor" />{program ? "Back to programs" : "Edit selection"}</button>
+      {program && <div className="pd-bundle-actions">
+        {onEdit && <button className="mdc-btn-main" type="button" onClick={onEdit}>Edit bundle</button>}
+        {onDelete && <button className="mdc-btn-export pd-delete-button" type="button" aria-haspopup="dialog"
+          ref={deleteButton} onClick={requestDelete}>Delete bundle</button>}
+      </div>}
+      {editing && onCancel && <button className="mdc-btn-export" type="button" onClick={onCancel}>Cancel</button>}
+    </div>
+    {program && onDelete && <dialog className="pd-delete-dialog" ref={deleteDialog} role="alertdialog"
+      aria-modal="true" aria-labelledby="pd-delete-title" aria-describedby="pd-delete-description"
+      onClose={() => deleteButton.current?.focus()}>
+      <h2 id="pd-delete-title">Delete bundle?</h2>
+      <p id="pd-delete-description"><strong>{program.name}</strong> will be removed from the program list. Its member projects stay available for other bundles.</p>
+      <div className="pd-bundle-actions">
+        <button className="mdc-btn-export" type="button" ref={cancelDelete} onClick={() => deleteDialog.current?.close()}>Cancel</button>
+        <button className="mdc-btn-main pd-confirm-delete" type="button" onClick={() => {
+          deleteDialog.current?.close();
+          onDelete();
+        }}>Delete bundle</button>
+      </div>
+    </dialog>}
     <header className="pd-heading">
-      <div><h1>{program ? program.name : "Review program bundle"}</h1>
+      <div><h1>{program ? program.name : editing ? "Review bundle changes" : "Review program bundle"}</h1>
         <p>{program ? "Track delivery and performance for the projects in this program." : "Confirm the selected projects and their contributions to county goals."}</p></div>
       {program ? <Status value={program.status} /> : <button className="mdc-btn-main" type="submit" form="pd-review-form"
-        disabled={!draftName.trim() || !members.length}>Submit program</button>}
+        disabled={!draftName.trim() || !members.length}>{editing ? "Save changes" : "Submit program"}</button>}
     </header>
+    {notice && <p className="pd-notice" role="status">{notice}</p>}
     {!program && <form className="pd-review-form" id="pd-review-form" onSubmit={event => {
       event.preventDefault();
       if (draftName.trim() && members.length) onSubmit?.(draftName);
